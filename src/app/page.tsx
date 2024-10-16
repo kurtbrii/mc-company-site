@@ -4,7 +4,6 @@ import Image from "next/image";
 import { LatestPost } from "~/app/_components/post";
 import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
-import { Sidebar } from "~/app/_components/sidebar";
 import LoginButton from "./_components/button";
 
 export default async function Home() {
