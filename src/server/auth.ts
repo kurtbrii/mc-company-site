@@ -46,12 +46,19 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
+  pages: {
+    // signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error', // Error code passed in query string as ?
+    // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
+
     /**
      * ...add more providers here.
      *
