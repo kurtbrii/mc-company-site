@@ -50,8 +50,6 @@ export default async function Home() {
         </div>
 
         <LoginButton session={session} />
-        {/* <Sidebar /> */}
-        {/* <div></div> */}
       </main>
     </HydrateClient>
   );
