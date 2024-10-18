@@ -1,15 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { LatestPost } from "~/app/_components/post";
+// import { LatestPost } from "~/app/_components/post";
 import { getServerAuthSession } from "~/server/auth";
 import { api, HydrateClient } from "~/trpc/server";
 import LoginButton from "./_components/button";
 
 export default async function Home() {
-  const hello = await api.post.hello({ text: "from tRPC" });
+  // const hello = await api.post.hello({ text: "from tRPC" });
 
-  void api.post.getLatest.prefetch();
+  // void api.post.getLatest.prefetch();
 
   const session = await getServerAuthSession();
 
