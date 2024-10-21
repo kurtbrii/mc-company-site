@@ -2,7 +2,7 @@
 
 import Sidebar from "../_components/sidebar";
 import { useSession } from "next-auth/react";
-import { userColor, buttonActive } from "../utils/functionHelpers";
+// import { userColor, buttonActive } from "../utils/functionHelpers";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -66,4 +66,27 @@ export default function Dashboard() {
 
 const handleTimeInOut = () => {
   alert("this time in is temporary");
+};
+
+const userColor = (role: string) => {
+  switch (role) {
+    case "CEO":
+      return "text-ceo bg-ceo_bg";
+    case "VIDEO_EDITOR":
+      return "text-video_editor bg-video_editor_bg";
+    case "CUSTOMER_SERVICE":
+      return "text-customer_service bg-customer_service_bg";
+    case "FUNNEL_BUILDERS":
+      return "text-funnel_builders bg-funnel_builders_bg";
+    case "USER":
+      return "text-everyone bg-everyone_bg";
+  }
+};
+
+const buttonActive = (role: string | undefined) => {
+  if (role === "USER") {
+    return "bg-button_disabled text-white_disabled cursor-not-allowed";
+  } else {
+    return "bg-discord_button text-white";
+  }
 };

@@ -1,18 +1,4 @@
 export const userColor = (role: string) => {
-  // if (role === "CEO") {
-  //   return "text-ceo bg-ceo_bg"
-  // } else {
-  //   return "text-everyone bg-everyone_bg"
-  // }
-  // if (role === "CEO") {
-  //   return "text-ceo bg-ceo_bg";
-  // } else if (role === "VIDEO_EDITOR") {
-  //   return "text-video_editor bg-video_editor_bg";
-  // } else {
-  //   return "text-everyone bg-everyone_bg";
-  // }
-
-
   switch (role) {
     case "CEO":
       return "text-ceo bg-ceo_bg"
