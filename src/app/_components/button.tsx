@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-"use client"; // Make this component a client component
+"use client";
 
 import Image from "next/image";
 import { signIn, signOut } from "next-auth/react";

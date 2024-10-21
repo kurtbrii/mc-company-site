@@ -3,11 +3,16 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import { dashboard_items } from "../utlis/helper";
+import { dashboard_items } from "../utils/helper";
 import { signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
+import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
+  const pathName = usePathname();
+
+  const { data: session, status } = useSession();
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
@@ -52,7 +57,10 @@ export default function Sidebar() {
 
           <ul className="space-y-2 font-medium">
             {dashboard_items.map((item, index) => (
-              <li key={index}>
+              <li
+                key={index}
+                className={`${pathName === item.href && "rounded-lg bg-discord_button"}`}
+              >
                 <Link
                   href={item.href}
                   className={`group flex items-center rounded-lg hover:bg-discord_button ${isOpen ? "justify-start" : "justify-center"} p-2 text-white dark:text-white`}
@@ -81,26 +89,23 @@ export default function Sidebar() {
         <div className="flex flex-col gap-4">
           <ul className="space-y-2 font-medium">
             {/* PROFILE */}
-            <li>
+            <li
+              className={`${pathName === "/profile" && "rounded-lg bg-discord_button"}`}
+            >
               <Link
                 href="/profile"
                 className={`group flex items-center rounded-lg hover:bg-discord_button ${isOpen ? "justify-start" : "justify-center"} p-2 text-white dark:text-white`}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18.685 19.097A9.723 9.723 0 0 0 21.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 0 0 3.065 7.097A9.716 9.716 0 0 0 12 21.75a9.716 9.716 0 0 0 6.685-2.653Zm-12.54-1.285A7.486 7.486 0 0 1 12 15a7.486 7.486 0 0 1 5.855 2.812A8.224 8.224 0 0 1 12 20.25a8.224 8.224 0 0 1-5.855-2.438ZM15.75 9a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z"
-                    clipRule="evenodd"
-                  />
-                </svg>
+                <Image
+                  src={session?.user?.image ?? "/assets/mc-company-logo.png"}
+                  alt={"User Image"}
+                  width={35}
+                  height={35}
+                  className="rounded-md"
+                />
 
                 <span className={`${isOpen ? "" : "hidden"} ms-3`}>
-                  Profile
+                  {session?.user?.name}
                 </span>
               </Link>
             </li>
