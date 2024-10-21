@@ -30,7 +30,7 @@ export default async function Home() {
         </div>
 
         {/* HERO SECTION */}
-        <div className="flex items-center justify-center gap-16">
+        <div className="mb-12 flex flex-wrap items-center justify-center gap-16 laptop:mb-0">
           <Image
             src="/assets/hello.svg"
             width={400}
