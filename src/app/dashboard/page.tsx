@@ -2,32 +2,39 @@
 
 import Sidebar from "../_components/sidebar";
 import { useSession } from "next-auth/react";
-import { userColor } from "../utils/functionHelpers";
+import { userColor, buttonActive } from "../utils/functionHelpers";
+import Link from "next/link";
+import { useEffect } from "react";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
+  const userRole = session?.user.role;
+
+  useEffect(() => {
+    console.log("Session updated:", session);
+  }, [session]);
+
+  if (status === "loading") {
+    return "loading...";
+  }
 
   return (
     <div className="flex">
       {/* SIDEBAR */}
       <Sidebar />
-
       {/* DASHBOARD - TIME IN/TIME OUT */}
       <div className="flex h-screen w-screen flex-col items-center justify-center gap-8 text-center">
         <p className="text-4xl">
           Welcome Back,{" "}
-          <span
-            className={`${userColor(session?.user.role ?? "")} rounded-lg p-2`}
-            // className={`rounded-lg bg-everyone_bg p-2 text-everyone`}
-          >
+          <span className={`${userColor(userRole ?? "")} rounded-lg p-2`}>
             {session?.user.name}
           </span>
         </p>
 
         <button
           onClick={handleTimeInOut}
-          className="bg-button_disabled text-white_disabled flex cursor-not-allowed items-center gap-2 rounded-md px-6 py-3"
-          disabled
+          className={`${buttonActive(userRole ?? "")} flex items-center gap-2 rounded-md px-6 py-3`}
+          disabled={userRole === "USER"}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -43,6 +50,15 @@ export default function Dashboard() {
           </svg>
           Time In
         </button>
+        {userRole === "USER" && (
+          <p className="text-white">
+            Set up your{" "}
+            <span className="text-everyone underline">
+              <Link href="/profile">profile</Link>
+            </span>{" "}
+            first.
+          </p>
+        )}
       </div>
     </div>
   );

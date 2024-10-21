@@ -1,23 +1,38 @@
-const userColor = (role: string) => {
+export const userColor = (role: string) => {
+  // if (role === "CEO") {
+  //   return "text-ceo bg-ceo_bg"
+  // } else {
+  //   return "text-everyone bg-everyone_bg"
+  // }
+  // if (role === "CEO") {
+  //   return "text-ceo bg-ceo_bg";
+  // } else if (role === "VIDEO_EDITOR") {
+  //   return "text-video_editor bg-video_editor_bg";
+  // } else {
+  //   return "text-everyone bg-everyone_bg";
+  // }
+
+
   switch (role) {
     case "CEO":
-      return "ceo ceo_bg"
+      return "text-ceo bg-ceo_bg"
     case "VIDEO_EDITOR":
-      return "video_editor video_editor_bg"
+      return "text-video_editor bg-video_editor_bg"
     case "CUSTOMER_SERVICE":
-      return "customer_service customer_service_bg"
-    case "FUNNEL_BUILDER":
-      return "funnel_builders funnel_builders_bg"
-    default:
+      return "text-customer_service bg-customer_service_bg"
+    case "FUNNEL_BUILDERS":
+      return "text-funnel_builders bg-funnel_builders_bg"
+    case "USER":
       return "text-everyone bg-everyone_bg"
   }
 }
 
-const buttonColors = (role: string) => {
+export const buttonActive = (role: string | undefined) => {
   if (role === "USER") {
-    return " "
+    return "bg-button_disabled text-white_disabled cursor-not-allowed"
+  } else {
+    return "bg-discord_button text-white"
   }
 }
 
-export { userColor }
 
