@@ -97,7 +97,7 @@ export default function Sidebar() {
                 className={`group flex items-center rounded-lg hover:bg-discord_button ${isOpen ? "justify-start" : "justify-center"} p-2 text-white dark:text-white`}
               >
                 <Image
-                  src={session?.user.image ?? "/assets/mc-company-logo.png"}
+                  src={session?.user?.image ?? "/assets/mc-company-logo.png"}
                   alt={"User Image"}
                   width={35}
                   height={35}
@@ -105,7 +105,7 @@ export default function Sidebar() {
                 />
 
                 <span className={`${isOpen ? "" : "hidden"} ms-3`}>
-                  {session?.user.name}
+                  {session?.user?.name}
                 </span>
               </Link>
             </li>
