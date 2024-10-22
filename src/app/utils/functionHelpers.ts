@@ -13,6 +13,21 @@ export const userColor = (role: string) => {
   }
 }
 
+export const userRole = (role: string) => {
+  switch (role) {
+    case "CEO":
+      return "CEO"
+    case "VIDEO_EDITOR":
+      return "Video Editor"
+    case "CUSTOMER_SERVICE":
+      return "Customer Service"
+    case "FUNNEL_BUILDERS":
+      return "Funnel Builder"
+    case "USER":
+      return "No Role Yet"
+  }
+}
+
 export const buttonActive = (role: string | undefined) => {
   if (role === "USER") {
     return "bg-button_disabled text-white_disabled cursor-not-allowed"

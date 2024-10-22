@@ -2,9 +2,10 @@
 
 import Sidebar from "../_components/sidebar";
 import { useSession } from "next-auth/react";
-// import { userColor, buttonActive } from "../utils/functionHelpers";
+import { userColor, buttonActive } from "../utils/functionHelpers";
 import Link from "next/link";
 import { useEffect } from "react";
+import { Suspense } from "react";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -26,9 +27,11 @@ export default function Dashboard() {
       <div className="flex h-screen w-screen flex-col items-center justify-center gap-8 text-center">
         <p className="text-4xl">
           Welcome Back,{" "}
-          <span className={`${userColor(userRole ?? "")} rounded-lg p-2`}>
-            {session?.user.name}
-          </span>
+          <Suspense fallback={<p>Loading feed...</p>}>
+            <span className={`${userColor(userRole ?? "")} rounded-lg p-2`}>
+              {session?.user.name}
+            </span>
+          </Suspense>
         </p>
 
         <button
@@ -68,25 +71,25 @@ const handleTimeInOut = () => {
   alert("this time in is temporary");
 };
 
-const userColor = (role: string) => {
-  switch (role) {
-    case "CEO":
-      return "text-ceo bg-ceo_bg";
-    case "VIDEO_EDITOR":
-      return "text-video_editor bg-video_editor_bg";
-    case "CUSTOMER_SERVICE":
-      return "text-customer_service bg-customer_service_bg";
-    case "FUNNEL_BUILDERS":
-      return "text-funnel_builders bg-funnel_builders_bg";
-    case "USER":
-      return "text-everyone bg-everyone_bg";
-  }
-};
+// const userColor = (role: string) => {
+//   switch (role) {
+//     case "CEO":
+//       return "text-ceo bg-ceo_bg";
+//     case "VIDEO_EDITOR":
+//       return "text-video_editor bg-video_editor_bg";
+//     case "CUSTOMER_SERVICE":
+//       return "text-customer_service bg-customer_service_bg";
+//     case "FUNNEL_BUILDERS":
+//       return "text-funnel_builders bg-funnel_builders_bg";
+//     case "USER":
+//       return "text-everyone bg-everyone_bg";
+//   }
+// };
 
-const buttonActive = (role: string | undefined) => {
-  if (role === "USER") {
-    return "bg-button_disabled text-white_disabled cursor-not-allowed";
-  } else {
-    return "bg-discord_button text-white";
-  }
-};
+// const buttonActive = (role: string | undefined) => {
+//   if (role === "USER") {
+//     return "bg-button_disabled text-white_disabled cursor-not-allowed";
+//   } else {
+//     return "bg-discord_button text-white";
+//   }
+// };
