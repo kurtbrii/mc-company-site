@@ -63,7 +63,10 @@ model User {
     sessions      Session[]
     Post          Post[]
     timeInDetails TimeInDetails[]
-    role          ROLE?           @default(USER)
+
+    // ! SCHEMA DEFINITIONS
+    role     ROLE   @default(USER)
+    fullName String @default("NEW USER")
 }
 
 model VerificationToken {
