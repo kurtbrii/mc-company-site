@@ -30,6 +30,18 @@ export default {
 
         funnel_builders: "#2FCC71",
         funnel_builders_bg: "#444E3F",
+
+        stripe_manager: "#546E7A",
+        stripe_manager_bg: "#3A3F45",
+
+        proofreader: "#9B59B6",
+        proofreader_bg: "#423D4C",
+
+        email_marketing: "#71368A",
+        email_marketing_bg: "#3F3A47",
+
+        facebook_marketing: "#206694",
+        facebook_marketing_bg: "#373E48",
       }
     },
     screens: {
