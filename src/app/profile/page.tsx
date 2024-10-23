@@ -9,7 +9,6 @@ import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateProfileSchema } from "../utils/zodHelpers";
 import { z } from "zod";
-import { useRouter } from "next/navigation";
 import { api } from "~/trpc/react";
 
 export default function Profile() {
@@ -17,7 +16,6 @@ export default function Profile() {
   const { data: session, update } = useSession();
   const user = session?.user;
   const [openForm, handleOpenForm] = useState(false);
-  const router = useRouter();
 
   const handleEditButton = () => {
     handleOpenForm(!openForm);
@@ -44,8 +42,8 @@ export default function Profile() {
   });
 
   const updateProfile = api.user.editProfile.useMutation({
-    onSuccess(data, variables, context) {
-      update;
+    onSuccess() {
+      void update();
     },
   });
 
@@ -58,12 +56,7 @@ export default function Profile() {
       role: formData.role,
     });
 
-    // alert("Successfully submitted");
-
-    update();
     handleEditButton();
-    // router.push("");
-    // location.reload();
   };
 
   useEffect(() => {
@@ -197,10 +190,16 @@ export default function Profile() {
             </div>
 
             <div className="flex gap-3">
-              <button className="w-full rounded-lg bg-discord_left p-4">
+              <button
+                className="w-full rounded-lg bg-discord_left p-4"
+                type="button"
+              >
                 Time In Details
               </button>
-              <button className="w-full rounded-lg bg-discord_left p-4">
+              <button
+                className="w-full rounded-lg bg-discord_left p-4"
+                type="button"
+              >
                 Bonus Sheet
               </button>
             </div>
