@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const pathName = usePathname();
 
   const { data: session, status } = useSession();
@@ -25,7 +25,7 @@ export default function Sidebar() {
       >
         <div className="flex flex-col gap-4">
           <svg
-            className={`${isOpen ? "self-start" : "self-center"} mb-4 size-6`}
+            className={`${isOpen ? "self-start" : "self-center"} mb-4 hidden size-6 tablet:block`}
             onClick={toggleSidebar}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
