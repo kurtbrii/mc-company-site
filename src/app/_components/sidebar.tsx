@@ -96,13 +96,17 @@ export default function Sidebar() {
                 href="/profile"
                 className={`group flex items-center rounded-lg hover:bg-discord_button ${isOpen ? "justify-start" : "justify-center"} p-2 text-white dark:text-white`}
               >
-                <Image
-                  src={session?.user?.image ?? "/assets/mc-company-logo.png"}
-                  alt={"User Image"}
-                  width={35}
-                  height={35}
-                  className="rounded-md"
-                />
+                {status === "loading" ? (
+                  <div className="h-[35px] w-[35px] animate-pulse rounded-lg bg-discord_black"></div>
+                ) : (
+                  <Image
+                    src={session?.user?.image ?? "/assets/mc-company-logo.png"}
+                    alt={"User Image"}
+                    width={35}
+                    height={35}
+                    className="rounded-md"
+                  />
+                )}
 
                 <span className={`${isOpen ? "" : "hidden"} ms-3`}>
                   {session?.user?.name}

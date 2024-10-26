@@ -30,7 +30,7 @@
     }
   },
   "include": [
-    "src/middleware.ts",
+    "src/app/middleware.tsx",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",

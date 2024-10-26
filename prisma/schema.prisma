@@ -13,18 +13,6 @@ datasource db {
     directUrl = env("DIRECT_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                       String  @id @default(cuid())
@@ -54,19 +42,19 @@ model Session {
 }
 
 model User {
-    id            String          @id @default(cuid())
+    id            String    @id @default(cuid())
     name          String?
-    email         String?         @unique
+    email         String?   @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
-    Post          Post[]
-    timeInDetails TimeInDetails[]
 
     // ! SCHEMA DEFINITIONS
-    role     ROLE   @default(USER)
-    fullName String @default("NEW USER")
+    role            ROLE            @default(USER)
+    fullName        String          @default("NEW USER")
+    timeInDetails   TimeInDetails[]
+    currentTimeInId String?
 }
 
 model VerificationToken {
@@ -79,24 +67,23 @@ model VerificationToken {
 
 // ! SCHEMA DEFINITIONS
 model TimeInDetails {
-    id        String    @id @default(cuid())
-    createdAt DateTime  @default(now())
-    date      DateTime? @db.Date
-    day       String?
-    timeIn    DateTime? @db.Time()
-    timeOut   DateTime? @db.Time()
+    id      String    @id @default(cuid())
+    // createdAt DateTime  @default(now())
+    // day       String?
+    timeIn  DateTime? @default(now())
+    timeOut DateTime?
 
     timeInDescription  String // @db.VarChar(40)
-    timeOutDescription String // @db.VarChar(40)
+    timeOutDescription String @default("Time Out") // @db.VarChar(40)
 
     // REFERENCE
-    User   User?   @relation(fields: [userId], references: [id])
-    userId String?
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
 }
 
 enum ROLE {
     USER
-    // CEO
+    CEO
     VIDEO_EDITOR
     CUSTOMER_SERVICE
     FUNNEL_BUILDER

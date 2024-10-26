@@ -16,6 +16,7 @@ export const userRouter = createTRPCRouter({
         data: {
           fullName: input.fullName,
           role: input.role,
+          currentTimeInId: input.currentTimeInId
         },
         where: {
           id: input.id

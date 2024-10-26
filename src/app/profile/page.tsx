@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { UpdateProfileSchema } from "../utils/zodHelpers";
-import { z } from "zod";
+import { type z } from "zod";
 import { api } from "~/trpc/react";
 import { Toastbar } from "../_components/toastbar";
 
