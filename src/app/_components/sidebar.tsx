@@ -9,7 +9,7 @@ import { useSession } from "next-auth/react";
 import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const pathName = usePathname();
 
   const { data: session, status } = useSession();
@@ -25,7 +25,7 @@ export default function Sidebar() {
       >
         <div className="flex flex-col gap-4">
           <svg
-            className={`${isOpen ? "self-start" : "self-center"} mb-4 size-6`}
+            className={`${isOpen ? "self-start" : "self-center"} mb-4 hidden size-6 tablet:block`}
             onClick={toggleSidebar}
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -96,13 +96,17 @@ export default function Sidebar() {
                 href="/profile"
                 className={`group flex items-center rounded-lg hover:bg-discord_button ${isOpen ? "justify-start" : "justify-center"} p-2 text-white dark:text-white`}
               >
-                <Image
-                  src={session?.user?.image ?? "/assets/mc-company-logo.png"}
-                  alt={"User Image"}
-                  width={35}
-                  height={35}
-                  className="rounded-md"
-                />
+                {status === "loading" ? (
+                  <div className="h-[35px] w-[35px] animate-pulse rounded-lg bg-discord_black"></div>
+                ) : (
+                  <Image
+                    src={session?.user?.image ?? "/assets/mc-company-logo.png"}
+                    alt={"User Image"}
+                    width={35}
+                    height={35}
+                    className="rounded-md"
+                  />
+                )}
 
                 <span className={`${isOpen ? "" : "hidden"} ms-3`}>
                   {session?.user?.name}

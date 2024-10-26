@@ -25,6 +25,7 @@ declare module "next-auth" {
       // ...other properties
       role: ROLE;
       fullName: string;
+      currentTimeInId: string;
     } & DefaultSession["user"];
   }
 
@@ -32,6 +33,7 @@ declare module "next-auth" {
     // ...other properties
     role: ROLE;
     fullName: string;
+    currentTimeInId: string;
   }
 }
 
@@ -48,15 +50,19 @@ export const authOptions: NextAuthOptions = {
         ...session.user,
         id: user.id,
         role: user.role,
-        fullName: user.fullName
+        fullName: user.fullName,
+        currentTimeInId: user.currentTimeInId
       },
     }),
   },
   pages: {
-    // signIn: '/auth/signin',
-    signOut: '/auth/signout',
-    error: '/auth/error', // Error code passed in query string as ?
+    // signIn: '/',
+    // signOut: '/auth/signout',
+    // error: '/'
     // newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+  session: {
+    strategy: "database", // Use database sessions instead of JWT
   },
   adapter: PrismaAdapter(db) as Adapter,
   providers: [
