@@ -120,7 +120,7 @@ export default function Dashboard() {
       {/* SIDEBAR */}
       <Sidebar />
       {/* DASHBOARD - TIME IN/TIME OUT */}
-      <div className="flex h-screen w-screen flex-col items-center justify-center gap-8">
+      <div className="flex h-screen w-screen flex-col items-center justify-start gap-8 tablet:justify-center">
         {status === "loading" ? (
           <div className="flex flex-col gap-3">
             <div className="h-4 w-96 animate-pulse rounded-lg bg-discord_left"></div>
@@ -128,7 +128,7 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
-            <p className="text-4xl">
+            <p className="text-center text-2xl tablet:text-4xl">
               Welcome Back,{" "}
               <span className={`${userColor(userRole ?? "")} rounded-lg p-2`}>
                 {session?.user.name}
@@ -209,8 +209,9 @@ export default function Dashboard() {
               </label>
               <textarea
                 id="timeInDescription"
-                className="h-24 w-96 rounded-lg bg-discord_left p-1 text-white outline-none focus:bg-discord_left focus:outline-none"
+                className="h-24 w-64 rounded-lg bg-discord_left p-1 text-white placeholder-slate-400 outline-none placeholder:text-sm focus:bg-discord_left focus:outline-none tablet:w-96"
                 {...register("timeInDescription")}
+                placeholder="What will you be doing?"
               />
               {errors.timeInDescription && (
                 <p className="text-sm text-customer_service">
@@ -250,8 +251,9 @@ export default function Dashboard() {
               </label>
               <textarea
                 id="timeOutDescription"
-                className="h-24 w-96 rounded-lg bg-discord_left p-1 text-white outline-none focus:bg-discord_left focus:outline-none"
+                className="h-24 w-96 rounded-lg bg-discord_left p-1 text-white placeholder-slate-400 outline-none placeholder:text-sm focus:bg-discord_left focus:outline-none"
                 {...registerOut("timeOutDescription")}
+                placeholder="What did you accomplish?"
               />
               {errorsOut.timeOutDescription && (
                 <p className="text-sm text-customer_service">
