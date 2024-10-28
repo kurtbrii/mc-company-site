@@ -52,3 +52,14 @@ export const buttonActive = (role: string | undefined) => {
   }
 }
 
+export const getTime = (date1: Date, date2: Date) => {
+  const start = date1.getTime();
+  const end = date2.getTime();
+
+  const diff = end - start;
+  const hours = Math.floor(diff / (1000 * 60 * 60) % 24);
+  const minutes = Math.floor(diff / (1000 * 60) % 60);
+  const seconds = Math.floor(diff / 1000 % 60);
+
+  return `${hours ? hours : "00"}:${minutes ? minutes : "00"}:${seconds ? seconds : "00"}`;
+};
