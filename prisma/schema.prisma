@@ -74,7 +74,7 @@ model TimeInDetails {
     timeOut DateTime?
 
     timeInDescription  String // @db.VarChar(40)
-    timeOutDescription String @default("Time Out") // @db.VarChar(40)
+    timeOutDescription String @default("Initial Time Out Description") // @db.VarChar(40)
 
     // REFERENCE
     User   User   @relation(fields: [userId], references: [id])

@@ -11,6 +11,7 @@ import { UpdateProfileSchema } from "../utils/zodHelpers";
 import { type z } from "zod";
 import { api } from "~/trpc/react";
 import { Toastbar } from "../_components/toastbar";
+import Link from "next/link";
 
 export default function Profile() {
   // ! VARIABLE DECLARATIONS
@@ -227,12 +228,14 @@ export default function Profile() {
             </div>
 
             <div className="flex flex-col gap-3 tablet:flex-row">
-              <button
-                className="w-full rounded-lg bg-discord_left p-4"
+              <Link
+                href={`/time-in/${user?.id}`}
+                className="w-full rounded-lg bg-discord_left p-4 text-center"
                 type="button"
               >
                 Time In Details
-              </button>
+              </Link>
+
               <button
                 className="w-full rounded-lg bg-discord_left p-4"
                 type="button"
