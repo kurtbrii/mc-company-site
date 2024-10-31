@@ -37,7 +37,7 @@ export function DatePickerWithRange({
             variant={"outline"}
             className={cn(
               "w-[300px] justify-start border-none bg-discord_button text-left font-normal outline-none hover:text-discord_button",
-              !date && "text-muted-foreground",
+              !date && "text-white",
             )}
           >
             <CalendarIcon />
@@ -61,6 +61,7 @@ export function DatePickerWithRange({
             mode="range"
             defaultMonth={date?.from}
             selected={date}
+            className="text-discord_black"
             onSelect={setDate}
             numberOfMonths={2}
           />

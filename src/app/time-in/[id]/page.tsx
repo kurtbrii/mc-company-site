@@ -153,8 +153,6 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
 
           {/* SELECT DATES */}
           <DatePickerWithRange className="" date={date} setDate={setDate} />
-
-          <Button variant="secondary">Button</Button>
         </div>
 
         <Table className="mt-14">
