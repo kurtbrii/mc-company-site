@@ -10,11 +10,15 @@ import { TimeInSchema, TimeOutSchema } from "~/app/utils/zodHelpers";
 
 export const timeInRouter = createTRPCRouter({
   getAllTimeIn: protectedProcedure
-    .input(z.object({ userId: z.string() }))
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
     .query(async ({ ctx, input }) => {
       return ctx.db.timeInDetails.findMany({
         where: {
-          userId: input.userId
+          userId: input.userId,
+          timeIn: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
         }
       })
     }),

@@ -49,6 +49,7 @@ export default function Sidebar() {
               height={50}
               alt="Company Logo"
               className="rounded-lg"
+              priority
             />
             <p className={`text-lg ${isOpen ? "block" : "hidden"}`}>
               MC Company
