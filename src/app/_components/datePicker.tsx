@@ -36,7 +36,7 @@ export function DatePickerWithRange({
             id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start bg-discord_button text-left font-normal outline-none hover:text-discord_button",
+              "w-[300px] justify-start border-none bg-discord_button text-left font-normal outline-none hover:text-discord_button",
               !date && "text-muted-foreground",
             )}
           >
