@@ -30,7 +30,8 @@ export default async function Home() {
             width={400}
             height={400}
             alt="Company Logo"
-            className="mb-4 rounded-lg" // Add margin below the image
+            className="mb-4 rounded-lg"
+            priority
           />
 
           <div className="flex flex-col gap-5 text-center">

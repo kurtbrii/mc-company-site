@@ -79,7 +79,7 @@ export default function Profile() {
       <div className="flex h-screen w-screen flex-col items-center justify-center">
         {/* CONTAINER */}
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex w-[295px] flex-col gap-3 tablet:min-w-[400px]">
+          <div className="flex w-[295px] scale-75 flex-col gap-3 tablet:min-w-[500px] tablet:scale-100">
             <div className="flex items-center justify-between rounded-lg bg-discord_left p-5 laptop:gap-10">
               {/* User Details */}
               <div className="flex flex-col gap-2 tablet:flex-row laptop:flex-row">
@@ -87,13 +87,15 @@ export default function Profile() {
                   {status === "loading" ? (
                     <div className="h-[100px] w-[100px] animate-pulse rounded-lg bg-discord_black"></div>
                   ) : (
-                    <Image
-                      src={user?.image ?? "/assets/mc-company-logo.png"}
-                      alt={"User Image"}
-                      width={100}
-                      height={100}
-                      className="rounded-md"
-                    />
+                    <div className="h-100px w-[100px]">
+                      <Image
+                        src={user?.image ?? ""}
+                        alt={"User Image"}
+                        width={100}
+                        height={100}
+                        className="rounded-md"
+                      />
+                    </div>
                   )}
                 </div>
                 <div className="flex flex-col">
@@ -124,7 +126,6 @@ export default function Profile() {
                       <p className="mb-2 text-sm italic text-everyone">
                         @{user?.name}
                       </p>
-                      {/* <p className="text-sm">{user?.email}</p> */}
 
                       {openForm ? (
                         <select
@@ -206,6 +207,7 @@ export default function Profile() {
                     </div>
                   ) : (
                     <>
+                      {/* EDIT BUTTON */}
                       <button
                         type="button"
                         className="self-start"
