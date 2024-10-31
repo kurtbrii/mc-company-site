@@ -5,6 +5,7 @@ import { api } from "~/trpc/react";
 import UserCard from "~/app/_components/userCard";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
+import { Button } from "~/components/ui/button";
 
 import {
   Table,
@@ -152,6 +153,8 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
 
           {/* SELECT DATES */}
           <DatePickerWithRange className="" date={date} setDate={setDate} />
+
+          <Button variant="secondary">Button</Button>
         </div>
 
         <Table className="mt-14">
