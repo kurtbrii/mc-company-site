@@ -1,7 +1,7 @@
 import { z, ZodType } from "zod";
-import { ROLE } from "@prisma/client";
+import { ROLE, MOTIVATED, YES_NO, YES_NO_SAME } from "@prisma/client";
 
-// user.ts
+// ! user.ts
 export const UpdateProfileSchema = z.object({
   id: z.string(),
   fullName: z.string().optional(),
@@ -9,7 +9,7 @@ export const UpdateProfileSchema = z.object({
   currentTimeInId: z.string().optional()
 });
 
-// timeIn.ts
+// ! timeIn.ts
 export const TimeInSchema = z.object({
   timeInDescription: z
     .string()
@@ -25,4 +25,13 @@ export const TimeOutSchema = z.object({
     .max(40, { message: "Time out details must be at most 40 characters" }),
   timeOut: z.date(),
   id: z.string()
+})
+
+// ! survey.ts
+export const SurveySchema = z.object({
+  feelBetter: z.nativeEnum(YES_NO_SAME).optional(),
+  stillHappy: z.nativeEnum(YES_NO).optional(),
+  motivated: z.nativeEnum(MOTIVATED).optional(),
+  comments: z.string().optional(),
+  userId: z.string()
 })

@@ -14,14 +14,12 @@ export default function name() {
 
       {/* DASHBOARD - TIME IN/TIME OUT */}
 
-      {dateNow === "Friday" ? (
+      {dateNow === "Thursday" ? (
         <div className="flex h-screen w-screen items-center justify-center">
           <p>You </p>
         </div>
       ) : (
-        <div className="flex h-screen w-screen items-center justify-center">
-          <p>This section is not available until Friday.</p>
-        </div>
+        <div className="flex h-screen w-screen items-center justify-center"></div>
       )}
     </div>
   );

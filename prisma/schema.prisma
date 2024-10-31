@@ -55,6 +55,7 @@ model User {
     fullName        String          @default("NEW USER")
     timeInDetails   TimeInDetails[]
     currentTimeInId String?
+    Survey          Survey[]
 }
 
 model VerificationToken {
@@ -68,8 +69,6 @@ model VerificationToken {
 // ! SCHEMA DEFINITIONS
 model TimeInDetails {
     id      String    @id @default(cuid())
-    // createdAt DateTime  @default(now())
-    // day       String?
     timeIn  DateTime? @default(now())
     timeOut DateTime?
 
@@ -77,6 +76,19 @@ model TimeInDetails {
     timeOutDescription String @default("Initial Time Out Description") // @db.VarChar(40)
 
     // REFERENCE
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
+}
+
+model Survey {
+    id String @id @default(cuid())
+
+    feelBetter YES_NO_SAME?
+    stillHappy YES_NO_SAME?
+    listenedTo YES_NO?
+    motivated  MOTIVATED?
+    comments   String?
+
     User   User   @relation(fields: [userId], references: [id])
     userId String
 }
@@ -91,4 +103,22 @@ enum ROLE {
     PROOFREADER
     EMAIL_MARKETING
     FACEBOOK_MARKETING
+}
+
+enum YES_NO_SAME {
+    yes
+    no
+    same
+}
+
+enum YES_NO {
+    yes
+    no
+    same
+}
+
+enum MOTIVATED {
+    more
+    same
+    less
 }
