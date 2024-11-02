@@ -81,7 +81,8 @@ model TimeInDetails {
 }
 
 model Survey {
-    id String @id @default(cuid())
+    id   String   @id @default(cuid())
+    date DateTime @default(now())
 
     feelBetter YES_NO_SAME?
     stillHappy YES_NO_SAME?
@@ -106,19 +107,18 @@ enum ROLE {
 }
 
 enum YES_NO_SAME {
-    yes
-    no
-    same
+    YES
+    NO
+    SAME
 }
 
 enum YES_NO {
-    yes
-    no
-    same
+    YES
+    NO
 }
 
 enum MOTIVATED {
-    more
-    same
-    less
+    MORE
+    SAME
+    LESS
 }

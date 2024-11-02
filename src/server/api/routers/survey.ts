@@ -7,7 +7,7 @@ import {
 import { z } from "zod";
 import { SurveySchema } from "~/app/utils/zodHelpers";
 
-export const timeInRouter = createTRPCRouter({
+export const surveyRouter = createTRPCRouter({
   getAllSurvey: protectedProcedure
     .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
     .query(async ({ ctx, input }) => {
@@ -24,13 +24,14 @@ export const timeInRouter = createTRPCRouter({
 
 
 
-  timeIn: protectedProcedure
+  createSurvey: protectedProcedure
     .input(SurveySchema)
     .mutation(async ({ ctx, input }) => {
       return ctx.db.survey.create({
         data: {
           feelBetter: input.feelBetter,
           stillHappy: input.stillHappy,
+          listenedTo: input.listenedTo,
           motivated: input.motivated,
           comments: input.comments,
           userId: input.userId
