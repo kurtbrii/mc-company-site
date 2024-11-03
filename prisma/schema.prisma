@@ -89,9 +89,12 @@ model Survey {
     listenedTo YES_NO?
     motivated  MOTIVATED?
     comments   String?
+    month      Int
 
     User   User   @relation(fields: [userId], references: [id])
     userId String
+
+    @@unique([userId, month])
 }
 
 enum ROLE {

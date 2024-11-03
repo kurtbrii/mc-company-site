@@ -34,10 +34,24 @@ export const surveyRouter = createTRPCRouter({
           listenedTo: input.listenedTo,
           motivated: input.motivated,
           comments: input.comments,
-          userId: input.userId
+          userId: input.userId,
+          month: input.month
         },
       });
     }),
+
+  getOneSurvey: protectedProcedure
+    .input(z.object({ userId: z.string(), month: z.number() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.survey.findUnique({
+        where: {
+          userId_month: {
+            userId: input.userId,
+            month: input.month
+          }
+        }
+      })
+    })
 
   // timeOut: protectedProcedure
   //   .input(TimeOutSchema)

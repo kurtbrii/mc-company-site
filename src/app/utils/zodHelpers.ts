@@ -34,5 +34,6 @@ export const SurveySchema = z.object({
   listenedTo: z.nativeEnum(YES_NO).optional(),
   motivated: z.nativeEnum(MOTIVATED).optional(),
   comments: z.string().optional(),
-  userId: z.string()
+  userId: z.string(),
+  month: z.number()
 })
