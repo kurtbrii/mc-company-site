@@ -1,15 +1,24 @@
-import Sidebar from "../_components/sidebar";
+"use client";
 
-export default function name() {
+import { useToast } from "~/components/hooks/use-toast";
+import { Button } from "~/components/ui/button";
+import { ToastAction } from "~/components/ui/toast";
+
+export default function ToastWithAction() {
+  const { toast } = useToast();
+
   return (
-    <div className="flex">
-      {/* SIDEBAR */}
-      <Sidebar />
-
-      {/* DASHBOARD - TIME IN/TIME OUT */}
-      <div className="flex h-screen w-screen items-center justify-center">
-        <p>Bonus Sheet</p>
-      </div>
-    </div>
+    <Button
+      variant="outline"
+      onClick={() => {
+        toast({
+          title: "Uh oh! Something went wrong.",
+          description: "There was a problem with your request.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+        });
+      }}
+    >
+      Show Toast
+    </Button>
   );
 }
