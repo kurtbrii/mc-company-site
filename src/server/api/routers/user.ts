@@ -6,15 +6,29 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+import { ROLE } from "@prisma/client";
 import { UpdateProfileSchema } from "~/app/utils/zodHelpers";
 
 export const userRouter = createTRPCRouter({
   getAllMembers: publicProcedure
-    .input(z.object({ id: z.string().optional() }))
+    .input(z.object({ notMyTeam: z.nativeEnum(ROLE).optional(), myTeam: z.nativeEnum(ROLE).optional(), }))
     .query(async ({ ctx, input }) => {
       return ctx.db.user.findMany({
         where: {
-          id: input.id
+          OR: [
+            {
+
+              role: {
+                equals: input.myTeam
+              },
+            },
+            {
+              role: {
+                not: input.notMyTeam
+              }
+
+            }
+          ]
         }
       })
     }),
