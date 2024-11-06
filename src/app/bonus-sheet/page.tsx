@@ -1,24 +1,37 @@
 "use client";
 
-import { useToast } from "~/components/hooks/use-toast";
-import { Button } from "~/components/ui/button";
-import { ToastAction } from "~/components/ui/toast";
+import Sidebar from "../_components/sidebar";
+import { api } from "~/trpc/react";
+import Link from "next/link";
+import UserCard from "../_components/userCard";
+import { UserCardLoading } from "../_components/loading_state/userCardLoading";
+import { useSession } from "next-auth/react";
 
-export default function ToastWithAction() {
-  const { toast } = useToast();
+import VideoEditorsBonus from "../_components/VideoEditorsBonus";
+
+import { Button } from "~/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "~/components/ui/form";
+
+import { useToast } from "~/components/hooks/use-toast";
+
+export default function TimeIn() {
+  const { data: session, status } = useSession();
+  const user = session?.user;
 
   return (
-    <Button
-      variant="outline"
-      onClick={() => {
-        toast({
-          title: "Uh oh! Something went wrong.",
-          description: "There was a problem with your request.",
-          action: <ToastAction altText="Try again">Try again</ToastAction>,
-        });
-      }}
-    >
-      Show Toast
-    </Button>
+    <div className="flex">
+      {/* SIDEBAR */}
+      <Sidebar />
+
+      {user?.role === "VIDEO_EDITOR" && <VideoEditorsBonus />}
+    </div>
   );
 }
