@@ -36,4 +36,17 @@ export const SurveySchema = z.object({
   comments: z.string().optional(),
   userId: z.string(),
   month: z.number()
+
+
+
+})
+
+// ! bonus_sheet.ts
+export const VideoEditorsBonusSchema = z.object({
+  hoursWorked: z.coerce.number({ message: "This should be a number" }),
+  competitorAdsBasis: z.coerce.number({ message: "This should be a number" }),
+  newScrollstoppers: z.coerce.number({ message: "This should be a number" }),
+  imageAds: z.coerce.number({ message: "This should be a number" }),
+  vsl: z.coerce.number({ message: "This should be a number" }),
+  userId: z.string()
 })

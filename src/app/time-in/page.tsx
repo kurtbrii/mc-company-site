@@ -6,15 +6,6 @@ import Link from "next/link";
 import UserCard from "../_components/userCard";
 import { UserCardLoading } from "../_components/loading_state/userCardLoading";
 
-// ! DATE CALENDAR
-import { addDays, format } from "date-fns";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
-
-import { cn } from "~/lib/utils";
-import { Button } from "~/components/ui/button";
-import { Calendar } from "~/components/ui/calendar";
-
 export default function TimeIn() {
   const { data: allMembers, isLoading } = api.user.getAllMembers.useQuery({});
 
@@ -47,7 +38,7 @@ export default function TimeIn() {
                   key={index}
                   href={`time-in/${member.id}`}
                 >
-                  <UserCard member={member} className="" />
+                  <UserCard member={member} />
                 </Link>
               ))}
             </>

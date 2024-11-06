@@ -73,10 +73,6 @@ export default function MonthlySurvey() {
     });
   };
 
-  useEffect(() => {
-    console.log("hi");
-  }, [getOne]);
-
   if (getOneLoading) {
     return (
       <div className="flex">

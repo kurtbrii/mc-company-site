@@ -1,6 +1,8 @@
 import { userRouter } from "~/server/api/routers/user";
 import { timeInRouter } from "~/server/api/routers/timeIn";
 import { surveyRouter } from "~/server/api/routers/survey";
+import { bonusSheetRouter } from "~/server/api/routers/bonus_sheet";
+
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 /**
  * This is the primary router for your server.
@@ -11,6 +13,7 @@ export const appRouter = createTRPCRouter({
     user: userRouter,
     timeIn: timeInRouter,
     survey: surveyRouter,
+    bonusSheet: bonusSheetRouter
 });
 
 // export type definition of API

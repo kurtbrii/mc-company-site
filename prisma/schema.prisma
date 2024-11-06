@@ -56,6 +56,9 @@ model User {
     timeInDetails   TimeInDetails[]
     currentTimeInId String?
     Survey          Survey[]
+
+    // bonus sheet
+    videoEditorsBonus VideoEditorsBonus[]
 }
 
 model VerificationToken {
@@ -95,6 +98,35 @@ model Survey {
     userId String
 
     @@unique([userId, month])
+}
+
+model FunnelBuildersBonus {
+    id   String   @id @default(cuid())
+    date DateTime @default(now())
+}
+
+model VideoEditorsBonus {
+    id   String   @id @default(cuid())
+    date DateTime @default(now())
+
+    // How many hours did you work?
+    // How many ads did you make with the competitors ad as a basis? (If you did 1 product, you made 12 ads) ((fill in 0 if you didnt do anything))
+    // How many new scrollstoppers did you create for an existing ad? ((fill in 0 if you didnt do anything))
+    // How many image ads did you create? (fill in 0 if you didnt do anything)
+    // How many VSL's did you make? ((fill in 0 if you didnt do anything))
+    hoursWorked        Float
+    competitorAdsBasis Int
+    newScrollstoppers  Int
+    imageAds           Int
+    vsl                Int
+
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
+}
+
+model CustomerServiceBonus {
+    id   String   @id @default(cuid())
+    date DateTime @default(now())
 }
 
 enum ROLE {
