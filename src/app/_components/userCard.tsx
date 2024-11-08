@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ROLE } from "@prisma/client";
 import { userColor } from "../utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 

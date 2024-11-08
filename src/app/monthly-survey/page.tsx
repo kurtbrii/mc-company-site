@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
 import Sidebar from "../_components/sidebar";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
@@ -8,21 +7,18 @@ import { useSession } from "next-auth/react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
 } from "~/components/ui/form";
 
 import { useToast } from "~/components/hooks/use-toast";
 
-import { Label } from "~/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
 import { Textarea } from "~/components/ui/textarea";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { type z } from "zod";
 import { SurveySchema } from "../utils/zodHelpers";
 
 import { api } from "~/trpc/react";

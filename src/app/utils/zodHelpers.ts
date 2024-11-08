@@ -1,4 +1,4 @@
-import { z, ZodType } from "zod";
+import { z, } from "zod";
 import { ROLE, MOTIVATED, YES_NO, YES_NO_SAME } from "@prisma/client";
 
 // ! user.ts
@@ -48,5 +48,23 @@ export const VideoEditorsBonusSchema = z.object({
   newScrollstoppers: z.coerce.number({ message: "This should be a number" }),
   imageAds: z.coerce.number({ message: "This should be a number" }),
   vsl: z.coerce.number({ message: "This should be a number" }),
+  userId: z.string()
+})
+
+export const FunnelBuildersSchema = z.object({
+  hoursWorked: z.coerce.number({ message: "This should be a number" }),
+  funnelsCreated: z.coerce.number({ message: "This should be a number" }),
+  copyFunnelTrick: z.coerce.number({ message: "This should be a number" }),
+  advertorialFromScratch: z.coerce.number({ message: "This should be a number" }),
+  hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
+  ticketResolved: z.coerce.number({ message: "This should be a number" }),
+  disputesAnswered: z.coerce.number({ message: "This should be a number" }),
+  userId: z.string()
+})
+
+export const CustomerServiceSchema = z.object({
+  hoursWorked: z.coerce.number({ message: "This should be a number" }),
+  ticketsResolved: z.coerce.number({ message: "This should be a number" }),
+  disputesResolved: z.coerce.number({ message: "This should be a number" }),
   userId: z.string()
 })

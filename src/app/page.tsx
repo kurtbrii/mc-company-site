@@ -1,7 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
 import { getServerAuthSession } from "~/server/auth";
-import { api, HydrateClient } from "~/trpc/server";
+import { HydrateClient } from "~/trpc/server";
 import LoginButton from "./_components/button";
 
 export default async function Home() {

@@ -58,7 +58,9 @@ model User {
     Survey          Survey[]
 
     // bonus sheet
-    videoEditorsBonus VideoEditorsBonus[]
+    videoEditorsBonus    VideoEditorsBonus[]
+    funnelBuildersBonus  FunnelBuildersBonus[]
+    customerServiceBonus CustomerServiceBonus[]
 }
 
 model VerificationToken {
@@ -103,6 +105,25 @@ model Survey {
 model FunnelBuildersBonus {
     id   String   @id @default(cuid())
     date DateTime @default(now())
+
+    // How many hours did you work    
+    // How many funnels did you create from scratch?
+    // How many funnels did you copy using trick? (fill in 0 if you didnt do anything)
+    // How many advertorials did you create from scratch? (fill in 0 if you didnt do anything)
+    // How many hours did you work as a customer service employee
+    // How many tickets did you resolve in Freshdesk
+    // How many disputes did you answered
+
+    hoursWorked            Float
+    funnelsCreated         Int
+    copyFunnelTrick        Int
+    advertorialFromScratch Int
+    hoursAsCustomerService Float
+    ticketResolved         Int
+    disputesAnswered       Int
+
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
 }
 
 model VideoEditorsBonus {
@@ -127,6 +148,16 @@ model VideoEditorsBonus {
 model CustomerServiceBonus {
     id   String   @id @default(cuid())
     date DateTime @default(now())
+
+    // How many hours did you work as a customer service employee?
+    // How many tickets did you resolve? (You can find this in Freshdesk) (100 tickets = 1, 95 tickets equals 0,95 etc.)
+    // How many disputes did you resolve?
+    hoursWorked      Float
+    ticketsResolved  Int
+    disputesResolved Int
+
+    User   User   @relation(fields: [userId], references: [id])
+    userId String
 }
 
 enum ROLE {

@@ -31,7 +31,7 @@ export default function Profile() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
     setError,
     getValues,
     setValue,
