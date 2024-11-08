@@ -1,4 +1,4 @@
-import { ROLE } from "@prisma/client";
+import { type ROLE } from "@prisma/client";
 
 export interface UserProps {
   id: string;

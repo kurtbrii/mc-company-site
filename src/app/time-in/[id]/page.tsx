@@ -1,11 +1,9 @@
 "use client";
 
-import Image from "next/image";
 import { api } from "~/trpc/react";
 import UserCard from "~/app/_components/userCard";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
-import { Button } from "~/components/ui/button";
 
 import {
   Table,
@@ -18,7 +16,6 @@ import {
 
 import Sidebar from "~/app/_components/sidebar";
 import { getTime } from "~/app/utils/functionHelpers";
-import { useSession } from "next-auth/react";
 import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
 import { DatePickerWithRange } from "~/app/_components/datePicker";
 import React from "react";
@@ -43,7 +40,6 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
     startDate: date?.from,
     endDate: date?.to,
   });
-  const { status, data } = useSession();
 
   const changeDate = (
     setDate: (date: DateRange | undefined) => void,

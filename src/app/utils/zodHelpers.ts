@@ -1,4 +1,4 @@
-import { z, ZodType } from "zod";
+import { z, } from "zod";
 import { ROLE, MOTIVATED, YES_NO, YES_NO_SAME } from "@prisma/client";
 
 // ! user.ts

@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import Sidebar from "../sidebar";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
 import { useSession } from "next-auth/react";
@@ -26,8 +24,6 @@ export default function FunnelBuildersBonus() {
   const userId = session?.user.id ?? "";
 
   const { toast } = useToast();
-
-  const dateNow = new Date(Date.now());
 
   const submitFunnelBuildersForm =
     api.bonusSheet.createFunnelBuildersBonus.useMutation({});

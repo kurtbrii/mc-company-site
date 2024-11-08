@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect } from "react";
-import Sidebar from "../sidebar";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
 import { useSession } from "next-auth/react";
@@ -27,16 +25,8 @@ export default function CustumerServiceBonus() {
 
   const { toast } = useToast();
 
-  const dateNow = new Date(Date.now());
-
   const subumitCustomerServiceForm =
     api.bonusSheet.createCustomerServiceBonus.useMutation({});
-
-  // const { data: getOne, isLoading: getOneLoading } =
-  //   api.survey.getOneSurvey.useQuery({
-  //     userId: session?.user.id ?? "",
-  //     month: dateNow.getMonth() + 1, // 0 indexing
-  //   });
 
   // ! FORM DECLARATIONS
   type FunnelBuildersBonusSchemaType = z.infer<typeof CustomerServiceSchema>;

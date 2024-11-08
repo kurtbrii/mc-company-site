@@ -4,9 +4,9 @@
 "use client";
 
 import * as React from "react";
-import { addDays, format } from "date-fns";
+import { format } from "date-fns";
 import { Calendar as CalendarIcon } from "lucide-react";
-import { DateRange } from "react-day-picker";
+import { type DateRange } from "react-day-picker";
 
 interface DatePickerProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
