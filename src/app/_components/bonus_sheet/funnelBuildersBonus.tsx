@@ -1,14 +1,13 @@
 "use client";
 
 import { useEffect } from "react";
-import Sidebar from "../_components/sidebar";
+import Sidebar from "../sidebar";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
 import { useSession } from "next-auth/react";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,22 +15,13 @@ import {
 } from "~/components/ui/form";
 
 import { useToast } from "~/components/hooks/use-toast";
-
 import { Input } from "~/components/ui/input";
-
-import { Label } from "~/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "~/components/ui/radio-group";
-import { Textarea } from "~/components/ui/textarea";
-
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { SurveySchema } from "../utils/zodHelpers";
-
+import { type z } from "zod";
 import { api } from "~/trpc/react";
+import { FunnelBuildersSchema } from "../../utils/zodHelpers";
 
-import { VideoEditorsBonusSchema } from "../utils/zodHelpers";
-
-export default function VideoEditorsBonus() {
+export default function FunnelBuildersBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
 
@@ -39,8 +29,8 @@ export default function VideoEditorsBonus() {
 
   const dateNow = new Date(Date.now());
 
-  const submitVideoEditorsForm =
-    api.bonusSheet.createVideoEditorsBonus.useMutation({});
+  const submitFunnelBuildersForm =
+    api.bonusSheet.createFunnelBuildersBonus.useMutation({});
 
   // const { data: getOne, isLoading: getOneLoading } =
   //   api.survey.getOneSurvey.useQuery({
@@ -49,37 +39,43 @@ export default function VideoEditorsBonus() {
   //   });
 
   // ! FORM DECLARATIONS
-  type VideoEditorsBonusSchemaType = z.infer<typeof VideoEditorsBonusSchema>;
+  type FunnelBuildersBonusSchemaType = z.infer<typeof FunnelBuildersSchema>;
 
-  const form = useForm<VideoEditorsBonusSchemaType>({
+  const form = useForm<FunnelBuildersBonusSchemaType>({
     defaultValues: {
-      competitorAdsBasis: 0,
+      advertorialFromScratch: 0,
+      copyFunnelTrick: 0,
+      disputesAnswered: 0,
+      funnelsCreated: 0,
+      hoursAsCustomerService: 0,
       hoursWorked: 0,
-      imageAds: 0,
-      newScrollstoppers: 0,
-      vsl: 0,
+      ticketResolved: 0,
       userId: userId ?? "",
     },
-    resolver: zodResolver(VideoEditorsBonusSchema),
+    resolver: zodResolver(FunnelBuildersSchema),
   });
 
   //! Submit Form
-  const onSubmit = async (data: z.infer<typeof VideoEditorsBonusSchema>) => {
+  const onSubmit = async (data: z.infer<typeof FunnelBuildersSchema>) => {
     console.log(data);
-    void submitVideoEditorsForm.mutateAsync({
+    void submitFunnelBuildersForm.mutateAsync({
       userId: userId,
-      competitorAdsBasis: data.competitorAdsBasis,
+      advertorialFromScratch: data.advertorialFromScratch,
+      copyFunnelTrick: data.copyFunnelTrick,
+      disputesAnswered: data.disputesAnswered,
+      funnelsCreated: data.funnelsCreated,
+      hoursAsCustomerService: data.hoursAsCustomerService,
       hoursWorked: data.hoursWorked,
-      imageAds: data.imageAds,
-      newScrollstoppers: data.newScrollstoppers,
-      vsl: data.vsl,
+      ticketResolved: data.ticketResolved,
     });
 
     toast({
       title: "Successfully submitted form",
     });
 
-    // location.reload();
+    setTimeout(function () {
+      location.reload();
+    }, 3000);
   };
 
   return (
@@ -88,7 +84,7 @@ export default function VideoEditorsBonus() {
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
           <h1 className="justify-center self-center text-2xl text-everyone tablet:mb-5 tablet:text-4xl">
-            VIDEO EDITORS BONUS SHEET
+            FUNNEL BUILDERS BONUS SHEET
           </h1>
 
           <form
@@ -117,61 +113,15 @@ export default function VideoEditorsBonus() {
                   </FormItem>
                 )}
               />
-              {/* How many ads did you make with the competitors ad as a basis?
-              (If you did 1 product, you made 12 ads) ((fill in 0 if you didnt
-              do anything)) */}
+
+              {/* // How many funnels did you create from scratch? */}
               <FormField
                 control={form.control}
-                name="competitorAdsBasis"
+                name="funnelsCreated"
                 render={({ field }) => (
                   <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
                     <FormLabel className="text-lg">
-                      How many ads did you make with the competitors ad as a
-                      basis?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* // How many new scrollstoppers did you create for an existing ad?
-              ((fill in 0 if you didnt do anything)) */}
-              <FormField
-                control={form.control}
-                name="newScrollstoppers"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many new scrollstoppers did you create for an existing
-                      ad?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {/* // How many image ads did you create? (fill in 0 if you didnt do anything) */}
-              <FormField
-                control={form.control}
-                name="imageAds"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many image ads did you create?
+                      How many funnels did you create from scratch?
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -186,15 +136,14 @@ export default function VideoEditorsBonus() {
                 )}
               />
 
-              {/* // How many VSL's did you make? ((fill in 0 if you didnt do
-              anything)) */}
+              {/* // How many funnels did you copy using trick? (fill in 0 if you didnt do anything) */}
               <FormField
                 control={form.control}
-                name="vsl"
+                name="copyFunnelTrick"
                 render={({ field }) => (
                   <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
                     <FormLabel className="text-lg">
-                      How many VSL&apos;s did you make?
+                      How many funnels did you copy using trick?
                     </FormLabel>
                     <FormControl>
                       <Input
@@ -208,6 +157,95 @@ export default function VideoEditorsBonus() {
                   </FormItem>
                 )}
               />
+
+              {/* // How many advertorials did you create from scratch? (fill in 0 if you didnt do anything) */}
+              <FormField
+                control={form.control}
+                name="advertorialFromScratch"
+                render={({ field }) => (
+                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
+                    <FormLabel className="text-lg">
+                      How many advertorials did you create from scratch?
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        placeholder="Enter number here (ex: 1.5)"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* // How many hours did you work as a customer service employee */}
+              <FormField
+                control={form.control}
+                name="hoursAsCustomerService"
+                render={({ field }) => (
+                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
+                    <FormLabel className="text-lg">
+                      How many hours did you work as a customer service employee
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        placeholder="Enter number here (ex: 1.5)"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* // How many tickets did you resolve in Freshdesk*/}
+              <FormField
+                control={form.control}
+                name="ticketResolved"
+                render={({ field }) => (
+                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
+                    <FormLabel className="text-lg">
+                      How many tickets did you resolve in Freshdesk?
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        placeholder="Enter number here (ex: 1.5)"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/* How many disputes did you answered */}
+              <FormField
+                control={form.control}
+                name="disputesAnswered"
+                render={({ field }) => (
+                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
+                    <FormLabel className="text-lg">
+                      How many disputes did you answer?
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        type="number"
+                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+                        placeholder="Enter number here (ex: 1.5)"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               <Button type="submit" className="mt-5 w-full">
                 Submit
               </Button>

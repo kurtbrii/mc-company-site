@@ -50,3 +50,14 @@ export const VideoEditorsBonusSchema = z.object({
   vsl: z.coerce.number({ message: "This should be a number" }),
   userId: z.string()
 })
+
+export const FunnelBuildersSchema = z.object({
+  hoursWorked: z.coerce.number({ message: "This should be a number" }),
+  funnelsCreated: z.coerce.number({ message: "This should be a number" }),
+  copyFunnelTrick: z.coerce.number({ message: "This should be a number" }),
+  advertorialFromScratch: z.coerce.number({ message: "This should be a number" }),
+  hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
+  ticketResolved: z.coerce.number({ message: "This should be a number" }),
+  disputesAnswered: z.coerce.number({ message: "This should be a number" }),
+  userId: z.string()
+})

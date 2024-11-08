@@ -5,7 +5,8 @@ import {
 } from "~/server/api/trpc";
 
 import { z } from "zod";
-import { VideoEditorsBonusSchema } from "~/app/utils/zodHelpers";
+import { VideoEditorsBonusSchema, FunnelBuildersSchema } from "~/app/utils/zodHelpers";
+
 
 export const bonusSheetRouter = createTRPCRouter({
   getAllVideoEditorsBonus: protectedProcedure
@@ -23,7 +24,7 @@ export const bonusSheetRouter = createTRPCRouter({
     }),
 
 
-
+  // ! create functions
   createVideoEditorsBonus: protectedProcedure
     .input(VideoEditorsBonusSchema)
     .mutation(async ({ ctx, input }) => {
@@ -38,6 +39,41 @@ export const bonusSheetRouter = createTRPCRouter({
         },
       });
     }),
+
+  createFunnelBuildersBonus: protectedProcedure
+    .input(FunnelBuildersSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.funnelBuildersBonus.create({
+        data: {
+          hoursWorked: input.hoursWorked,
+          funnelsCreated: input.funnelsCreated,
+          copyFunnelTrick: input.copyFunnelTrick,
+          advertorialFromScratch: input.advertorialFromScratch,
+          hoursAsCustomerService: input.hoursAsCustomerService,
+          ticketResolved: input.ticketResolved,
+          disputesAnswered: input.disputesAnswered,
+          userId: input.userId,
+        }
+      })
+    }),
+
+  createCustomerServiceBonus: protectedProcedure
+    .input(FunnelBuildersSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.funnelBuildersBonus.create({
+        data: {
+          hoursWorked: input.hoursWorked,
+          funnelsCreated: input.funnelsCreated,
+          copyFunnelTrick: input.copyFunnelTrick,
+          advertorialFromScratch: input.advertorialFromScratch,
+          hoursAsCustomerService: input.hoursAsCustomerService,
+          ticketResolved: input.ticketResolved,
+          disputesAnswered: input.disputesAnswered,
+          userId: input.userId,
+        }
+      })
+    })
+
 });
 
 
