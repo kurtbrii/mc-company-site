@@ -5,7 +5,7 @@ import {
 } from "~/server/api/trpc";
 
 import { z } from "zod";
-import { VideoEditorsBonusSchema, FunnelBuildersSchema } from "~/app/utils/zodHelpers";
+import { VideoEditorsBonusSchema, FunnelBuildersSchema, CustomerServiceSchema } from "~/app/utils/zodHelpers";
 
 
 export const bonusSheetRouter = createTRPCRouter({
@@ -58,17 +58,13 @@ export const bonusSheetRouter = createTRPCRouter({
     }),
 
   createCustomerServiceBonus: protectedProcedure
-    .input(FunnelBuildersSchema)
+    .input(CustomerServiceSchema)
     .mutation(async ({ ctx, input }) => {
-      return ctx.db.funnelBuildersBonus.create({
+      return ctx.db.customerServiceBonus.create({
         data: {
           hoursWorked: input.hoursWorked,
-          funnelsCreated: input.funnelsCreated,
-          copyFunnelTrick: input.copyFunnelTrick,
-          advertorialFromScratch: input.advertorialFromScratch,
-          hoursAsCustomerService: input.hoursAsCustomerService,
-          ticketResolved: input.ticketResolved,
-          disputesAnswered: input.disputesAnswered,
+          ticketsResolved: input.ticketsResolved,
+          disputesResolved: input.disputesResolved,
           userId: input.userId,
         }
       })
