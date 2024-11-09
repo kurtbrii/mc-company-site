@@ -89,17 +89,18 @@ model Survey {
     id   String   @id @default(cuid())
     date DateTime @default(now())
 
-    feelBetter YES_NO_SAME?
-    stillHappy YES_NO_SAME?
-    listenedTo YES_NO?
-    motivated  MOTIVATED?
-    comments   String?
+    feelBetter YES_NO_SAME
+    stillHappy YES_NO_SAME
+    listenedTo YES_NO
+    motivated  MOTIVATED
+    comments   String
     month      Int
+    year       Int
 
     User   User   @relation(fields: [userId], references: [id])
     userId String
 
-    @@unique([userId, month])
+    @@unique([userId, month, year])
 }
 
 model FunnelBuildersBonus {

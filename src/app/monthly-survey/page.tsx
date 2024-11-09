@@ -34,6 +34,7 @@ export default function MonthlySurvey() {
     api.survey.getOneSurvey.useQuery({
       userId: session?.user.id ?? "",
       month: dateNow.getMonth() + 1, // 0 indexing
+      year: dateNow.getFullYear(),
     });
 
   // ! FORM DECLARATIONS
@@ -62,6 +63,7 @@ export default function MonthlySurvey() {
       motivated: data.motivated,
       stillHappy: data.stillHappy,
       month: dateNow.getMonth() + 1, // 0 indexing
+      year: dateNow.getFullYear(),
     });
 
     toast({

@@ -35,19 +35,21 @@ export const surveyRouter = createTRPCRouter({
           motivated: input.motivated,
           comments: input.comments,
           userId: input.userId,
-          month: input.month
+          month: input.month,
+          year: input.year
         },
       });
     }),
 
   getOneSurvey: protectedProcedure
-    .input(z.object({ userId: z.string(), month: z.number() }))
+    .input(z.object({ userId: z.string(), month: z.number(), year: z.number() }))
     .query(async ({ ctx, input }) => {
       return ctx.db.survey.findUnique({
         where: {
-          userId_month: {
+          userId_month_year: {
             userId: input.userId,
-            month: input.month
+            month: input.month,
+            year: input.year
           }
         }
       })
