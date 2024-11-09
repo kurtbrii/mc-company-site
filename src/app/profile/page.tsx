@@ -235,16 +235,39 @@ export default function Profile() {
                 className="w-full rounded-lg bg-discord_left p-4 text-center"
                 type="button"
               >
-                Time In Details
+                My Time In Details
               </Link>
-
-              <button
-                className="w-full rounded-lg bg-discord_left p-4"
-                type="button"
-              >
-                Bonus Sheet
-              </button>
+              {user?.role !== "CEO" && (
+                <button
+                  className="w-full rounded-lg bg-discord_left p-4"
+                  type="button"
+                >
+                  My Bonus Sheet
+                </button>
+              )}
             </div>
+
+            {user?.role === "CEO" && (
+              <div className="flex flex-col gap-3 tablet:flex-row">
+                <Link
+                  href={`/time-in`}
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
+                  type="button"
+                >
+                  Time In Details <br />
+                  (All Members)
+                </Link>
+
+                <Link
+                  href={`/bonus-sheet`}
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
+                  type="button"
+                >
+                  Bonus Sheet <br />
+                  (All Members)
+                </Link>
+              </div>
+            )}
           </div>
         </form>
 

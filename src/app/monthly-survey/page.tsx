@@ -49,6 +49,7 @@ export default function MonthlySurvey() {
       motivated: "MORE",
       stillHappy: "YES",
       month: 0,
+      year: 2024,
     },
     resolver: zodResolver(SurveySchema),
   });
