@@ -8,6 +8,7 @@ import UserCard from "../_components/userCard";
 import { type User } from "@prisma/client";
 import { userRole } from "../utils/functionHelpers";
 import { useState } from "react";
+import { type ROLE } from "@prisma/client";
 
 export default function MyTeam() {
   const { data: session } = useSession();
@@ -45,7 +46,7 @@ export default function MyTeam() {
       {/* MY TEAM */}
       <div className="mt-16 flex w-screen flex-col tablet:m-16">
         <h1 className="self-center text-2xl text-everyone tablet:mb-5 tablet:text-4xl">
-          My Team ({userRole(user?.role ?? "")})
+          My Team ({userRole(user?.role ?? "USER")})
         </h1>
 
         {/* mapping my team */}
@@ -99,7 +100,7 @@ export default function MyTeam() {
                 {Object.entries(remaining).map(([role, members]) => (
                   <div key={role} className="gap4 mb-10 mt-10 flex flex-col">
                     <h1 className="self-center text-4xl text-everyone tablet:mb-5">
-                      {userRole(role)}
+                      {userRole(role as ROLE)}
                     </h1>
                     <div className="mt-3 flex flex-col flex-wrap justify-center gap-5 tablet:flex-row">
                       {members?.map((member, index) => (
@@ -122,11 +123,9 @@ export default function MyTeam() {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const remainingMembers = ({ users }: { users: User[] }) => {
   const roles: Record<string, User[]> = {};
 
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   for (const user of users) {
     if (!(user.role in roles)) {
       roles[user.role] = [];

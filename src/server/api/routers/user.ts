@@ -11,24 +11,39 @@ import { UpdateProfileSchema } from "~/app/utils/zodHelpers";
 
 export const userRouter = createTRPCRouter({
   getAllMembers: publicProcedure
-    .input(z.object({ notMyTeam: z.nativeEnum(ROLE).optional(), myTeam: z.nativeEnum(ROLE).optional(), }))
+    .input(z.object({ notMyTeam: z.nativeEnum(ROLE).optional(), myTeam: z.nativeEnum(ROLE).optional(), hasBonus: z.boolean().optional() }))
     .query(async ({ ctx, input }) => {
-      return ctx.db.user.findMany({
-        where: {
-          OR: [
-            {
 
-              role: {
-                equals: input.myTeam
-              },
-            },
-            {
-              role: {
-                not: input.notMyTeam
-              }
+      const roleObj = {
+        OR: [
+          input.myTeam && {
+            role: {
+              equals: input.myTeam
+            }
+          },
+          input.notMyTeam && {
+            role: {
+              not: input.notMyTeam
+            }
+          },
+
+          input.hasBonus && {
+            role: {
+              in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE", "CEO"]
 
             }
-          ]
+          }
+        ].filter(Boolean)
+      }
+
+      const filterQuery = roleObj.OR.length === 0 ? {} : roleObj;
+
+      return ctx.db.user.findMany({
+        where: {
+          ...(roleObj.OR ? filterQuery : {})
+        },
+        orderBy: {
+          fullName: 'asc'
         }
       })
     }),

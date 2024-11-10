@@ -17,7 +17,7 @@ export default function TimeIn() {
       {/* CONTAINER */}
       <div className="mt-16 flex w-screen flex-col tablet:m-16">
         <h1 className="self-center text-2xl text-everyone tablet:mb-5 tablet:text-4xl">
-          TIME IN (ALL MEMBERS)
+          ALL MEMBERS
         </h1>
 
         {/* mapping all members */}

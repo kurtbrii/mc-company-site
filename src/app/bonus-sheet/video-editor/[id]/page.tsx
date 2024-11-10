@@ -2,6 +2,7 @@
 
 import { api } from "~/trpc/react";
 import UserCard from "~/app/_components/userCard";
+import { getCurrentMonday } from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
 
@@ -13,7 +14,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import { getCurrentMonday } from "~/app/utils/functionHelpers";
+
 import Sidebar from "~/app/_components/sidebar";
 import { getTime } from "~/app/utils/functionHelpers";
 import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
@@ -21,13 +22,13 @@ import { DatePickerWithRange } from "~/app/_components/datePicker";
 import React from "react";
 import { addDays } from "date-fns";
 
-export default function TimeInUser({ params }: { params: { id: string } }) {
+export default function BonusSheetVideoEditor({
+  params,
+}: {
+  params: { id: string };
+}) {
   const getMember = api.user.getMember.useQuery({ id: params.id });
 
-  // const startDate = new Date("2024-10-28");
-  // const endDate = new Date("2024-10-28");
-
-  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: getCurrentMonday() ?? new Date("2024-10-31"),
     to: addDays(getCurrentMonday(), 6),
@@ -35,11 +36,12 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
 
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: getUserTimeIn, isLoading } = api.timeIn.getAllTimeIn.useQuery({
-    userId: params.id,
-    startDate: date?.from,
-    endDate: date?.to,
-  });
+  const { data: getVideoEditorBonus, isLoading } =
+    api.bonusSheet.getVideoEditorBonus.useQuery({
+      userId: params.id,
+      startDate: date?.from,
+      endDate: date?.to,
+    });
 
   const changeDate = (
     setDate: (date: DateRange | undefined) => void,
@@ -154,49 +156,43 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
         <Table className="mt-14">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-center">Time In Id</TableHead>
-              <TableHead className="text-center">Date</TableHead>
-              <TableHead className="text-center">Day</TableHead>
-              <TableHead className="text-center">Time In</TableHead>
-              <TableHead className="text-center">Time In Description</TableHead>
-              <TableHead className="text-center">Time Out</TableHead>
+              <TableHead className="text-center">What is the date?</TableHead>
               <TableHead className="text-center">
-                Time Out Description
+                How many hours did you work?
               </TableHead>
-              <TableHead className="text-center">Total</TableHead>
-              {/* <TableHead className="text-right">Amount</TableHead> */}
+              <TableHead className="text-center">
+                How many ads did you make with the competitors ad as a basis?{" "}
+              </TableHead>
+              <TableHead className="text-center">
+                How many new scrollstoppers did you create for an existing ad?{" "}
+              </TableHead>
+              <TableHead className="text-center">
+                How many image ads did you create?
+              </TableHead>
+              <TableHead className="text-center">
+                How many VSL&apos;s did you make?
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {getUserTimeIn?.map((item, index) => (
+            {getVideoEditorBonus?.map((videoEditor, index) => (
               <TableRow key={index} className="text-center">
-                <TableCell className="font-medium">{item.id}</TableCell>
-                <TableCell>{item.timeIn?.toLocaleDateString()}</TableCell>
-                <TableCell>
-                  {item.timeIn?.toLocaleDateString("en-US", {
-                    weekday: "long",
-                  })}
+                <TableCell className="w-48 font-medium">
+                  {videoEditor.date.toISOString().slice(0, 10)}
                 </TableCell>
-                <TableCell>{item.timeIn?.toLocaleTimeString()}</TableCell>
-                <TableCell>
-                  {item.timeInDescription === "Time Out"
-                    ? "-"
-                    : item.timeInDescription}
+                <TableCell className="font-medium">
+                  {videoEditor.hoursWorked}
                 </TableCell>
-                <TableCell>
-                  {item.timeOut ? item.timeOut.toLocaleTimeString() : "-"}
+                <TableCell className="font-medium">
+                  {videoEditor.competitorAdsBasis}
                 </TableCell>
-                <TableCell>
-                  {item.timeOutDescription === "Initial Time Out Description"
-                    ? "-"
-                    : item.timeOutDescription}
+                <TableCell className="font-medium">
+                  {videoEditor.newScrollstoppers}
                 </TableCell>
-                <TableCell>
-                  {getTime(
-                    item.timeIn ?? new Date(),
-                    item.timeOut ?? new Date(),
-                  )}
+                <TableCell className="font-medium">
+                  {videoEditor.imageAds}
                 </TableCell>
+                <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
               </TableRow>
             ))}
           </TableBody>

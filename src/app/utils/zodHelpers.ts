@@ -29,13 +29,14 @@ export const TimeOutSchema = z.object({
 
 // ! survey.ts
 export const SurveySchema = z.object({
-  feelBetter: z.nativeEnum(YES_NO_SAME).optional(),
-  stillHappy: z.nativeEnum(YES_NO).optional(),
-  listenedTo: z.nativeEnum(YES_NO).optional(),
-  motivated: z.nativeEnum(MOTIVATED).optional(),
-  comments: z.string().optional(),
+  feelBetter: z.nativeEnum(YES_NO_SAME),
+  stillHappy: z.nativeEnum(YES_NO),
+  listenedTo: z.nativeEnum(YES_NO),
+  motivated: z.nativeEnum(MOTIVATED),
+  comments: z.string(),
   userId: z.string(),
-  month: z.number()
+  month: z.number(),
+  year: z.number()
 
 
 

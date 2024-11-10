@@ -1,4 +1,6 @@
-export const userColor = (role: string) => {
+import { type ROLE } from "@prisma/client"
+
+export const userColor = (role: ROLE) => {
   switch (role) {
     case "CEO":
       return "text-ceo bg-ceo_bg"
@@ -21,7 +23,7 @@ export const userColor = (role: string) => {
   }
 }
 
-export const userRole = (role: string) => {
+export const userRole = (role: ROLE) => {
   switch (role) {
     case "CEO":
       return "CEO"
@@ -44,7 +46,18 @@ export const userRole = (role: string) => {
   }
 }
 
-export const buttonActive = (role: string | undefined) => {
+export const getRole = (role: ROLE) => {
+  switch (role) {
+    case "VIDEO_EDITOR":
+      return "video-editor";
+    case "FUNNEL_BUILDER":
+      return "funnel-builder";
+    case "CUSTOMER_SERVICE":
+      return "customer-service";
+  }
+};
+
+export const buttonActive = (role: ROLE) => {
   if (role === "USER") {
     return "bg-button_disabled text-white_disabled cursor-not-allowed"
   } else {
@@ -62,4 +75,17 @@ export const getTime = (date1: Date, date2: Date) => {
   const seconds = Math.floor(diff / 1000 % 60);
 
   return `${hours ? hours : "00"}:${minutes ? minutes : "00"}:${seconds ? seconds : "00"}`;
+};
+
+export const getCurrentMonday = () => {
+  const today = new Date();
+  const dayOfWeek = today.getDay();
+  const distanceToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
+
+  // Set the date to the most recent Monday
+  const currentMonday = new Date(today);
+  currentMonday.setDate(today.getDate() + distanceToMonday);
+
+  // Return the date as a string in 'YYYY-MM-DD' format
+  return currentMonday;
 };

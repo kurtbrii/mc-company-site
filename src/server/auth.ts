@@ -44,7 +44,7 @@ declare module "next-auth" {
  */
 export const authOptions: NextAuthOptions = {
   callbacks: {
-    session: ({ session, user }) => ({
+    session: ({ session, user, token }) => ({
       ...session,
       user: {
         ...session.user,
@@ -65,11 +65,13 @@ export const authOptions: NextAuthOptions = {
     strategy: "database", // Use database sessions instead of JWT
   },
   adapter: PrismaAdapter(db) as Adapter,
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     DiscordProvider({
       clientId: env.DISCORD_CLIENT_ID,
       clientSecret: env.DISCORD_CLIENT_SECRET,
     }),
+
 
     /**
      * ...add more providers here.

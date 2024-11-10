@@ -9,21 +9,6 @@ import { VideoEditorsBonusSchema, FunnelBuildersSchema, CustomerServiceSchema } 
 
 
 export const bonusSheetRouter = createTRPCRouter({
-  getAllVideoEditorsBonus: protectedProcedure
-    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.timeInDetails.findMany({
-        where: {
-          userId: input.userId,
-          timeIn: {
-            gte: input.startDate,
-            lte: input.endDate
-          }
-        }
-      })
-    }),
-
-
   // ! create functions
   createVideoEditorsBonus: protectedProcedure
     .input(VideoEditorsBonusSchema)
@@ -66,6 +51,21 @@ export const bonusSheetRouter = createTRPCRouter({
           ticketsResolved: input.ticketsResolved,
           disputesResolved: input.disputesResolved,
           userId: input.userId,
+        }
+      })
+    }),
+
+  // ! get functions
+  getVideoEditorBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.videoEditorsBonus.findMany({
+        where: {
+          userId: input.userId,
+          date: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
         }
       })
     })
