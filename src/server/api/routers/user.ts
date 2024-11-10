@@ -40,7 +40,7 @@ export const userRouter = createTRPCRouter({
 
       return ctx.db.user.findMany({
         where: {
-          ...(roleObj.OR === null ? {} : filterQuery)
+          ...(roleObj.OR ? filterQuery : {})
         },
         orderBy: {
           fullName: 'asc'

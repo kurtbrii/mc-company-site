@@ -3,7 +3,7 @@
 import Sidebar from "../_components/sidebar";
 import Image from "next/image";
 import { useSession } from "next-auth/react";
-import { userColor, userRole } from "../utils/functionHelpers";
+import { getRole, userColor, userRole } from "../utils/functionHelpers";
 import { useEffect, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -238,12 +238,13 @@ export default function Profile() {
                 My Time In Details
               </Link>
               {user?.role !== "CEO" && (
-                <button
-                  className="w-full rounded-lg bg-discord_left p-4"
+                <Link
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
                   type="button"
+                  href={`bonus-sheet/${getRole(user?.role ?? "USER")}/${user?.id}`}
                 >
                   My Bonus Sheet
-                </button>
+                </Link>
               )}
             </div>
 

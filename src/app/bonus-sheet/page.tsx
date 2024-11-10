@@ -6,22 +6,12 @@ import Link from "next/link";
 import UserCard from "../_components/userCard";
 import { UserCardLoading } from "../_components/loading_state/userCardLoading";
 import { type ROLE } from "@prisma/client";
+import { getRole } from "~/app/utils/functionHelpers";
 
 export default function TimeIn() {
   const { data: allMembers, isLoading } = api.user.getAllMembers.useQuery({
     hasBonus: true,
   });
-
-  const getRole = (role: ROLE) => {
-    switch (role) {
-      case "VIDEO_EDITOR":
-        return "video-editor";
-      case "FUNNEL_BUILDER":
-        return "funnel-builder";
-      case "CUSTOMER_SERVICE":
-        return "customer-service";
-    }
-  };
 
   return (
     <div className="flex">

@@ -114,7 +114,7 @@ model FunnelBuildersBonus {
     // How many hours did you work as a customer service employee
     // How many tickets did you resolve in Freshdesk
     // How many disputes did you answered
-
+    dateOfWork             DateTime?
     hoursWorked            Float
     funnelsCreated         Int
     copyFunnelTrick        Int
@@ -136,6 +136,7 @@ model VideoEditorsBonus {
     // How many new scrollstoppers did you create for an existing ad? ((fill in 0 if you didnt do anything))
     // How many image ads did you create? (fill in 0 if you didnt do anything)
     // How many VSL's did you make? ((fill in 0 if you didnt do anything))
+    dateOfWork         DateTime?
     hoursWorked        Float
     competitorAdsBasis Int
     newScrollstoppers  Int
@@ -153,6 +154,7 @@ model CustomerServiceBonus {
     // How many hours did you work as a customer service employee?
     // How many tickets did you resolve? (You can find this in Freshdesk) (100 tickets = 1, 95 tickets equals 0,95 etc.)
     // How many disputes did you resolve?
+    dateOfWork       DateTime?
     hoursWorked      Float
     ticketsResolved  Int
     disputesResolved Int

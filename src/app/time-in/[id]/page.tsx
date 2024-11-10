@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-
+import { getCurrentMonday } from "~/app/utils/functionHelpers";
 import Sidebar from "~/app/_components/sidebar";
 import { getTime } from "~/app/utils/functionHelpers";
 import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
@@ -205,16 +205,3 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
     </div>
   );
 }
-
-const getCurrentMonday = () => {
-  const today = new Date();
-  const dayOfWeek = today.getDay();
-  const distanceToMonday = (dayOfWeek === 0 ? -6 : 1) - dayOfWeek;
-
-  // Set the date to the most recent Monday
-  const currentMonday = new Date(today);
-  currentMonday.setDate(today.getDate() + distanceToMonday);
-
-  // Return the date as a string in 'YYYY-MM-DD' format
-  return currentMonday;
-};
