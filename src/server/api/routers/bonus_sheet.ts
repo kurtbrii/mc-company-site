@@ -20,7 +20,8 @@ export const bonusSheetRouter = createTRPCRouter({
           newScrollstoppers: input.newScrollstoppers,
           imageAds: input.imageAds,
           vsl: input.vsl,
-          userId: input.userId
+          userId: input.userId,
+          dateOfWork: input.dateOfWork
         },
       });
     }),
@@ -38,6 +39,7 @@ export const bonusSheetRouter = createTRPCRouter({
           ticketResolved: input.ticketResolved,
           disputesAnswered: input.disputesAnswered,
           userId: input.userId,
+          dateOfWork: input.dateOfWork
         }
       })
     }),
@@ -50,6 +52,7 @@ export const bonusSheetRouter = createTRPCRouter({
           hoursWorked: input.hoursWorked,
           ticketsResolved: input.ticketsResolved,
           disputesResolved: input.disputesResolved,
+          dateOfWork: input.dateOfWork,
           userId: input.userId,
         }
       })

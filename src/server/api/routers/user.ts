@@ -29,7 +29,7 @@ export const userRouter = createTRPCRouter({
 
           input.hasBonus && {
             role: {
-              in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE", "CEO"]
+              in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE"]
 
             }
           }
