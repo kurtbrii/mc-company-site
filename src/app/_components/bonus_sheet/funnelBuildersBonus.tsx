@@ -29,6 +29,8 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 
+import { FormFieldComponent } from "./form_field_components/funnelBuilderFormField";
+
 export default function FunnelBuildersBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
@@ -92,7 +94,7 @@ export default function FunnelBuildersBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-everyone tablet:mb-5 tablet:text-4xl">
+          <h1 className="justify-center self-center text-2xl text-funnel_builders tablet:mb-5 tablet:text-4xl">
             FUNNEL BUILDERS BONUS SHEET
           </h1>
 
@@ -139,222 +141,54 @@ export default function FunnelBuildersBonus() {
                   </FormItem>
                 )}
               />
-
               {/* How many hours did you work? */}
-              <FormField
-                control={form.control}
-                name="hoursWorked"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many hours did you work?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={"How many hours did you work?"}
+                controlName="hoursWorked"
               />
-
               {/* // How many funnels did you create from scratch? */}
-              <FormField
-                control={form.control}
-                name="funnelsCreated"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many funnels did you create from scratch?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={"How many funnels did you create from scratch?"}
+                controlName="funnelsCreated"
               />
 
               {/* // How many funnels did you copy using trick? (fill in 0 if you didnt do anything) */}
-              <FormField
-                control={form.control}
-                name="copyFunnelTrick"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many funnels did you copy using trick?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={"How many funnels did you copy using trick?"}
+                controlName="copyFunnelTrick"
               />
 
               {/* // How many advertorials did you create from scratch? (fill in 0 if you didnt do anything) */}
-              <FormField
-                control={form.control}
-                name="advertorialFromScratch"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many advertorials did you create from scratch?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={"How many advertorials did you create from scratch?"}
+                controlName="advertorialFromScratch"
               />
 
               {/* // How many hours did you work as a customer service employee */}
-              <FormField
-                control={form.control}
-                name="hoursAsCustomerService"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many hours did you work as a customer service employee
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={
+                  "How many hours did you work as a customer service employee"
+                }
+                controlName="hoursAsCustomerService"
               />
 
               {/* // How many tickets did you resolve in Freshdesk*/}
-              <FormField
-                control={form.control}
-                name="ticketResolved"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many tickets did you resolve in Freshdesk?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={"How many tickets did you resolve in Freshdesk?"}
+                controlName="ticketResolved"
               />
 
               {/* How many disputes did you answered */}
-              <FormField
-                control={form.control}
-                name="disputesAnswered"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many disputes did you answer?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        step="any"
-                        min="0"
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here"
-                        value={field.value ?? ""}
-                        onChange={(e) =>
-                          field.onChange(
-                            e.target.value === ""
-                              ? undefined
-                              : parseFloat(e.target.value),
-                          )
-                        }
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label={"How many disputes did you answer?"}
+                controlName="disputesAnswered"
               />
 
               <Button type="submit" className="mt-5 w-full">
