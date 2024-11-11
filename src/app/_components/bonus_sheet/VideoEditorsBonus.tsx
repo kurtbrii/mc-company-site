@@ -19,6 +19,18 @@ import { type z } from "zod";
 import { api } from "~/trpc/react";
 import { VideoEditorsBonusSchema } from "../../utils/zodHelpers";
 
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+
+import { cn } from "~/lib/utils";
+import { Calendar } from "~/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { useState } from "react";
+
 export default function VideoEditorsBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
@@ -26,18 +38,36 @@ export default function VideoEditorsBonus() {
   const { toast } = useToast();
 
   const submitVideoEditorsForm =
-    api.bonusSheet.createVideoEditorsBonus.useMutation({});
+    api.bonusSheet.createVideoEditorsBonus.useMutation({
+      onSuccess: () => {
+        toast({
+          title: "Successfully submitted form",
+        });
+
+        setTimeout(function () {
+          location.reload();
+        }, 3000);
+      },
+
+      onError: () => {
+        toast({
+          title: "Unsuccessful: Duplicate Date",
+          variant: "destructive",
+        });
+      },
+    });
 
   // ! FORM DECLARATIONS
+
   type VideoEditorsBonusSchemaType = z.infer<typeof VideoEditorsBonusSchema>;
 
   const form = useForm<VideoEditorsBonusSchemaType>({
     defaultValues: {
-      competitorAdsBasis: 0,
-      hoursWorked: 0,
-      imageAds: 0,
-      newScrollstoppers: 0,
-      vsl: 0,
+      hoursWorked: undefined,
+      competitorAdsBasis: undefined,
+      imageAds: undefined,
+      newScrollstoppers: undefined,
+      vsl: undefined,
       userId: userId ?? "",
     },
     resolver: zodResolver(VideoEditorsBonusSchema),
@@ -45,22 +75,15 @@ export default function VideoEditorsBonus() {
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof VideoEditorsBonusSchema>) => {
-    void submitVideoEditorsForm.mutateAsync({
+    await submitVideoEditorsForm.mutateAsync({
       userId: userId,
       competitorAdsBasis: data.competitorAdsBasis,
       hoursWorked: data.hoursWorked,
       imageAds: data.imageAds,
       newScrollstoppers: data.newScrollstoppers,
       vsl: data.vsl,
+      dateOfWork: data.dateOfWork,
     });
-
-    toast({
-      title: "Successfully submitted form",
-    });
-
-    setTimeout(function () {
-      location.reload();
-    }, 3000);
   };
 
   return (
@@ -77,6 +100,45 @@ export default function VideoEditorsBonus() {
             className="mt-3 space-y-8 border-none"
           >
             <div className="flex min-w-56 max-w-96 scale-90 flex-col gap-3 tablet:min-w-96 tablet:scale-100">
+              <FormField
+                control={form.control}
+                name="dateOfWork"
+                render={({ field }) => (
+                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
+                    <FormLabel className="text-lg">What is the date?</FormLabel>
+                    <FormControl>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"default"}
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                            )}
+                          >
+                            <CalendarIcon />
+                            {field.value ? (
+                              format(field.value, "PP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            // max={new Date(Date.now()).toDateString()}
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
               {/* How many hours did you work? */}
               <FormField
                 control={form.control}
@@ -88,16 +150,26 @@ export default function VideoEditorsBonus() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        step="any"
+                        min="0"
                         type="number"
                         className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         placeholder="Enter number here (ex: 1.5)"
-                        {...field}
+                        value={field.value ?? ""}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? undefined
+                              : parseFloat(e.target.value),
+                          )
+                        }
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
+
               {/* How many ads did you make with the competitors ad as a basis?
               (If you did 1 product, you made 12 ads) ((fill in 0 if you didnt
               do anything)) */}
@@ -112,10 +184,18 @@ export default function VideoEditorsBonus() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        min="0"
                         type="number"
                         className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         placeholder="Enter number here"
-                        {...field}
+                        value={field.value ?? ""}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? undefined
+                              : parseInt(e.target.value),
+                          )
+                        }
                       />
                     </FormControl>
                     <FormMessage />
@@ -135,10 +215,18 @@ export default function VideoEditorsBonus() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        min="0"
                         type="number"
                         className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
+                        placeholder="Enter number here"
+                        value={field.value ?? ""}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? undefined
+                              : parseInt(e.target.value),
+                          )
+                        }
                       />
                     </FormControl>
                     <FormMessage />
@@ -156,10 +244,18 @@ export default function VideoEditorsBonus() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        min="0"
                         type="number"
                         className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
+                        placeholder="Enter number here"
+                        value={field.value ?? ""}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? undefined
+                              : parseInt(e.target.value),
+                          )
+                        }
                       />
                     </FormControl>
                     <FormMessage />
@@ -179,10 +275,18 @@ export default function VideoEditorsBonus() {
                     </FormLabel>
                     <FormControl>
                       <Input
+                        min="0"
                         type="number"
                         className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
+                        placeholder="Enter number here"
+                        value={field.value ?? ""}
+                        onChange={(e) =>
+                          field.onChange(
+                            e.target.value === ""
+                              ? undefined
+                              : parseInt(e.target.value),
+                          )
+                        }
                       />
                     </FormControl>
                     <FormMessage />

@@ -46,9 +46,10 @@ export const SurveySchema = z.object({
 export const VideoEditorsBonusSchema = z.object({
   hoursWorked: z.coerce.number({ message: "This should be a number" }),
   competitorAdsBasis: z.coerce.number({ message: "This should be a number" }),
-  newScrollstoppers: z.coerce.number({ message: "This should be a number" }),
+  newScrollstoppers: z.coerce.number({ message: "This should be a number" }).min(0),
   imageAds: z.coerce.number({ message: "This should be a number" }),
   vsl: z.coerce.number({ message: "This should be a number" }),
+  dateOfWork: z.date(),
   userId: z.string()
 })
 

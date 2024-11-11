@@ -31,10 +31,6 @@ export default function Dashboard() {
     },
   });
 
-  useEffect(() => {
-    console.log("Session updated:", session);
-  }, [session]);
-
   // ! FORM DECLARATION
   // ! Time In
   const handleTimeInClicked = () => {

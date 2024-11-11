@@ -20,7 +20,8 @@ export const bonusSheetRouter = createTRPCRouter({
           newScrollstoppers: input.newScrollstoppers,
           imageAds: input.imageAds,
           vsl: input.vsl,
-          userId: input.userId
+          userId: input.userId,
+          dateOfWork: input.dateOfWork
         },
       });
     }),
