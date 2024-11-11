@@ -37,16 +37,13 @@ export const SurveySchema = z.object({
   userId: z.string(),
   month: z.number(),
   year: z.number()
-
-
-
 })
 
 // ! bonus_sheet.ts
 export const VideoEditorsBonusSchema = z.object({
   hoursWorked: z.coerce.number({ message: "This should be a number" }),
   competitorAdsBasis: z.coerce.number({ message: "This should be a number" }),
-  newScrollstoppers: z.coerce.number({ message: "This should be a number" }).min(0),
+  newScrollstoppers: z.coerce.number({ message: "This should be a number" }),
   imageAds: z.coerce.number({ message: "This should be a number" }),
   vsl: z.coerce.number({ message: "This should be a number" }),
   dateOfWork: z.date(),
@@ -61,6 +58,7 @@ export const FunnelBuildersSchema = z.object({
   hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
   ticketResolved: z.coerce.number({ message: "This should be a number" }),
   disputesAnswered: z.coerce.number({ message: "This should be a number" }),
+  dateOfWork: z.date(),
   userId: z.string()
 })
 
@@ -68,5 +66,6 @@ export const CustomerServiceSchema = z.object({
   hoursWorked: z.coerce.number({ message: "This should be a number" }),
   ticketsResolved: z.coerce.number({ message: "This should be a number" }),
   disputesResolved: z.coerce.number({ message: "This should be a number" }),
+  dateOfWork: z.date(),
   userId: z.string()
 })

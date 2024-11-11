@@ -21,7 +21,6 @@ import { VideoEditorsBonusSchema } from "../../utils/zodHelpers";
 
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-
 import { cn } from "~/lib/utils";
 import { Calendar } from "~/components/ui/calendar";
 import {
@@ -58,7 +57,6 @@ export default function VideoEditorsBonus() {
     });
 
   // ! FORM DECLARATIONS
-
   type VideoEditorsBonusSchemaType = z.infer<typeof VideoEditorsBonusSchema>;
 
   const form = useForm<VideoEditorsBonusSchemaType>({
