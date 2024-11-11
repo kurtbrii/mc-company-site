@@ -13,7 +13,6 @@ import {
 } from "~/components/ui/form";
 
 import { useToast } from "~/components/hooks/use-toast";
-import { Input } from "~/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
 import { api } from "~/trpc/react";
@@ -28,7 +27,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
-import { useState } from "react";
 import { FormFieldComponent } from "./form_field_components/videoEditorFormField";
 
 export default function VideoEditorsBonus() {

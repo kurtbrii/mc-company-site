@@ -17,12 +17,8 @@ interface FormFieldProps {
       hoursWorked: number;
       dateOfWork: Date;
       userId: string;
-      funnelsCreated: number;
-      copyFunnelTrick: number;
-      advertorialFromScratch: number;
-      hoursAsCustomerService: number;
-      ticketResolved: number;
-      disputesAnswered: number;
+      ticketsResolved: number;
+      disputesResolved: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -34,12 +30,8 @@ interface FormFieldProps {
     | "hoursWorked"
     | "dateOfWork"
     | "userId"
-    | "funnelsCreated"
-    | "copyFunnelTrick"
-    | "advertorialFromScratch"
-    | "hoursAsCustomerService"
-    | "ticketResolved"
-    | "disputesAnswered";
+    | "ticketsResolved"
+    | "disputesResolved";
 }
 
 export const FormFieldComponent = ({

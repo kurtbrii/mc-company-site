@@ -19,6 +19,17 @@ import { type z } from "zod";
 import { api } from "~/trpc/react";
 import { CustomerServiceSchema } from "../../utils/zodHelpers";
 
+import { format } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { cn } from "~/lib/utils";
+import { Calendar } from "~/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "~/components/ui/popover";
+import { FormFieldComponent } from "./form_field_components/customerServiceFormField";
+
 export default function CustumerServiceBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
@@ -26,7 +37,24 @@ export default function CustumerServiceBonus() {
   const { toast } = useToast();
 
   const subumitCustomerServiceForm =
-    api.bonusSheet.createCustomerServiceBonus.useMutation({});
+    api.bonusSheet.createCustomerServiceBonus.useMutation({
+      onSuccess: () => {
+        toast({
+          title: "Successfully submitted form",
+        });
+
+        setTimeout(function () {
+          location.reload();
+        }, 3000);
+      },
+
+      onError: () => {
+        toast({
+          title: "Unsuccessful: Duplicate Date",
+          variant: "destructive",
+        });
+      },
+    });
 
   // ! FORM DECLARATIONS
   type FunnelBuildersBonusSchemaType = z.infer<typeof CustomerServiceSchema>;
@@ -43,21 +71,13 @@ export default function CustumerServiceBonus() {
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof CustomerServiceSchema>) => {
-    console.log(data);
-    void subumitCustomerServiceForm.mutateAsync({
+    subumitCustomerServiceForm.mutate({
       hoursWorked: data.hoursWorked,
       ticketsResolved: data.ticketsResolved,
       disputesResolved: data.disputesResolved,
+      dateOfWork: data.dateOfWork,
       userId: userId,
     });
-
-    toast({
-      title: "Successfully submitted form",
-    });
-
-    // setTimeout(function () {
-    //   location.reload();
-    // }, 3000);
   };
 
   return (
@@ -65,8 +85,8 @@ export default function CustumerServiceBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-everyone tablet:mb-5 tablet:text-4xl">
-            FUNNEL BUILDERS BONUS SHEET
+          <h1 className="justify-center self-center text-2xl text-customer_service tablet:mb-5 tablet:text-4xl">
+            CUSTOMER SERVICE BONUS SHEET
           </h1>
 
           <form
@@ -74,71 +94,64 @@ export default function CustumerServiceBonus() {
             className="mt-3 space-y-8 border-none"
           >
             <div className="flex min-w-56 max-w-96 scale-90 flex-col gap-3 tablet:min-w-96 tablet:scale-100">
-              {/* How many hours did you work? */}
               <FormField
                 control={form.control}
-                name="hoursWorked"
+                name="dateOfWork"
                 render={({ field }) => (
                   <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many hours did you work?
-                    </FormLabel>
+                    <FormLabel className="text-lg">What is the date?</FormLabel>
                     <FormControl>
-                      <Input
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
-                      />
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant={"default"}
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                            )}
+                          >
+                            <CalendarIcon />
+                            {field.value ? (
+                              format(field.value, "PP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0">
+                          <Calendar
+                            // max={new Date(Date.now()).toDateString()}
+                            mode="single"
+                            selected={field.value}
+                            onSelect={field.onChange}
+                            initialFocus
+                          />
+                        </PopoverContent>
+                      </Popover>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
+              />
+
+              {/* How many hours did you work? */}
+              <FormFieldComponent
+                form={form}
+                label="How many hours did you work?"
+                controlName="hoursWorked"
               />
 
               {/* How many tickets did you resolve? */}
-              <FormField
-                control={form.control}
-                name="ticketsResolved"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      How many tickets did you resolve?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label="How many tickets did you resolve?"
+                controlName="ticketsResolved"
               />
 
               {/* //  How many disputes did you resolve?*/}
-              <FormField
-                control={form.control}
-                name="disputesResolved"
-                render={({ field }) => (
-                  <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-                    <FormLabel className="text-lg">
-                      {" "}
-                      How many disputes did you resolve?
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="number"
-                        className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
-                        placeholder="Enter number here (ex: 1.5)"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+              <FormFieldComponent
+                form={form}
+                label="How many disputes did you resolve?"
+                controlName="disputesResolved"
               />
 
               <Button type="submit" className="mt-5 w-full">

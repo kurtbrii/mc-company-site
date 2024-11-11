@@ -52,6 +52,7 @@ export const bonusSheetRouter = createTRPCRouter({
           hoursWorked: input.hoursWorked,
           ticketsResolved: input.ticketsResolved,
           disputesResolved: input.disputesResolved,
+          dateOfWork: input.dateOfWork,
           userId: input.userId,
         }
       })

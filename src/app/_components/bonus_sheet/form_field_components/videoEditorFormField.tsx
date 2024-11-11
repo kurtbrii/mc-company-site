@@ -47,17 +47,12 @@ export const FormFieldComponent = ({
     <FormField
       control={form.control}
       name={controlName}
-      // name="competitorAdsBasis"
       render={({ field }) => (
         <FormItem className="rounded-md border-none bg-discord_left px-8 py-5">
-          <FormLabel className="text-lg">
-            {label}
-            {/* How many ads did you make with the competitors ad as a basis? */}
-          </FormLabel>
+          <FormLabel className="text-lg">{label}</FormLabel>
           <FormControl>
             <Input
-              min="0"
-              step="any"
+              type="text"
               className="border-none ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
               placeholder="Enter number here"
               value={
@@ -67,9 +62,7 @@ export const FormFieldComponent = ({
               }
               onChange={(e) =>
                 field.onChange(
-                  e.target.value === ""
-                    ? undefined
-                    : parseFloat(e.target.value),
+                  e.target.value === "" ? undefined : e.target.value,
                 )
               }
             />
