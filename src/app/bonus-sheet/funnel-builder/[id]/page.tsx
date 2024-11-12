@@ -16,14 +16,13 @@ import {
 } from "~/components/ui/table";
 
 import Sidebar from "~/app/_components/sidebar";
-import { getTime } from "~/app/utils/functionHelpers";
 import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
 import { DatePickerWithRange } from "~/app/_components/datePicker";
 import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
 
-export default function BonusSheetVideoEditor({
+export default function BonusSheetFunnelBuilder({
   params,
 }: {
   params: { id: string };
@@ -37,8 +36,8 @@ export default function BonusSheetVideoEditor({
 
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: getVideoEditorBonus, isLoading } =
-    api.bonusSheet.getVideoEditorBonus.useQuery({
+  const { data: getFunnelBuilderBonus, isLoading } =
+    api.bonusSheet.getFunnelBuilderBonus.useQuery({
       userId: params.id,
       startDate: date?.from,
       endDate: date?.to,
@@ -162,38 +161,52 @@ export default function BonusSheetVideoEditor({
                 How many hours did you work?
               </TableHead>
               <TableHead className="text-center">
-                How many ads did you make with the competitors ad as a basis?{" "}
+                How many funnels did you create from scratch?
               </TableHead>
               <TableHead className="text-center">
-                How many new scrollstoppers did you create for an existing ad?{" "}
+                How many funnels did you copy using trick?
               </TableHead>
               <TableHead className="text-center">
-                How many image ads did you create?
+                How many advertorials did you create from scratch?
               </TableHead>
               <TableHead className="text-center">
-                How many VSL&apos;s did you make?
+                How many hours did you work as a customer service employee?
+              </TableHead>
+              <TableHead className="text-center">
+                How many tickets did you resolve in Freshdesk
+              </TableHead>
+              <TableHead className="text-center">
+                How many disputes did you answered
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {getVideoEditorBonus?.map((videoEditor, index) => (
+            {getFunnelBuilderBonus?.map((funnelBuilder, index) => (
               <TableRow key={index} className="text-center">
                 <TableCell className="w-48 font-medium">
-                  {format(videoEditor.dateOfWork, "PP")}
+                  {format(funnelBuilder.dateOfWork, "PP")}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.hoursWorked}
+                  {funnelBuilder.hoursWorked}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.competitorAdsBasis}
+                  {funnelBuilder.funnelsCreated}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.newScrollstoppers}
+                  {funnelBuilder.copyFunnelTrick}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.imageAds}
+                  {funnelBuilder.advertorialFromScratch}
                 </TableCell>
-                <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.hoursAsCustomerService}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.ticketResolved}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.disputesAnswered}
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

@@ -16,14 +16,13 @@ import {
 } from "~/components/ui/table";
 
 import Sidebar from "~/app/_components/sidebar";
-import { getTime } from "~/app/utils/functionHelpers";
 import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
 import { DatePickerWithRange } from "~/app/_components/datePicker";
 import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
 
-export default function BonusSheetVideoEditor({
+export default function BonusSheetCustomerService({
   params,
 }: {
   params: { id: string };
@@ -37,8 +36,8 @@ export default function BonusSheetVideoEditor({
 
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: getVideoEditorBonus, isLoading } =
-    api.bonusSheet.getVideoEditorBonus.useQuery({
+  const { data: getCustomerServiceBonus, isLoading } =
+    api.bonusSheet.getCustomerServiceBonus.useQuery({
       userId: params.id,
       startDate: date?.from,
       endDate: date?.to,
@@ -170,30 +169,26 @@ export default function BonusSheetVideoEditor({
               <TableHead className="text-center">
                 How many image ads did you create?
               </TableHead>
-              <TableHead className="text-center">
-                How many VSL&apos;s did you make?
-              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {getVideoEditorBonus?.map((videoEditor, index) => (
+            {getCustomerServiceBonus?.map((customerService, index) => (
               <TableRow key={index} className="text-center">
                 <TableCell className="w-48 font-medium">
-                  {format(videoEditor.dateOfWork, "PP")}
+                  {format(customerService.dateOfWork, "PP")}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.hoursWorked}
+                  {customerService.hoursWorked}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.competitorAdsBasis}
+                  {customerService.hoursWorked}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.newScrollstoppers}
+                  {customerService.ticketsResolved}
                 </TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.imageAds}
+                  {customerService.disputesResolved}
                 </TableCell>
-                <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
               </TableRow>
             ))}
           </TableBody>
