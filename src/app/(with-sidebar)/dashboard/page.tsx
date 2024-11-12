@@ -1,9 +1,9 @@
 "use client";
 
 import React from "react";
-import Sidebar from "../_components/sidebar";
+import Sidebar from "../../_components/sidebar";
 import { useSession } from "next-auth/react";
-// import { userColor, buttonActive } from "../utils/functionHelpers";
+import { userColor, buttonActive } from "../../utils/functionHelpers";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { type z } from "zod";
@@ -12,7 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { TimeInSchema } from "~/app/utils/zodHelpers";
 import { TimeOutSchema } from "~/app/utils/zodHelpers";
-import { Toastbar } from "../_components/toastbar";
+import { Toastbar } from "../../_components/toastbar";
 
 export default function Dashboard() {
   // ! GENERAL VARIABLE DECLARATIONS
@@ -112,10 +112,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="flex">
-      {/* SIDEBAR */}
-      <Sidebar />
-      {/* DASHBOARD - TIME IN/TIME OUT */}
+    <>
       <div className="flex h-screen w-screen flex-col items-center justify-start gap-8 tablet:justify-center">
         {status === "loading" ? (
           <div className="flex flex-col gap-3">
@@ -126,7 +123,9 @@ export default function Dashboard() {
           <>
             <p className="text-center text-2xl tablet:text-4xl">
               Welcome Back,{" "}
-              <span className={`${userColor(userRole ?? "")} rounded-lg p-2`}>
+              <span
+                className={`${userColor(userRole ?? "USER")} rounded-lg p-2`}
+              >
                 {session?.user.name}
               </span>
             </p>
@@ -139,7 +138,7 @@ export default function Dashboard() {
           !session?.user.currentTimeInId && (
             <button
               onClick={handleTimeInClicked}
-              className={`${buttonActive(userRole ?? "")} flex items-center gap-2 rounded-md px-6 py-3`}
+              className={`${buttonActive(userRole ?? "USER")} flex items-center gap-2 rounded-md px-6 py-3`}
               disabled={userRole === "USER"}
             >
               <svg
@@ -277,7 +276,6 @@ export default function Dashboard() {
           </form>
         )}
       </div>
-
       {status !== "loading" && isToastVisible && (
         <Toastbar
           isToastVisible={isToastVisible}
@@ -285,37 +283,37 @@ export default function Dashboard() {
           message={`Successfully timed ${session?.user.currentTimeInId !== "" ? "in" : "out"}`}
         />
       )}
-    </div>
+    </>
   );
 }
 
-const userColor = (role: string) => {
-  switch (role) {
-    case "CEO":
-      return "text-ceo bg-ceo_bg";
-    case "VIDEO_EDITOR":
-      return "text-video_editor bg-video_editor_bg";
-    case "CUSTOMER_SERVICE":
-      return "text-customer_service bg-customer_service_bg";
-    case "FUNNEL_BUILDER":
-      return "text-funnel_builders bg-funnel_builders_bg";
-    case "STRIPE_MANAGER":
-      return "text-stripe_manager bg-stripe_manager_bg";
-    case "PROOFREADER":
-      return "text-proofreader bg-proofreader_bg";
-    case "EMAIL_MARKETING":
-      return "text-email_marketing bg-email_marketing_bg";
-    case "FACEBOOK_MARKETING":
-      return "text-facebook_marketing bg-facebook_marketing_bg";
-    case "USER":
-      return "text-everyone bg-everyone_bg";
-  }
-};
+// const userColor = (role: string) => {
+//   switch (role) {
+//     case "CEO":
+//       return "text-ceo bg-ceo_bg";
+//     case "VIDEO_EDITOR":
+//       return "text-video_editor bg-video_editor_bg";
+//     case "CUSTOMER_SERVICE":
+//       return "text-customer_service bg-customer_service_bg";
+//     case "FUNNEL_BUILDER":
+//       return "text-funnel_builders bg-funnel_builders_bg";
+//     case "STRIPE_MANAGER":
+//       return "text-stripe_manager bg-stripe_manager_bg";
+//     case "PROOFREADER":
+//       return "text-proofreader bg-proofreader_bg";
+//     case "EMAIL_MARKETING":
+//       return "text-email_marketing bg-email_marketing_bg";
+//     case "FACEBOOK_MARKETING":
+//       return "text-facebook_marketing bg-facebook_marketing_bg";
+//     case "USER":
+//       return "text-everyone bg-everyone_bg";
+//   }
+// };
 
-const buttonActive = (role: string | undefined) => {
-  if (role === "USER") {
-    return "bg-button_disabled text-white_disabled cursor-not-allowed";
-  } else {
-    return "bg-discord_button text-white";
-  }
-};
+// const buttonActive = (role: string | undefined) => {
+//   if (role === "USER") {
+//     return "bg-button_disabled text-white_disabled cursor-not-allowed";
+//   } else {
+//     return "bg-discord_button text-white";
+//   }
+// };

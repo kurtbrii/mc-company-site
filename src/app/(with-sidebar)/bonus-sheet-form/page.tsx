@@ -1,21 +1,18 @@
 "use client";
 
-import Sidebar from "../_components/sidebar";
+import Sidebar from "../../_components/sidebar";
 import { useSession } from "next-auth/react";
 
-import VideoEditorsBonus from "../_components/bonus_sheet/VideoEditorsBonus";
-import FunnelBuildersBonus from "../_components/bonus_sheet/funnelBuildersBonus";
-import CustomerServiceBonus from "../_components/bonus_sheet/customerServiceBonus";
+import VideoEditorsBonus from "../../_components/bonus_sheet/VideoEditorsBonus";
+import FunnelBuildersBonus from "../../_components/bonus_sheet/funnelBuildersBonus";
+import CustomerServiceBonus from "../../_components/bonus_sheet/customerServiceBonus";
 
 export default function TimeIn() {
   const { data: session, status } = useSession();
   const user = session?.user;
 
   return (
-    <div className="flex">
-      {/* SIDEBAR */}
-      <Sidebar />
-
+    <>
       {status === "loading" ? (
         <>
           <div className="flex w-full flex-col items-center justify-center gap-3">
@@ -30,6 +27,6 @@ export default function TimeIn() {
           {user?.role === "CUSTOMER_SERVICE" && <CustomerServiceBonus />}
         </>
       )}
-    </div>
+    </>
   );
 }
