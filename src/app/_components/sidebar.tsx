@@ -20,7 +20,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`${isOpen ? "w-80" : "w-24"} flex h-screen flex-col justify-between bg-discord_left p-5 transition-transform`}
+      className={`${isOpen ? "min-w-72" : "min-w-24"} sticky left-0 top-0 z-10 flex h-screen flex-col justify-between bg-discord_left p-5 transition-transform`}
     >
       <div className="flex flex-col gap-4">
         <svg

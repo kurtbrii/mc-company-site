@@ -69,9 +69,50 @@ export const bonusSheetRouter = createTRPCRouter({
             gte: input.startDate,
             lte: input.endDate
           }
+        },
+        orderBy: {
+          dateOfWork: "desc"
         }
       })
-    })
+    }),
+
+
+  getCustomerServiceBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.customerServiceBonus.findMany({
+        where: {
+          userId: input.userId,
+          date: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
+        },
+        orderBy: {
+          dateOfWork: "desc"
+        }
+      })
+    }),
+
+  getFunnelBuilderBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.funnelBuildersBonus.findMany({
+        where: {
+          userId: input.userId,
+          date: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
+        },
+        orderBy: {
+          dateOfWork: "desc"
+        }
+      })
+    }),
+
+
+
 });
 
 

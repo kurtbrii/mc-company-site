@@ -1,6 +1,6 @@
 "use client";
 
-import Sidebar from "../_components/sidebar";
+import Sidebar from "../../_components/sidebar";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
 import { useSession } from "next-auth/react";
@@ -19,7 +19,7 @@ import { Textarea } from "~/components/ui/textarea";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
-import { SurveySchema } from "../utils/zodHelpers";
+import { SurveySchema } from "../../utils/zodHelpers";
 
 import { api } from "~/trpc/react";
 
@@ -74,12 +74,9 @@ export default function MonthlySurvey() {
 
   if (getOneLoading) {
     return (
-      <div className="flex">
-        <Sidebar />
-        <div className="flex w-full flex-col items-center justify-center gap-3">
-          <div className="h-4 w-96 animate-pulse rounded-lg bg-discord_left"></div>
-          <div className="h-4 w-96 animate-pulse rounded-lg bg-discord_left"></div>
-        </div>
+      <div className="flex w-full flex-col items-center justify-center gap-3">
+        <div className="h-4 w-96 animate-pulse rounded-lg bg-discord_left"></div>
+        <div className="h-4 w-96 animate-pulse rounded-lg bg-discord_left"></div>
       </div>
     );
   }
@@ -87,11 +84,8 @@ export default function MonthlySurvey() {
   // ! FORM IS NOT YET OPEN
   if (![27, 28, 29, 30].includes(dateNow.getDate())) {
     return (
-      <div className="flex">
-        <Sidebar />
-        <div className="flex h-screen w-screen items-center justify-center">
-          <p>This is only accessible by the end of the month.</p>
-        </div>
+      <div className="flex h-screen w-screen items-center justify-center">
+        <p>This is only accessible by the end of the month.</p>
       </div>
     );
   }
@@ -99,11 +93,8 @@ export default function MonthlySurvey() {
   // ! MEMBER ALREADY ANSWERED
   if (getOne) {
     return (
-      <div className="flex">
-        <Sidebar />
-        <div className="flex h-screen w-screen items-center justify-center">
-          <p>You have already filled out this form. Wait until next month.</p>
-        </div>
+      <div className="flex h-screen w-screen items-center justify-center">
+        <p>You have already filled out this form. Wait until next month.</p>
       </div>
     );
   }
