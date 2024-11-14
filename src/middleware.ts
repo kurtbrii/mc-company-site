@@ -1,8 +1,4 @@
-// import { getServerSession } from "next-auth";
-import { authOptions } from "./server/auth"; // Adjust the path as necessary
 import { type NextRequest, NextResponse } from "next/server";
-import { parse } from "cookie";
-import { getServerAuthSession } from "./server/auth";
 import { getSession } from "next-auth/react";
 
 export async function middleware(req: NextRequest, res: NextResponse) {
@@ -48,5 +44,10 @@ export const config = {
     '/time-in/:path*',
     '/bonus-sheet-form/:path*',
     '/monthly-survey/:path*'
-  ]
+  ],
+  unstable_allowDynamic: [
+    '/lib/utilities.js', // allows a single file
+    '/node_modules/function-bind/**', // use a glob to allow anything in the function-bind 3rd party module
+    '/node_modules/@babel/runtime/regenerator/index.js',
+  ],
 };
