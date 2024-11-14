@@ -38,7 +38,7 @@ export default async function Home() {
               Hey, Team!
             </h1>
             <p className="max-w-xs text-xl text-gray-400">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              Welcome to our company site!
             </p>
           </div>
         </div>

@@ -81,7 +81,7 @@ model TimeInDetails {
     timeOutDescription String @default("Initial Time Out Description") // @db.VarChar(40)
 
     // REFERENCE
-    User   User   @relation(fields: [userId], references: [id])
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 }
 
@@ -97,7 +97,7 @@ model Survey {
     month      Int
     year       Int
 
-    User   User   @relation(fields: [userId], references: [id])
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
     @@unique([userId, month, year])
@@ -123,7 +123,7 @@ model FunnelBuildersBonus {
     ticketResolved         Int
     disputesAnswered       Int
 
-    User   User   @relation(fields: [userId], references: [id])
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
     @@unique([userId, dateOfWork])
@@ -145,7 +145,7 @@ model VideoEditorsBonus {
     imageAds           Int
     vsl                Int
 
-    User   User   @relation(fields: [userId], references: [id])
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
     @@unique([userId, dateOfWork])
@@ -163,7 +163,7 @@ model CustomerServiceBonus {
     ticketsResolved  Int
     disputesResolved Int
 
-    User   User   @relation(fields: [userId], references: [id])
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
     @@unique([userId, dateOfWork])
