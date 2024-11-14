@@ -1,22 +1,39 @@
-import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth";
+// import { getServerSession } from "next-auth";
 import { authOptions } from "./server/auth"; // Adjust the path as necessary
-import { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
+import { parse } from "cookie";
+import { getServerAuthSession } from "./server/auth";
+import { getSession } from "next-auth/react";
 
-const loggedIn = true;
+export async function middleware(req: NextRequest, res: NextResponse) {
+  //! solution from https://github.com/nextauthjs/next-auth/issues/4467
+  const requestForNextAuth: object = {
+    headers: {
+      cookie: req.headers.get('cookie'),
+    },
+  };
 
+  const session = await getSession({ req: requestForNextAuth });
 
-export async function middleware(req: NextRequest) {
-
-
-  if (loggedIn) {
-    return NextResponse.next();
+  if (!session) {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 
-  return NextResponse.redirect(new URL('/', req.url))
+  return NextResponse.next()
+
 
 }
 
+// Define the paths that the middleware applies to
 export const config = {
-  matcher: ["/dashboard"],
+  runtime: 'nodejs',
+  matcher: [
+    "/dashboard/:path*",
+    '/profile/:path*',
+    "/bonus-sheet/:path*",
+    '/my-team',
+    '/time-in/:path*',
+    '/bonus-sheet-form/:path*',
+    '/monthly-survey/:path*'
+  ]
 };
