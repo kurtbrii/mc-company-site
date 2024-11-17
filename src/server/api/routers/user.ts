@@ -26,21 +26,22 @@ export const userRouter = createTRPCRouter({
               not: input.notMyTeam
             }
           },
-
+        ].filter(Boolean),
+        AND: [
           input.hasBonus && {
             role: {
               in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE"]
 
             }
           }
-        ].filter(Boolean)
+        ].filter(Boolean),
       }
 
       const filterQuery = roleObj.OR.length === 0 ? {} : roleObj;
 
       return ctx.db.user.findMany({
         where: {
-          ...(roleObj.OR ? filterQuery : {})
+          ...(roleObj.OR ?? roleObj.AND ? filterQuery : {})
         },
         orderBy: {
           fullName: 'asc'
