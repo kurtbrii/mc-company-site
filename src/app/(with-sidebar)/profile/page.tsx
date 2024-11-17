@@ -220,24 +220,26 @@ export default function Profile() {
             )}
           </div>
 
-          <div className="flex flex-col gap-3 tablet:flex-row">
-            <Link
-              href={`/time-in/${user?.id}`}
-              className="w-full rounded-lg bg-discord_left p-4 text-center"
-              type="button"
-            >
-              My Time In Details
-            </Link>
-            {user?.role !== "CEO" && (
+          {status !== "loading" && (
+            <div className="flex flex-col gap-3 tablet:flex-row">
               <Link
+                href={`/time-in/${user?.id}`}
                 className="w-full rounded-lg bg-discord_left p-4 text-center"
                 type="button"
-                href={`bonus-sheet/${getRole(user?.role ?? "USER")}/${user?.id}`}
               >
-                My Bonus Sheet
+                My Time In Details
               </Link>
-            )}
-          </div>
+              {user?.role !== "CEO" && (
+                <Link
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
+                  type="button"
+                  href={`bonus-sheet/${getRole(user?.role ?? "USER")}/${user?.id}`}
+                >
+                  My Bonus Sheet
+                </Link>
+              )}
+            </div>
+          )}
 
           {user?.role === "CEO" && (
             <div className="flex flex-col gap-3 tablet:flex-row">
