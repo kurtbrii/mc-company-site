@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { userColor } from "../utils/functionHelpers";
+import { userColor, userRole } from "../utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 
 export default function UserCard({
@@ -8,6 +8,7 @@ export default function UserCard({
 }: {
   member: UserProps;
   className?: string;
+  key?: number;
 }) {
   return (
     <div className="flex transform items-center justify-between rounded-lg bg-discord_left p-5 transition-transform duration-300 ease-in-out hover:scale-105 laptop:gap-10">
@@ -36,7 +37,7 @@ export default function UserCard({
           <p
             className={`self-start rounded-md px-2 py-1 text-sm ${userColor(member?.role ?? "USER")}`}
           >
-            {member?.role}
+            {userRole(member?.role)}
           </p>
         </div>
       </div>

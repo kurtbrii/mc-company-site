@@ -128,11 +128,12 @@ export default function FunnelBuildersBonus() {
                         </PopoverTrigger>
                         <PopoverContent className="w-auto p-0">
                           <Calendar
-                            // max={new Date(Date.now()).toDateString()}
                             mode="single"
                             selected={field.value}
                             onSelect={field.onChange}
+                            disabled={(date) => date > new Date()}
                             initialFocus
+                            showOutsideDays={false}
                           />
                         </PopoverContent>
                       </Popover>

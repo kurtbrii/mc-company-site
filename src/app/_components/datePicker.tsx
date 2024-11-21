@@ -64,6 +64,7 @@ export function DatePickerWithRange({
             className="text-discord_black"
             onSelect={setDate}
             numberOfMonths={2}
+            showOutsideDays={false}
           />
         </PopoverContent>
       </Popover>

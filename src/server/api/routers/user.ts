@@ -11,7 +11,7 @@ import { UpdateProfileSchema } from "~/app/utils/zodHelpers";
 
 export const userRouter = createTRPCRouter({
   getAllMembers: publicProcedure
-    .input(z.object({ notMyTeam: z.nativeEnum(ROLE).optional(), myTeam: z.nativeEnum(ROLE).optional(), hasBonus: z.boolean().optional() }))
+    .input(z.object({ notMyTeam: z.nativeEnum(ROLE).optional(), myTeam: z.nativeEnum(ROLE).optional(), hasBonus: z.boolean().optional(), month: z.number().optional(), year: z.number().optional() }))
     .query(async ({ ctx, input }) => {
 
       const roleObj = {
@@ -26,14 +26,23 @@ export const userRouter = createTRPCRouter({
               not: input.notMyTeam
             }
           },
+
+          // ! used in monthly survey
+          input.month && input.year && {
+            Survey: {
+              none: {
+                month: input.month,
+                year: input.year
+              }
+            }
+          }
         ].filter(Boolean),
         AND: [
           input.hasBonus && {
             role: {
               in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE"]
-
             }
-          }
+          },
         ].filter(Boolean),
       }
 
