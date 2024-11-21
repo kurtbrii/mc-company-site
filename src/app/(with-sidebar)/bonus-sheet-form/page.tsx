@@ -1,6 +1,5 @@
 "use client";
 
-import Sidebar from "../../_components/sidebar";
 import { useSession } from "next-auth/react";
 
 import VideoEditorsBonus from "../../_components/bonus_sheet/VideoEditorsBonus";

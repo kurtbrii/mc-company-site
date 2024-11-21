@@ -23,7 +23,7 @@ export async function middleware(req: NextRequest, res: NextResponse) {
   const notMyTimeInDetails = currentURL.startsWith('/time-in/') && currentURL.split('/')[2] !== user?.id // user navigates to time in details of other members
   const notMyBonusDetails = currentURL.startsWith('/bonus-sheet/') && currentURL.split('/')[3] !== user?.id // user navigates to bonus sheet details of other members
 
-  const ceoURLs = [`/time-in`, '/bonus-sheet'] // paths that are only accessible to the CEO
+  const ceoURLs = [`/time-in`, '/bonus-sheet', '/monthly-survey'] // paths that are only accessible to the CEO
   const isUrlProtected = ceoURLs.includes(req.nextUrl.pathname)
 
   if (user?.role !== 'CEO') {
@@ -43,7 +43,7 @@ export const config = {
     '/my-team',
     '/time-in/:path*',
     '/bonus-sheet-form/:path*',
-    '/monthly-survey/:path*'
+    '/monthly-survey-form/:path*'
   ],
   unstable_allowDynamic: [
     '/lib/utilities.js', // allows a single file

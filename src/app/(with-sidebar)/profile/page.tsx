@@ -260,6 +260,15 @@ export default function Profile() {
                 Bonus Sheet <br />
                 (All Members)
               </Link>
+
+              <Link
+                href={`/monthly-survey`}
+                className="w-full rounded-lg bg-discord_left p-4 text-center"
+                type="button"
+              >
+                Monthly Survey <br />
+                (All Members)
+              </Link>
             </div>
           )}
         </div>

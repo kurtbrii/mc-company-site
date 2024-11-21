@@ -9,20 +9,18 @@ import { SurveySchema } from "~/app/utils/zodHelpers";
 
 export const surveyRouter = createTRPCRouter({
   getAllSurvey: protectedProcedure
-    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .input(z.object({ month: z.number().optional(), year: z.number().optional() }))
     .query(async ({ ctx, input }) => {
-      return ctx.db.timeInDetails.findMany({
+      return ctx.db.survey.findMany({
         where: {
-          userId: input.userId,
-          timeIn: {
-            gte: input.startDate,
-            lte: input.endDate
-          }
+          month: input.month,
+          year: input.year,
+        },
+        include: {
+          User: true
         }
       })
     }),
-
-
 
   createSurvey: protectedProcedure
     .input(SurveySchema)
@@ -55,18 +53,5 @@ export const surveyRouter = createTRPCRouter({
       })
     })
 
-  // timeOut: protectedProcedure
-  //   .input(TimeOutSchema)
-  //   .mutation(async ({ ctx, input }) => {
-  //     return ctx.db.timeInDetails.update({
-  //       data: {
-  //         timeOutDescription: input.timeOutDescription,
-  //         timeOut: input.timeOut
-  //       },
-  //       where: {
-  //         id: input.id
-  //       }
-  //     })
-  // })
 });
 
