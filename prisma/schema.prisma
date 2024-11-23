@@ -115,7 +115,7 @@ model FunnelBuildersBonus {
     // How many hours did you work as a customer service employee
     // How many tickets did you resolve in Freshdesk
     // How many disputes did you answered
-    dateOfWork             DateTime @db.Date
+    dateOfWork             DateTime
     hoursWorked            Float
     funnelsCreated         Int
     copyFunnelTrick        Int
@@ -139,7 +139,7 @@ model VideoEditorsBonus {
     // How many new scrollstoppers did you create for an existing ad? ((fill in 0 if you didnt do anything))
     // How many image ads did you create? (fill in 0 if you didnt do anything)
     // How many VSL's did you make? ((fill in 0 if you didnt do anything))
-    dateOfWork         DateTime @db.Date
+    dateOfWork         DateTime
     hoursWorked        Float
     competitorAdsBasis Int
     newScrollstoppers  Int
@@ -159,7 +159,7 @@ model CustomerServiceBonus {
     // How many hours did you work as a customer service employee?
     // How many tickets did you resolve? (You can find this in Freshdesk) (100 tickets = 1, 95 tickets equals 0,95 etc.)
     // How many disputes did you resolve?
-    dateOfWork       DateTime @db.Date
+    dateOfWork       DateTime
     hoursWorked      Float
     ticketsResolved  Int
     disputesResolved Int
@@ -176,7 +176,7 @@ model FacebookMarketingBonus {
 
     // How many hours did the campaigns launching take? ( 3 hours and 30 minutes = 3.5, 3 hours and 20 minutes = 3.33 etc etc)
     // How many campaigns did you launch
-    dateOfWork             DateTime @db.Date
+    dateOfWork             DateTime
     hoursCampaignsLaunched Float
     campaignsLaunched      Int
 

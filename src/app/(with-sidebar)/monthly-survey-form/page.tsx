@@ -82,7 +82,7 @@ export default function MonthlySurvey() {
   }
 
   // ! FORM IS NOT YET OPEN
-  if (![27, 28, 29, 30].includes(dateNow.getDate())) {
+  if (![27, 28, 29, 30, 23].includes(dateNow.getDate())) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
         <p>This is only accessible by the end of the month.</p>
@@ -102,10 +102,6 @@ export default function MonthlySurvey() {
   // ! FORM IS OPEN
   return (
     <div className="flex">
-      {/* SIDEBAR */}
-      <Sidebar />
-
-      {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
           <h1 className="self-center text-2xl text-everyone tablet:mb-5 tablet:text-4xl">

@@ -9,7 +9,7 @@ import { VideoEditorsBonusSchema, FunnelBuildersSchema, CustomerServiceSchema, F
 
 
 export const bonusSheetRouter = createTRPCRouter({
-  // ! create functions
+  // ! video editor bonus 
   createVideoEditorsBonus: protectedProcedure
     .input(VideoEditorsBonusSchema)
     .mutation(async ({ ctx, input }) => {
@@ -26,6 +26,25 @@ export const bonusSheetRouter = createTRPCRouter({
       });
     }),
 
+  getVideoEditorBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.videoEditorsBonus.findMany({
+        where: {
+          userId: input.userId,
+          dateOfWork: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
+        },
+        orderBy: {
+          dateOfWork: "desc"
+        }
+      })
+    }),
+
+
+  // ! funnel builder bonus
   createFunnelBuildersBonus: protectedProcedure
     .input(FunnelBuildersSchema)
     .mutation(async ({ ctx, input }) => {
@@ -44,6 +63,26 @@ export const bonusSheetRouter = createTRPCRouter({
       })
     }),
 
+
+  getFunnelBuilderBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.funnelBuildersBonus.findMany({
+        where: {
+          userId: input.userId,
+          dateOfWork: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
+        },
+        orderBy: {
+          dateOfWork: "desc"
+        }
+      })
+    }),
+
+
+  // ! customer service bonus
   createCustomerServiceBonus: protectedProcedure
     .input(CustomerServiceSchema)
     .mutation(async ({ ctx, input }) => {
@@ -58,6 +97,25 @@ export const bonusSheetRouter = createTRPCRouter({
       })
     }),
 
+
+  getCustomerServiceBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.customerServiceBonus.findMany({
+        where: {
+          userId: input.userId,
+          dateOfWork: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
+        },
+        orderBy: {
+          dateOfWork: "desc"
+        }
+      })
+    }),
+
+  // ! facebook marketing bonus
   createFBMarketingBonus: protectedProcedure
     .input(FacebookMarketingSchema)
     .mutation(async ({ ctx, input }) => {
@@ -71,14 +129,13 @@ export const bonusSheetRouter = createTRPCRouter({
       })
     }),
 
-  // ! get functions
-  getVideoEditorBonus: protectedProcedure
+  getFBMarketingBonus: protectedProcedure
     .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
     .query(async ({ ctx, input }) => {
-      return ctx.db.videoEditorsBonus.findMany({
+      return ctx.db.facebookMarketingBonus.findMany({
         where: {
           userId: input.userId,
-          date: {
+          dateOfWork: {
             gte: input.startDate,
             lte: input.endDate
           }
@@ -88,42 +145,6 @@ export const bonusSheetRouter = createTRPCRouter({
         }
       })
     }),
-
-
-  getCustomerServiceBonus: protectedProcedure
-    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.customerServiceBonus.findMany({
-        where: {
-          userId: input.userId,
-          date: {
-            gte: input.startDate,
-            lte: input.endDate
-          }
-        },
-        orderBy: {
-          dateOfWork: "desc"
-        }
-      })
-    }),
-
-  getFunnelBuilderBonus: protectedProcedure
-    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
-    .query(async ({ ctx, input }) => {
-      return ctx.db.funnelBuildersBonus.findMany({
-        where: {
-          userId: input.userId,
-          date: {
-            gte: input.startDate,
-            lte: input.endDate
-          }
-        },
-        orderBy: {
-          dateOfWork: "desc"
-        }
-      })
-    }),
-
 
 
 });

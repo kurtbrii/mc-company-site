@@ -21,7 +21,7 @@ import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
 
-export default function BonusSheetFunnelBuilder({
+export default function BonusSheetFBMarketing({
   params,
 }: {
   params: { id: string };
@@ -35,8 +35,8 @@ export default function BonusSheetFunnelBuilder({
 
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: getFunnelBuilderBonus, isLoading } =
-    api.bonusSheet.getFunnelBuilderBonus.useQuery({
+  const { data: fbMarketingBonus, isLoading } =
+    api.bonusSheet.getFBMarketingBonus.useQuery({
       userId: params.id,
       startDate: date?.from,
       endDate: date?.to,
@@ -51,7 +51,7 @@ export default function BonusSheetFunnelBuilder({
   };
 
   return (
-    <div className="m-10 flex flex-col items-center gap-4">
+    <div className="m-10 flex w-full flex-col items-center gap-4">
       {isLoading ? (
         <UserCardLoading />
       ) : (
@@ -149,59 +149,33 @@ export default function BonusSheetFunnelBuilder({
         <DatePickerWithRange className="" date={date} setDate={setDate} />
       </div>
 
-      <Table className="mt-14">
+      <Table className="mt-14 w-[800px] justify-self-center">
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center">What is the date?</TableHead>
-            <TableHead className="text-center">
-              How many hours did you work?
+            <TableHead className="w-64 text-center">
+              What is the date?
             </TableHead>
-            <TableHead className="text-center">
+            <TableHead className="w-64 text-center">
+              How many hours did the campaigns launching take?
+            </TableHead>
+            <TableHead className="w-64 text-center">
               How many funnels did you create from scratch?
-            </TableHead>
-            <TableHead className="text-center">
-              How many funnels did you copy using trick?
-            </TableHead>
-            <TableHead className="text-center">
-              How many advertorials did you create from scratch?
-            </TableHead>
-            <TableHead className="text-center">
-              How many hours did you work as a customer service employee?
-            </TableHead>
-            <TableHead className="text-center">
-              How many tickets did you resolve in Freshdesk
-            </TableHead>
-            <TableHead className="text-center">
-              How many disputes did you answered
             </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {getFunnelBuilderBonus?.map((funnelBuilder, index) => (
+          {fbMarketingBonus?.map((fbMarketing, index) => (
             <TableRow key={index} className="text-center">
               <TableCell className="w-48 font-medium">
-                {format(funnelBuilder.dateOfWork, "PP")}
+                {format(fbMarketing.dateOfWork, "PP")}
               </TableCell>
+
               <TableCell className="font-medium">
-                {funnelBuilder.hoursWorked}
+                {fbMarketing.hoursCampaignsLaunched}
               </TableCell>
+
               <TableCell className="font-medium">
-                {funnelBuilder.funnelsCreated}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.copyFunnelTrick}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.advertorialFromScratch}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.hoursAsCustomerService}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.ticketResolved}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.disputesAnswered}
+                {fbMarketing.campaignsLaunched}
               </TableCell>
             </TableRow>
           ))}

@@ -51,7 +51,7 @@ export default function BonusSheetCustomerService({
   };
 
   return (
-    <div className="m-10 flex w-screen flex-col items-center gap-4">
+    <div className="m-10 flex flex-col items-center gap-4">
       {isLoading ? (
         <UserCardLoading />
       ) : (
