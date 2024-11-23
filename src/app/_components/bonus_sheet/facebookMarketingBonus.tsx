@@ -28,7 +28,7 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 
-import { FormFieldComponent } from "./form_field_components/customerServiceFormField";
+import { FormFieldComponent } from "./form_field_components/facebookMarketingFormField";
 
 export default function FacebookMarketingBonus() {
   const { data: session } = useSession();

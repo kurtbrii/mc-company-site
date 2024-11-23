@@ -14,11 +14,10 @@ import { Input } from "~/components/ui/input";
 interface FormFieldProps {
   form: UseFormReturn<
     {
-      hoursWorked: number;
       dateOfWork: Date;
       userId: string;
-      ticketsResolved: number;
-      disputesResolved: number;
+      campaignsLaunched: number;
+      hoursCampaignsLaunched: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -27,11 +26,10 @@ interface FormFieldProps {
 
   label: string;
   controlName:
-    | "hoursWorked"
     | "dateOfWork"
     | "userId"
-    | "ticketsResolved"
-    | "disputesResolved";
+    | "campaignsLaunched"
+    | "hoursCampaignsLaunched";
 }
 
 export const FormFieldComponent = ({
