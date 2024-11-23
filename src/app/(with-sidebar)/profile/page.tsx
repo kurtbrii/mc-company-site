@@ -229,7 +229,12 @@ export default function Profile() {
               >
                 My Time In Details
               </Link>
-              {user?.role !== "CEO" && (
+              {[
+                "FACEBOOK_MARKETING",
+                "FUNNEL_BUILDER",
+                "VIDEO_EDITOR",
+                "CUSTOMER_SERVICE",
+              ].includes(user!.role) && (
                 <Link
                   className="w-full rounded-lg bg-discord_left p-4 text-center"
                   type="button"

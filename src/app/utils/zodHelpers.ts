@@ -69,3 +69,10 @@ export const CustomerServiceSchema = z.object({
   dateOfWork: z.date(),
   userId: z.string()
 })
+
+export const FacebookMarketingSchema = z.object({
+  campaignsLaunched: z.coerce.number({ message: "This should be a number" }),
+  hoursCampaignsLaunched: z.coerce.number({ message: "This should be a number" }),
+  dateOfWork: z.date(),
+  userId: z.string()
+})
