@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import VideoEditorsBonus from "../../_components/bonus_sheet/VideoEditorsBonus";
 import FunnelBuildersBonus from "../../_components/bonus_sheet/funnelBuildersBonus";
 import CustomerServiceBonus from "../../_components/bonus_sheet/customerServiceBonus";
+import FacebookMarketingBonus from "~/app/_components/bonus_sheet/facebookMarketingBonus";
 
 export default function TimeIn() {
   const { data: session, status } = useSession();
@@ -24,6 +25,7 @@ export default function TimeIn() {
           {user?.role === "FUNNEL_BUILDER" && <FunnelBuildersBonus />}
           {user?.role === "VIDEO_EDITOR" && <VideoEditorsBonus />}
           {user?.role === "CUSTOMER_SERVICE" && <CustomerServiceBonus />}
+          {user?.role === "FACEBOOK_MARKETING" && <FacebookMarketingBonus />}
         </>
       )}
     </>

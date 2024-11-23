@@ -54,6 +54,8 @@ export const getRole = (role: ROLE) => {
       return "funnel-builder";
     case "CUSTOMER_SERVICE":
       return "customer-service";
+    case "FACEBOOK_MARKETING":
+      return "facebook-marketing";
   }
 };
 

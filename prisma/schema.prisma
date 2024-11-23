@@ -58,9 +58,10 @@ model User {
     Survey          Survey[]
 
     // bonus sheet
-    videoEditorsBonus    VideoEditorsBonus[]
-    funnelBuildersBonus  FunnelBuildersBonus[]
-    customerServiceBonus CustomerServiceBonus[]
+    videoEditorsBonus      VideoEditorsBonus[]
+    funnelBuildersBonus    FunnelBuildersBonus[]
+    customerServiceBonus   CustomerServiceBonus[]
+    facebookMarketingBonus FacebookMarketingBonus[]
 }
 
 model VerificationToken {
@@ -162,6 +163,22 @@ model CustomerServiceBonus {
     hoursWorked      Float
     ticketsResolved  Int
     disputesResolved Int
+
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+
+    @@unique([userId, dateOfWork])
+}
+
+model FacebookMarketingBonus {
+    id   String   @id @default(cuid())
+    date DateTime @default(now())
+
+    // How many hours did the campaigns launching take? ( 3 hours and 30 minutes = 3.5, 3 hours and 20 minutes = 3.33 etc etc)
+    // How many campaigns did you launch
+    dateOfWork             DateTime @db.Date
+    hoursCampaignsLaunched Float
+    campaignsLaunched      Int
 
     User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
