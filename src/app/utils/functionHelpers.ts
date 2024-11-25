@@ -91,3 +91,10 @@ export const getCurrentMonday = () => {
   // Return the date as a string in 'YYYY-MM-DD' format
   return currentMonday;
 };
+
+
+export const getAverageProductivity = (totalProductivity: number, length: number) => {
+  return (Math.round((totalProductivity / length) * 100) /
+    100) *
+    100
+}

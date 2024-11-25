@@ -2,7 +2,10 @@
 
 import { api } from "~/trpc/react";
 import UserCard from "~/app/_components/userCard";
-import { getCurrentMonday } from "~/app/utils/functionHelpers";
+import {
+  getCurrentMonday,
+  getAverageProductivity,
+} from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
 import DateFilter from "~/app/_components/dateFilter";
@@ -43,6 +46,8 @@ export default function BonusSheetVideoEditor({
       endDate: date?.to,
     });
 
+  let totalProductivity = 0;
+
   return (
     <div className="m-10 flex w-full flex-col items-center gap-4">
       {isLoading ? (
@@ -80,31 +85,45 @@ export default function BonusSheetVideoEditor({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {getVideoEditorBonus?.map((videoEditor, index) => (
-            <TableRow key={index} className="text-center">
-              <TableCell className="w-48 font-medium">
-                {format(videoEditor.dateOfWork, "PP")}
-              </TableCell>
-              <TableCell className="font-medium">
-                {videoEditor.hoursWorked}
-              </TableCell>
-              <TableCell className="font-medium">
-                {videoEditor.competitorAdsBasis}
-              </TableCell>
-              <TableCell className="font-medium">
-                {videoEditor.newScrollstoppers}
-              </TableCell>
-              <TableCell className="font-medium">
-                {videoEditor.imageAds}
-              </TableCell>
-              <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
-              <TableCell className="font-medium">
-                {videoEditor.productivity! * 100}%
-              </TableCell>
-            </TableRow>
-          ))}
+          {getVideoEditorBonus?.map((videoEditor, index) => {
+            totalProductivity += videoEditor.productivity!;
+            return (
+              <TableRow key={index} className="text-center">
+                <TableCell className="w-48 font-medium">
+                  {format(videoEditor.dateOfWork, "PP")}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {videoEditor.hoursWorked}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {videoEditor.competitorAdsBasis}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {videoEditor.newScrollstoppers}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {videoEditor.imageAds}
+                </TableCell>
+                <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
+                <TableCell className="font-medium">
+                  {videoEditor.productivity! * 100}%
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
+
+      {getVideoEditorBonus && (
+        <p className="mt-20 self-end text-lg">
+          Average Productivity:{" "}
+          {getAverageProductivity(
+            totalProductivity,
+            getVideoEditorBonus.length,
+          )}
+          %
+        </p>
+      )}
     </div>
   );
 }
