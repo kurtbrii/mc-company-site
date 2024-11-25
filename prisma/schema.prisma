@@ -149,6 +149,8 @@ model VideoEditorsBonus {
     User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
+    productivity Float?
+
     @@unique([userId, dateOfWork])
 }
 

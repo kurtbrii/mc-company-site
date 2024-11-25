@@ -76,6 +76,7 @@ export default function BonusSheetVideoEditor({
             <TableHead className="text-center">
               How many VSL&apos;s did you make?
             </TableHead>
+            <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -97,6 +98,9 @@ export default function BonusSheetVideoEditor({
                 {videoEditor.imageAds}
               </TableCell>
               <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
+              <TableCell className="font-medium">
+                {videoEditor.productivity! * 100}%
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

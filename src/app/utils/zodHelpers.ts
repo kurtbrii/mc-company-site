@@ -47,7 +47,8 @@ export const VideoEditorsBonusSchema = z.object({
   imageAds: z.coerce.number({ message: "This should be a number" }),
   vsl: z.coerce.number({ message: "This should be a number" }),
   dateOfWork: z.date(),
-  userId: z.string()
+  userId: z.string(),
+  productivity: z.number()
 })
 
 export const FunnelBuildersSchema = z.object({

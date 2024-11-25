@@ -21,7 +21,8 @@ export const bonusSheetRouter = createTRPCRouter({
           imageAds: input.imageAds,
           vsl: input.vsl,
           userId: input.userId,
-          dateOfWork: input.dateOfWork
+          dateOfWork: input.dateOfWork,
+          productivity: input.productivity
         },
       });
     }),

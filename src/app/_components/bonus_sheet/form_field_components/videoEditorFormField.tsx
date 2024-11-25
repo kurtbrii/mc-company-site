@@ -21,6 +21,7 @@ interface FormFieldProps {
       vsl: number;
       dateOfWork: Date;
       userId: string;
+      productivity: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -35,7 +36,8 @@ interface FormFieldProps {
     | "imageAds"
     | "vsl"
     | "dateOfWork"
-    | "userId";
+    | "userId"
+    | "productivity";
 }
 
 export const FormFieldComponent = ({

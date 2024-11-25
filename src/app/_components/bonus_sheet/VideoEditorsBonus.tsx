@@ -29,6 +29,16 @@ import {
 } from "~/components/ui/popover";
 import { FormFieldComponent } from "./form_field_components/videoEditorFormField";
 
+function calculateProductivity(data: z.infer<typeof VideoEditorsBonusSchema>) {
+  return (
+    (data.competitorAdsBasis * 0.2 +
+      data.newScrollstoppers * 0.1 +
+      data.imageAds +
+      data.vsl * 1.33) /
+    data.hoursWorked
+  );
+}
+
 export default function VideoEditorsBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
@@ -66,12 +76,15 @@ export default function VideoEditorsBonus() {
       newScrollstoppers: undefined,
       vsl: undefined,
       userId: userId ?? "",
+      productivity: 0,
     },
     resolver: zodResolver(VideoEditorsBonusSchema),
   });
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof VideoEditorsBonusSchema>) => {
+    const productivity = calculateProductivity(data);
+
     await submitVideoEditorsForm.mutateAsync({
       userId: userId,
       competitorAdsBasis: data.competitorAdsBasis,
@@ -80,6 +93,7 @@ export default function VideoEditorsBonus() {
       newScrollstoppers: data.newScrollstoppers,
       vsl: data.vsl,
       dateOfWork: data.dateOfWork,
+      productivity: productivity,
     });
   };
 
