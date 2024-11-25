@@ -14,7 +14,7 @@ export const TimeInSchema = z.object({
   timeInDescription: z
     .string()
     .min(5, { message: "Time in details must be at least 5 characters" })
-    .max(40, { message: "Time in details must be at most 40 characters" }),
+    .max(200, { message: "Time in details must be at most 200 characters" }),
   userId: z.string()
 })
 

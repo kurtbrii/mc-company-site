@@ -33,8 +33,8 @@ export default function TimeIn() {
         <option value="CUSTOMER_SERVICE">Customer Service</option>
         {/* <option value="STRIPE_MANAGER">Stripe Manager</option>
         <option value="PROOFREADER">Proofreader</option>
-        <option value="EMAIL_MARKETING">Email Marketing</option>
-        <option value="FACEBOOK_MARKETING">Facebook Marketing</option> */}
+        <option value="EMAIL_MARKETING">Email Marketing</option> */}
+        <option value="FACEBOOK_MARKETING">Facebook Marketing</option>
       </select>
 
       {/* mapping all members */}
