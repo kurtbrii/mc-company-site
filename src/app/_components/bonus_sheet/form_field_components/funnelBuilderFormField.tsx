@@ -23,6 +23,7 @@ interface FormFieldProps {
       hoursAsCustomerService: number;
       ticketResolved: number;
       disputesAnswered: number;
+      productivity: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -39,7 +40,8 @@ interface FormFieldProps {
     | "advertorialFromScratch"
     | "hoursAsCustomerService"
     | "ticketResolved"
-    | "disputesAnswered";
+    | "disputesAnswered"
+    | "productivity";
 }
 
 export const FormFieldComponent = ({

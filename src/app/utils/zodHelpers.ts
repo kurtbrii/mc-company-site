@@ -60,7 +60,8 @@ export const FunnelBuildersSchema = z.object({
   ticketResolved: z.coerce.number({ message: "This should be a number" }),
   disputesAnswered: z.coerce.number({ message: "This should be a number" }),
   dateOfWork: z.date(),
-  userId: z.string()
+  userId: z.string(),
+  productivity: z.number()
 })
 
 export const CustomerServiceSchema = z.object({

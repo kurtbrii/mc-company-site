@@ -2,7 +2,10 @@
 
 import { api } from "~/trpc/react";
 import UserCard from "~/app/_components/userCard";
-import { getCurrentMonday } from "~/app/utils/functionHelpers";
+import {
+  getCurrentMonday,
+  getAverageProductivity,
+} from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
 
@@ -28,6 +31,8 @@ export default function BonusSheetFunnelBuilder({
 }) {
   const getMember = api.user.getMember.useQuery({ id: params.id });
 
+  let totalProductivity = 0;
+
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: getCurrentMonday() ?? new Date("2024-10-31"),
     to: addDays(getCurrentMonday(), 6),
@@ -36,7 +41,7 @@ export default function BonusSheetFunnelBuilder({
   date?.from?.setHours(0, 0, 0, 0);
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: getFunnelBuilderBonus, isLoading } =
+  const { data: funnelBuilderBonus, isLoading } =
     api.bonusSheet.getFunnelBuilderBonus.useQuery({
       userId: params.id,
       startDate: date?.from,
@@ -83,39 +88,55 @@ export default function BonusSheetFunnelBuilder({
             <TableHead className="text-center">
               How many disputes did you answered
             </TableHead>
+            <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {getFunnelBuilderBonus?.map((funnelBuilder, index) => (
-            <TableRow key={index} className="text-center">
-              <TableCell className="w-48 font-medium">
-                {format(funnelBuilder.dateOfWork, "PP")}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.hoursWorked}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.funnelsCreated}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.copyFunnelTrick}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.advertorialFromScratch}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.hoursAsCustomerService}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.ticketResolved}
-              </TableCell>
-              <TableCell className="font-medium">
-                {funnelBuilder.disputesAnswered}
-              </TableCell>
-            </TableRow>
-          ))}
+          {funnelBuilderBonus?.map((funnelBuilder, index) => {
+            totalProductivity += funnelBuilder.productivity!;
+
+            return (
+              <TableRow key={index} className="text-center">
+                <TableCell className="w-48 font-medium">
+                  {format(funnelBuilder.dateOfWork, "PP")}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.hoursWorked}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.funnelsCreated}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.copyFunnelTrick}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.advertorialFromScratch}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.hoursAsCustomerService}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.ticketResolved}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {funnelBuilder.disputesAnswered}
+                </TableCell>
+                <TableCell className="font-medium">
+                  {(funnelBuilder.productivity! * 100).toFixed(2)}%
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
+
+      {funnelBuilderBonus && (
+        <p className="mt-20 self-end text-lg">
+          Average Productivity:{" "}
+          {getAverageProductivity(totalProductivity, funnelBuilderBonus.length)}
+          %
+        </p>
+      )}
     </div>
   );
 }

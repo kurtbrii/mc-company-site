@@ -37,6 +37,19 @@ export default function FunnelBuildersBonus() {
 
   const { toast } = useToast();
 
+  function calculateTotalProductivity(
+    data: z.infer<typeof FunnelBuildersSchema>,
+  ) {
+    return (
+      (data.funnelsCreated * 2 +
+        data.copyFunnelTrick * 0.75 +
+        data.advertorialFromScratch * 3 +
+        data.disputesAnswered * 0.1 +
+        data.ticketResolved * 8) /
+      (data.hoursWorked + data.hoursAsCustomerService)
+    );
+  }
+
   const submitFunnelBuildersForm =
     api.bonusSheet.createFunnelBuildersBonus.useMutation({
       onSuccess: () => {
@@ -62,14 +75,15 @@ export default function FunnelBuildersBonus() {
 
   const form = useForm<FunnelBuildersBonusSchemaType>({
     defaultValues: {
+      funnelsCreated: undefined,
       advertorialFromScratch: undefined,
       copyFunnelTrick: undefined,
       disputesAnswered: undefined,
-      funnelsCreated: undefined,
       hoursAsCustomerService: undefined,
       hoursWorked: undefined,
       ticketResolved: undefined,
       userId: userId ?? "",
+      productivity: 0,
     },
     resolver: zodResolver(FunnelBuildersSchema),
   });
@@ -86,6 +100,7 @@ export default function FunnelBuildersBonus() {
       hoursWorked: data.hoursWorked,
       ticketResolved: data.ticketResolved,
       dateOfWork: data.dateOfWork,
+      productivity: calculateTotalProductivity(data),
     });
   };
 
