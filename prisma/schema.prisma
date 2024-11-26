@@ -127,6 +127,8 @@ model FunnelBuildersBonus {
     User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
+    productivity Float?
+
     @@unique([userId, dateOfWork])
 }
 
@@ -169,6 +171,8 @@ model CustomerServiceBonus {
     User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
 
+    productivity Float?
+
     @@unique([userId, dateOfWork])
 }
 
@@ -184,6 +188,8 @@ model FacebookMarketingBonus {
 
     User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
+
+    productivity Float?
 
     @@unique([userId, dateOfWork])
 }

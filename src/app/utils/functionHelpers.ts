@@ -94,7 +94,5 @@ export const getCurrentMonday = () => {
 
 
 export const getAverageProductivity = (totalProductivity: number, length: number) => {
-  return (Math.round((totalProductivity / length) * 100) /
-    100) *
-    100
+  return (totalProductivity / length * 100).toFixed(2)
 }

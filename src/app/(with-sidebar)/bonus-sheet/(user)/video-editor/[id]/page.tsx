@@ -106,7 +106,7 @@ export default function BonusSheetVideoEditor({
                 </TableCell>
                 <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
                 <TableCell className="font-medium">
-                  {videoEditor.productivity! * 100}%
+                  {(videoEditor.productivity! * 100).toFixed(2)}%
                 </TableCell>
               </TableRow>
             );

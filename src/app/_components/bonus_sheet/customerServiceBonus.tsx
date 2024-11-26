@@ -13,7 +13,6 @@ import {
 } from "~/components/ui/form";
 
 import { useToast } from "~/components/hooks/use-toast";
-import { Input } from "~/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
 import { api } from "~/trpc/react";
@@ -29,6 +28,12 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 import { FormFieldComponent } from "./form_field_components/customerServiceFormField";
+
+function calculateProductivity(data: z.infer<typeof CustomerServiceSchema>) {
+  return (
+    (data.ticketsResolved * 8 + data.disputesResolved * 0.1) / data.hoursWorked
+  );
+}
 
 export default function CustumerServiceBonus() {
   const { data: session } = useSession();
@@ -65,6 +70,7 @@ export default function CustumerServiceBonus() {
       ticketsResolved: 0,
       disputesResolved: 0,
       userId: "",
+      productivity: 0,
     },
     resolver: zodResolver(CustomerServiceSchema),
   });
@@ -77,6 +83,7 @@ export default function CustumerServiceBonus() {
       disputesResolved: data.disputesResolved,
       dateOfWork: data.dateOfWork,
       userId: userId,
+      productivity: calculateProductivity(data),
     });
   };
 

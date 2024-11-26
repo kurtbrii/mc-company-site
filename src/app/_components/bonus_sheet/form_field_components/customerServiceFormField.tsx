@@ -19,6 +19,7 @@ interface FormFieldProps {
       userId: string;
       ticketsResolved: number;
       disputesResolved: number;
+      productivity: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -31,7 +32,8 @@ interface FormFieldProps {
     | "dateOfWork"
     | "userId"
     | "ticketsResolved"
-    | "disputesResolved";
+    | "disputesResolved"
+    | "productivity";
 }
 
 export const FormFieldComponent = ({
