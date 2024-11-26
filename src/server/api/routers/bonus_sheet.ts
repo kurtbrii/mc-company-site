@@ -127,6 +127,7 @@ export const bonusSheetRouter = createTRPCRouter({
           campaignsLaunched: input.campaignsLaunched,
           dateOfWork: input.dateOfWork,
           hoursCampaignsLaunched: input.hoursCampaignsLaunched,
+          productivity: input.productivity
         }
       })
     }),
@@ -147,8 +148,6 @@ export const bonusSheetRouter = createTRPCRouter({
         }
       })
     }),
-
-
 });
 
 

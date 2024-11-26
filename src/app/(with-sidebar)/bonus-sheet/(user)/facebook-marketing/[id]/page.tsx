@@ -2,7 +2,10 @@
 
 import { api } from "~/trpc/react";
 import UserCard from "~/app/_components/userCard";
-import { getCurrentMonday } from "~/app/utils/functionHelpers";
+import {
+  getCurrentMonday,
+  getAverageProductivity,
+} from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
 import DateFilter from "~/app/_components/dateFilter";
@@ -27,6 +30,8 @@ export default function BonusSheetFBMarketing({
   params: { id: string };
 }) {
   const getMember = api.user.getMember.useQuery({ id: params.id });
+
+  let totalProductivity = 0;
 
   const [date, setDate] = React.useState<DateRange | undefined>({
     from: getCurrentMonday() ?? new Date("2024-10-31"),
@@ -70,26 +75,44 @@ export default function BonusSheetFBMarketing({
             <TableHead className="w-64 text-center">
               How many funnels did you create from scratch?
             </TableHead>
+            <TableHead className="w-64 text-center">
+              Productivity Score
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {fbMarketingBonus?.map((fbMarketing, index) => (
-            <TableRow key={index} className="text-center">
-              <TableCell className="w-48 font-medium">
-                {format(fbMarketing.dateOfWork, "PP")}
-              </TableCell>
+          {fbMarketingBonus?.map((fbMarketing, index) => {
+            totalProductivity += fbMarketing.productivity!;
 
-              <TableCell className="font-medium">
-                {fbMarketing.hoursCampaignsLaunched}
-              </TableCell>
+            return (
+              <TableRow key={index} className="text-center">
+                <TableCell className="w-48 font-medium">
+                  {format(fbMarketing.dateOfWork, "PP")}
+                </TableCell>
 
-              <TableCell className="font-medium">
-                {fbMarketing.campaignsLaunched}
-              </TableCell>
-            </TableRow>
-          ))}
+                <TableCell className="font-medium">
+                  {fbMarketing.hoursCampaignsLaunched}
+                </TableCell>
+
+                <TableCell className="font-medium">
+                  {fbMarketing.campaignsLaunched}
+                </TableCell>
+
+                <TableCell className="font-medium">
+                  {(fbMarketing.productivity! * 100).toFixed(2)}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
+
+      {fbMarketingBonus && (
+        <p className="mt-20 self-end text-lg">
+          Average Productivity:{" "}
+          {getAverageProductivity(totalProductivity, fbMarketingBonus.length)}%
+        </p>
+      )}
     </div>
   );
 }

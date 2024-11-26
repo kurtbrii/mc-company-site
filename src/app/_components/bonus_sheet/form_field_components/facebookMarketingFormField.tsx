@@ -18,6 +18,7 @@ interface FormFieldProps {
       userId: string;
       campaignsLaunched: number;
       hoursCampaignsLaunched: number;
+      productivity: number;
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
@@ -29,7 +30,8 @@ interface FormFieldProps {
     | "dateOfWork"
     | "userId"
     | "campaignsLaunched"
-    | "hoursCampaignsLaunched";
+    | "hoursCampaignsLaunched"
+    | "productivity";
 }
 
 export const FormFieldComponent = ({

@@ -76,5 +76,6 @@ export const FacebookMarketingSchema = z.object({
   campaignsLaunched: z.coerce.number({ message: "This should be a number" }),
   hoursCampaignsLaunched: z.coerce.number({ message: "This should be a number" }),
   dateOfWork: z.date(),
-  userId: z.string()
+  userId: z.string(),
+  productivity: z.number()
 })

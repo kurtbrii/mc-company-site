@@ -30,6 +30,10 @@ import {
 
 import { FormFieldComponent } from "./form_field_components/facebookMarketingFormField";
 
+function calculateProductivity(data: z.infer<typeof FacebookMarketingSchema>) {
+  return (data.campaignsLaunched * 0.25) / data.hoursCampaignsLaunched;
+}
+
 export default function FacebookMarketingBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
@@ -62,6 +66,7 @@ export default function FacebookMarketingBonus() {
   const form = useForm<FunnelBuildersBonusSchemaType>({
     defaultValues: {
       userId: userId ?? "",
+      productivity: 0,
     },
     resolver: zodResolver(FacebookMarketingSchema),
   });
@@ -73,6 +78,7 @@ export default function FacebookMarketingBonus() {
       campaignsLaunched: data.campaignsLaunched,
       dateOfWork: data.dateOfWork,
       hoursCampaignsLaunched: data.hoursCampaignsLaunched,
+      productivity: calculateProductivity(data),
     });
   };
 
