@@ -79,7 +79,7 @@ export default function BonusSheetFunnelBuilder({
             <TableHead className="text-center">
               How many advertorials did you create from scratch?
             </TableHead>
-            <TableHead className="text-center">
+            {/* <TableHead className="text-center">
               How many hours did you work as a customer service employee?
             </TableHead>
             <TableHead className="text-center">
@@ -87,7 +87,7 @@ export default function BonusSheetFunnelBuilder({
             </TableHead>
             <TableHead className="text-center">
               How many disputes did you answered
-            </TableHead>
+            </TableHead> */}
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>
@@ -112,7 +112,7 @@ export default function BonusSheetFunnelBuilder({
                 <TableCell className="font-medium">
                   {funnelBuilder.advertorialFromScratch}
                 </TableCell>
-                <TableCell className="font-medium">
+                {/* <TableCell className="font-medium">
                   {funnelBuilder.hoursAsCustomerService}
                 </TableCell>
                 <TableCell className="font-medium">
@@ -120,7 +120,7 @@ export default function BonusSheetFunnelBuilder({
                 </TableCell>
                 <TableCell className="font-medium">
                   {funnelBuilder.disputesAnswered}
-                </TableCell>
+                </TableCell> */}
                 <TableCell className="font-medium">
                   {(funnelBuilder.productivity! * 100).toFixed(2)}%
                 </TableCell>

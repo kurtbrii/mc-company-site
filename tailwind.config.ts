@@ -36,6 +36,8 @@ export default {
 				email_marketing_bg: '#3F3A47',
 				facebook_marketing: '#206694',
 				facebook_marketing_bg: '#373E48',
+				manager: "#E74B3C",
+				manager_bg: "#4C3C40",
 
 
 				// ! SHADCN COLORS

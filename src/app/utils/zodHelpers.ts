@@ -40,6 +40,22 @@ export const SurveySchema = z.object({
 })
 
 // ! bonus_sheet.ts
+export const ManagerSchema = z.object({
+  hoursWorked: z.coerce.number({ message: "This should be a number" }),
+  funnelsCreated: z.coerce.number({ message: "This should be a number" }),
+  copyFunnelTrick: z.coerce.number({ message: "This should be a number" }),
+  advertorialFromScratch: z.coerce.number({ message: "This should be a number" }),
+
+  hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
+  ticketResolved: z.coerce.number({ message: "This should be a number" }),
+  disputesAnswered: z.coerce.number({ message: "This should be a number" }),
+
+  dateOfWork: z.date(),
+  userId: z.string(),
+  productivity: z.number()
+})
+
+
 export const VideoEditorsBonusSchema = z.object({
   hoursWorked: z.coerce.number({ message: "This should be a number" }),
   competitorAdsBasis: z.coerce.number({ message: "This should be a number" }),
@@ -56,12 +72,14 @@ export const FunnelBuildersSchema = z.object({
   funnelsCreated: z.coerce.number({ message: "This should be a number" }),
   copyFunnelTrick: z.coerce.number({ message: "This should be a number" }),
   advertorialFromScratch: z.coerce.number({ message: "This should be a number" }),
-  hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
-  ticketResolved: z.coerce.number({ message: "This should be a number" }),
-  disputesAnswered: z.coerce.number({ message: "This should be a number" }),
+
   dateOfWork: z.date(),
   userId: z.string(),
   productivity: z.number()
+
+  // hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
+  // ticketResolved: z.coerce.number({ message: "This should be a number" }),
+  // disputesAnswered: z.coerce.number({ message: "This should be a number" }),
 })
 
 export const CustomerServiceSchema = z.object({

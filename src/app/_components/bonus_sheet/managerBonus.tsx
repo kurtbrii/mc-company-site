@@ -17,7 +17,7 @@ import { Input } from "~/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
 import { api } from "~/trpc/react";
-import { FunnelBuildersSchema } from "../../utils/zodHelpers";
+import { ManagerSchema } from "../../utils/zodHelpers";
 
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
@@ -31,24 +31,24 @@ import {
 
 import { FormFieldComponent } from "./form_field_components/funnelBuilderFormField";
 
-export default function FunnelBuildersBonus() {
+export default function ManagerBonus() {
   const { data: session } = useSession();
   const userId = session?.user.id ?? "";
 
   const { toast } = useToast();
 
-  function calculateTotalProductivity(
-    data: z.infer<typeof FunnelBuildersSchema>,
-  ) {
+  function calculateTotalProductivity(data: z.infer<typeof ManagerSchema>) {
     return (
       (data.funnelsCreated * 2 +
         data.copyFunnelTrick * 0.75 +
-        data.advertorialFromScratch * 3) /
-      data.hoursWorked
+        data.advertorialFromScratch * 3 +
+        data.disputesAnswered * 0.1 +
+        data.ticketResolved * 8) /
+      (data.hoursWorked + data.hoursAsCustomerService)
     );
   }
 
-  const submitFunnelBuildersForm =
+  const submitManagerForm =
     api.bonusSheet.createFunnelBuildersBonus.useMutation({
       onSuccess: () => {
         toast({
@@ -69,36 +69,36 @@ export default function FunnelBuildersBonus() {
     });
 
   // ! FORM DECLARATIONS
-  type FunnelBuildersBonusSchemaType = z.infer<typeof FunnelBuildersSchema>;
+  type FunnelBuildersBonusSchemaType = z.infer<typeof ManagerSchema>;
 
   const form = useForm<FunnelBuildersBonusSchemaType>({
     defaultValues: {
       funnelsCreated: undefined,
       advertorialFromScratch: undefined,
       copyFunnelTrick: undefined,
+      disputesAnswered: undefined,
+      hoursAsCustomerService: undefined,
       hoursWorked: undefined,
+      ticketResolved: undefined,
       userId: userId ?? "",
       productivity: 0,
-      // disputesAnswered: undefined,
-      // hoursAsCustomerService: undefined,
-      // ticketResolved: undefined,
     },
-    resolver: zodResolver(FunnelBuildersSchema),
+    resolver: zodResolver(ManagerSchema),
   });
 
   //! Submit Form
-  const onSubmit = async (data: z.infer<typeof FunnelBuildersSchema>) => {
-    void submitFunnelBuildersForm.mutateAsync({
+  const onSubmit = async (data: z.infer<typeof ManagerSchema>) => {
+    void submitManagerForm.mutateAsync({
       userId: userId,
-      funnelsCreated: data.funnelsCreated,
-      copyFunnelTrick: data.copyFunnelTrick,
       advertorialFromScratch: data.advertorialFromScratch,
+      copyFunnelTrick: data.copyFunnelTrick,
+      disputesAnswered: data.disputesAnswered,
+      funnelsCreated: data.funnelsCreated,
+      hoursAsCustomerService: data.hoursAsCustomerService,
       hoursWorked: data.hoursWorked,
+      ticketResolved: data.ticketResolved,
       dateOfWork: data.dateOfWork,
       productivity: calculateTotalProductivity(data),
-      // disputesAnswered: data.disputesAnswered,
-      // ticketResolved: data.ticketResolved,
-      // hoursAsCustomerService: data.hoursAsCustomerService,
     });
   };
 
@@ -182,8 +182,7 @@ export default function FunnelBuildersBonus() {
                 controlName="advertorialFromScratch"
               />
 
-              {/* MIGHT BE NEEDED IN THE FUTURE !! */}
-              {/* // How many hours did you work as a customer service employee
+              {/* // How many hours did you work as a customer service employee */}
               <FormFieldComponent
                 form={form}
                 label={
@@ -193,18 +192,18 @@ export default function FunnelBuildersBonus() {
               />
 
               {/* // How many tickets did you resolve in Freshdesk*/}
-              {/* <FormFieldComponent
+              <FormFieldComponent
                 form={form}
                 label={"How many tickets did you resolve in Freshdesk?"}
                 controlName="ticketResolved"
-              /> */}
+              />
 
               {/* How many disputes did you answered */}
-              {/* <FormFieldComponent
+              <FormFieldComponent
                 form={form}
                 label={"How many disputes did you answer?"}
                 controlName="disputesAnswered"
-              /> */}
+              />
 
               <Button type="submit" className="mt-5 w-full">
                 Submit

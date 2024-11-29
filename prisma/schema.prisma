@@ -62,6 +62,7 @@ model User {
     funnelBuildersBonus    FunnelBuildersBonus[]
     customerServiceBonus   CustomerServiceBonus[]
     facebookMarketingBonus FacebookMarketingBonus[]
+    ManagerBonus           ManagerBonus[]
 }
 
 model VerificationToken {
@@ -104,7 +105,8 @@ model Survey {
     @@unique([userId, month, year])
 }
 
-model FunnelBuildersBonus {
+// Bonus Sheets
+model ManagerBonus {
     id   String   @id @default(cuid())
     date DateTime @default(now())
 
@@ -123,6 +125,34 @@ model FunnelBuildersBonus {
     hoursAsCustomerService Float
     ticketResolved         Int
     disputesAnswered       Int
+
+    User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    userId String
+
+    productivity Float?
+
+    @@unique([userId, dateOfWork])
+}
+
+model FunnelBuildersBonus {
+    id   String   @id @default(cuid())
+    date DateTime @default(now())
+
+    // How many hours did you work    
+    // How many funnels did you create from scratch?
+    // How many funnels did you copy using trick? (fill in 0 if you didnt do anything)
+    // How many advertorials did you create from scratch? (fill in 0 if you didnt do anything)
+    // How many hours did you work as a customer service employee
+    // How many tickets did you resolve in Freshdesk
+    // How many disputes did you answered
+    dateOfWork             DateTime
+    hoursWorked            Float
+    funnelsCreated         Int
+    copyFunnelTrick        Int
+    advertorialFromScratch Int
+    // hoursAsCustomerService Float
+    // ticketResolved         Int
+    // disputesAnswered       Int
 
     User   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     userId String
@@ -204,6 +234,7 @@ enum ROLE {
     PROOFREADER
     EMAIL_MARKETING
     FACEBOOK_MARKETING
+    MANAGER
 }
 
 enum YES_NO_SAME {
