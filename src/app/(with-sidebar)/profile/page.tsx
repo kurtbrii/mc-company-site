@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ROLE } from "@prisma/client";
+import { type ROLE } from "@prisma/client";
 import { useSession } from "next-auth/react";
 // import { getBonusRole, userColor, userRole } from "../../utils/functionHelpers";
 import { useEffect, useState } from "react";
@@ -292,7 +292,7 @@ export default function Profile() {
   );
 }
 
-export const userColor = (role: ROLE) => {
+const userColor = (role: ROLE) => {
   switch (role) {
     case "CEO":
       return "text-ceo bg-ceo_bg";
@@ -317,7 +317,7 @@ export const userColor = (role: ROLE) => {
   }
 };
 
-export const userRole = (role: ROLE) => {
+const userRole = (role: ROLE) => {
   switch (role) {
     case "CEO":
       return "CEO";
@@ -342,7 +342,7 @@ export const userRole = (role: ROLE) => {
   }
 };
 
-export const getBonusRole = (role: ROLE) => {
+const getBonusRole = (role: ROLE) => {
   switch (role) {
     case "VIDEO_EDITOR":
       return "video-editor";
