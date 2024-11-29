@@ -102,7 +102,7 @@ export default function VideoEditorsBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-video_editor tablet:mb-5 tablet:text-4xl">
+          <h1 className="justify-center self-center rounded-xl bg-video_editor_bg p-4 text-2xl text-video_editor tablet:mb-5 tablet:text-4xl">
             VIDEO EDITORS BONUS SHEET
           </h1>
 

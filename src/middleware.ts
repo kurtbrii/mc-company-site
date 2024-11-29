@@ -1,6 +1,6 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getSession } from "next-auth/react";
-import { getRole } from "./app/utils/functionHelpers";
+import { getBonusRole } from "./app/utils/functionHelpers";
 
 export async function middleware(req: NextRequest, res: NextResponse) {
   //! solution from https://github.com/nextauthjs/next-auth/issues/4467
@@ -22,7 +22,7 @@ export async function middleware(req: NextRequest, res: NextResponse) {
   const currentURL = req.nextUrl.pathname
 
   const notMyTimeInDetails = currentURL.startsWith('/time-in/') && currentURL.split('/')[2] !== user?.id // user navigates to time in details of other members
-  const notMyBonusDetails = currentURL.startsWith('/bonus-sheet/') && (getRole(user!.role) !== currentURL.split('/')[2] || currentURL.split('/')[3] !== user?.id) // user navigates to bonus sheet details of other members
+  const notMyBonusDetails = currentURL.startsWith('/bonus-sheet/') && (getBonusRole(user!.role) !== currentURL.split('/')[2] || currentURL.split('/')[3] !== user?.id) // user navigates to bonus sheet details of other members
 
 
   const ceoURLs = [`/time-in`, '/bonus-sheet', '/monthly-survey'] // paths that are only accessible to the CEO

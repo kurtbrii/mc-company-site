@@ -107,7 +107,7 @@ export default function FunnelBuildersBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-funnel_builders tablet:mb-5 tablet:text-4xl">
+          <h1 className="justify-center self-center rounded-xl bg-funnel_builders_bg p-4 text-2xl text-funnel_builders tablet:mb-5 tablet:text-4xl">
             FUNNEL BUILDERS BONUS SHEET
           </h1>
 

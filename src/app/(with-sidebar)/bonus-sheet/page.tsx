@@ -6,7 +6,7 @@ import Link from "next/link";
 import UserCard from "../../_components/userCard";
 import { UserCardLoading } from "../../_components/loading_state/userCardLoading";
 import { type ROLE } from "@prisma/client";
-import { getRole, userColor } from "~/app/utils/functionHelpers";
+import { getBonusRole, userColor } from "~/app/utils/functionHelpers";
 import { useState } from "react";
 
 export default function TimeIn() {
@@ -53,7 +53,7 @@ export default function TimeIn() {
               <Link
                 className="flex w-[295px] flex-col gap-3 tablet:min-w-[400px]"
                 key={index}
-                href={`bonus-sheet/${getRole(member.role)}/${member.id}`}
+                href={`bonus-sheet/${getBonusRole(member.role)}/${member.id}`}
               >
                 <UserCard member={member} />
               </Link>

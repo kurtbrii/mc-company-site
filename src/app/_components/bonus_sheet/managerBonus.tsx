@@ -29,7 +29,7 @@ import {
   PopoverTrigger,
 } from "~/components/ui/popover";
 
-import { FormFieldComponent } from "./form_field_components/funnelBuilderFormField";
+import { FormFieldComponent } from "./form_field_components/managerFormField";
 
 export default function ManagerBonus() {
   const { data: session } = useSession();
@@ -48,30 +48,29 @@ export default function ManagerBonus() {
     );
   }
 
-  const submitManagerForm =
-    api.bonusSheet.createFunnelBuildersBonus.useMutation({
-      onSuccess: () => {
-        toast({
-          title: "Successfully submitted form",
-        });
+  const submitManagerForm = api.bonusSheet.createManagerBonus.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Successfully submitted form",
+      });
 
-        setTimeout(function () {
-          location.reload();
-        }, 3000);
-      },
+      setTimeout(function () {
+        location.reload();
+      }, 3000);
+    },
 
-      onError: () => {
-        toast({
-          title: "Unsuccessful: Duplicate Date",
-          variant: "destructive",
-        });
-      },
-    });
+    onError: () => {
+      toast({
+        title: "Unsuccessful: Duplicate Date",
+        variant: "destructive",
+      });
+    },
+  });
 
   // ! FORM DECLARATIONS
-  type FunnelBuildersBonusSchemaType = z.infer<typeof ManagerSchema>;
+  type ManagerBonusSchemaType = z.infer<typeof ManagerSchema>;
 
-  const form = useForm<FunnelBuildersBonusSchemaType>({
+  const form = useForm<ManagerBonusSchemaType>({
     defaultValues: {
       funnelsCreated: undefined,
       advertorialFromScratch: undefined,
@@ -107,8 +106,8 @@ export default function ManagerBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-funnel_builders tablet:mb-5 tablet:text-4xl">
-            FUNNEL BUILDERS BONUS SHEET
+          <h1 className="justify-center self-center rounded-xl bg-manager_bg p-4 text-2xl text-manager tablet:mb-5 tablet:text-4xl">
+            MANAGER BONUS SHEET
           </h1>
 
           <form
@@ -186,7 +185,7 @@ export default function ManagerBonus() {
               <FormFieldComponent
                 form={form}
                 label={
-                  "How many hours did you work as a customer service employee"
+                  "How many hours did you work as a customer service employee?"
                 }
                 controlName="hoursAsCustomerService"
               />

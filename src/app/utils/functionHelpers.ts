@@ -18,6 +18,8 @@ export const userColor = (role: ROLE) => {
       return "text-email_marketing bg-email_marketing_bg"
     case "FACEBOOK_MARKETING":
       return "text-facebook_marketing bg-facebook_marketing_bg"
+    case "MANAGER":
+      return "text-manager bg-manager_bg"
     case "USER":
       return "text-everyone bg-everyone_bg"
   }
@@ -41,12 +43,14 @@ export const userRole = (role: ROLE) => {
       return "Email Marketing"
     case "FACEBOOK_MARKETING":
       return "Facebook Marketing"
+    case "MANAGER":
+      return "Manager"
     case "USER":
       return "No Role Yet"
   }
 }
 
-export const getRole = (role: ROLE) => {
+export const getBonusRole = (role: ROLE) => {
   switch (role) {
     case "VIDEO_EDITOR":
       return "video-editor";
@@ -56,6 +60,8 @@ export const getRole = (role: ROLE) => {
       return "customer-service";
     case "FACEBOOK_MARKETING":
       return "facebook-marketing";
+    case "MANAGER":
+      return "manager"
   }
 };
 
@@ -95,4 +101,5 @@ export const getCurrentMonday = () => {
 
 export const getAverageProductivity = (totalProductivity: number, length: number) => {
   return length === 0 ? 0 : (totalProductivity / length * 100).toFixed(2)
+
 }

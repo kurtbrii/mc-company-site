@@ -92,7 +92,7 @@ export default function CustumerServiceBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-customer_service tablet:mb-5 tablet:text-4xl">
+          <h1 className="justify-center self-center rounded-xl bg-customer_service_bg p-4 text-2xl text-customer_service tablet:mb-5 tablet:text-4xl">
             CUSTOMER SERVICE BONUS SHEET
           </h1>
 

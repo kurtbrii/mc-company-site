@@ -87,7 +87,7 @@ export default function FacebookMarketingBonus() {
       {/* FORM */}
       <div className="flex w-screen flex-col items-center justify-center tablet:my-12">
         <Form {...form}>
-          <h1 className="justify-center self-center text-2xl text-facebook_marketing tablet:mb-5 tablet:text-4xl">
+          <h1 className="justify-center self-center rounded-xl bg-facebook_marketing_bg p-4 text-2xl text-facebook_marketing tablet:mb-5 tablet:text-4xl">
             FACEBOOK MARKETING BONUS SHEET
           </h1>
 

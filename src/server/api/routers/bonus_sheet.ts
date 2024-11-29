@@ -5,10 +5,50 @@ import {
 } from "~/server/api/trpc";
 
 import { z } from "zod";
-import { VideoEditorsBonusSchema, FunnelBuildersSchema, CustomerServiceSchema, FacebookMarketingSchema } from "~/app/utils/zodHelpers";
+import { VideoEditorsBonusSchema, FunnelBuildersSchema, CustomerServiceSchema, FacebookMarketingSchema, ManagerSchema } from "~/app/utils/zodHelpers";
 
 
 export const bonusSheetRouter = createTRPCRouter({
+  // ! manager bonus
+  createManagerBonus: protectedProcedure
+    .input(ManagerSchema)
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.managerBonus.create({
+        data: {
+          dateOfWork: input.dateOfWork,
+
+          hoursWorked: input.hoursWorked,
+          funnelsCreated: input.funnelsCreated,
+          copyFunnelTrick: input.copyFunnelTrick,
+          advertorialFromScratch: input.advertorialFromScratch,
+
+          hoursAsCustomerService: input.hoursAsCustomerService,
+          ticketResolved: input.ticketResolved,
+          disputesAnswered: input.disputesAnswered,
+
+          productivity: input.productivity,
+          userId: input.userId
+        }
+      });
+    }),
+
+  getManagerBonus: protectedProcedure
+    .input(z.object({ userId: z.string(), startDate: z.date().optional(), endDate: z.date().optional() }))
+    .query(async ({ ctx, input }) => {
+      return ctx.db.managerBonus.findMany({
+        where: {
+          userId: input.userId,
+          dateOfWork: {
+            gte: input.startDate,
+            lte: input.endDate
+          }
+        },
+        orderBy: {
+          dateOfWork: "desc"
+        }
+      })
+    }),
+
   // ! video editor bonus 
   createVideoEditorsBonus: protectedProcedure
     .input(VideoEditorsBonusSchema)
@@ -55,12 +95,12 @@ export const bonusSheetRouter = createTRPCRouter({
           funnelsCreated: input.funnelsCreated,
           copyFunnelTrick: input.copyFunnelTrick,
           advertorialFromScratch: input.advertorialFromScratch,
-          hoursAsCustomerService: input.hoursAsCustomerService,
-          ticketResolved: input.ticketResolved,
-          disputesAnswered: input.disputesAnswered,
           userId: input.userId,
           dateOfWork: input.dateOfWork,
           productivity: input.productivity
+          // hoursAsCustomerService: input.hoursAsCustomerService,
+          // ticketResolved: input.ticketResolved,
+          // disputesAnswered: input.disputesAnswered,
         }
       })
     }),
