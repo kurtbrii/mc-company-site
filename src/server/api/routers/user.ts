@@ -13,7 +13,6 @@ export const userRouter = createTRPCRouter({
   getAllMembers: publicProcedure
     .input(z.object({ notMyTeam: z.nativeEnum(ROLE).optional(), myTeam: z.nativeEnum(ROLE).optional(), hasBonus: z.boolean().optional(), month: z.number().optional(), year: z.number().optional() }))
     .query(async ({ ctx, input }) => {
-
       const roleObj = {
         OR: [
           input.myTeam && {

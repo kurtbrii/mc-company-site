@@ -95,7 +95,7 @@ export default function MonthlySurvey() {
   }
 
   // ! FORM IS NOT YET OPEN
-  if (![1, 27, 28, 29, 30, 23].includes(dateNow.getDate())) {
+  if (![27, 28, 29, 30, 23].includes(dateNow.getDate())) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
         <p>This is only accessible by the end of the month.</p>
