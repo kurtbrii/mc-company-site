@@ -40,7 +40,7 @@ export const userRouter = createTRPCRouter({
         AND: [
           input.hasBonus && {
             role: {
-              in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE"]
+              in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE", "MANAGER"]
             }
           },
         ].filter(Boolean),
