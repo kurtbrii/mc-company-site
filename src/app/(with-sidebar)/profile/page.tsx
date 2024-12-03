@@ -84,7 +84,10 @@ export default function Profile() {
                 ) : (
                   <div className="h-100px w-[100px]">
                     <Image
-                      src={user?.image ?? ""}
+                      src={
+                        user?.image ??
+                        "./../../../../public/assets/mc-company-logo.png"
+                      }
                       alt={"User Image"}
                       width={100}
                       height={100}
