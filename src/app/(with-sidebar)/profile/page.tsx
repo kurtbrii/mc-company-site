@@ -12,6 +12,7 @@ import { type z } from "zod";
 import { api } from "~/trpc/react";
 import { Toastbar } from "../../_components/toastbar";
 import Link from "next/link";
+import { superUsers, hasBonusObject } from "~/app/utils/helper";
 
 export default function Profile() {
   // ! VARIABLE DECLARATIONS
@@ -233,13 +234,7 @@ export default function Profile() {
               >
                 My Time In Details
               </Link>
-              {[
-                "FACEBOOK_MARKETING",
-                "FUNNEL_BUILDER",
-                "VIDEO_EDITOR",
-                "CUSTOMER_SERVICE",
-                "MANAGER",
-              ].includes(user!.role) && (
+              {hasBonusObject.includes(user!.role) && (
                 <Link
                   className="w-full rounded-lg bg-discord_left p-4 text-center"
                   type="button"
@@ -251,7 +246,7 @@ export default function Profile() {
             </div>
           )}
 
-          {["CEO", "MANAGER"].includes(user?.role ?? "USER") && (
+          {superUsers.includes(user?.role ?? "USER") && (
             <div className="flex flex-col gap-3 tablet:flex-row">
               <Link
                 href={`/time-in`}

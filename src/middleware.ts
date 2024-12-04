@@ -1,6 +1,7 @@
 import { type NextRequest, NextResponse } from "next/server";
 import { getSession } from "next-auth/react";
 import { getBonusRole } from "./app/utils/functionHelpers";
+import { superUsers } from "~/app/utils/helper";
 
 export async function middleware(req: NextRequest, res: NextResponse) {
   //! solution from https://github.com/nextauthjs/next-auth/issues/4467
@@ -25,11 +26,11 @@ export async function middleware(req: NextRequest, res: NextResponse) {
   const notMyBonusDetails = currentURL.startsWith('/bonus-sheet/') && (getBonusRole(user!.role) !== currentURL.split('/')[2] || currentURL.split('/')[3] !== user?.id) // user navigates to bonus sheet details of other members
 
 
-  const ceoURLs = [`/time-in`, '/bonus-sheet'] // paths that are only accessible to the CEO
-  const isUrlProtected = ceoURLs.includes(req.nextUrl.pathname)
+  const superUsersUrls = [`/time-in`, '/bonus-sheet', "/monthly-survey"] // paths that are only accessible to the CEO
+  const isUrlProtected = superUsersUrls.includes(req.nextUrl.pathname)
 
-  if (user?.role !== 'CEO' && user?.role !== "MANAGER") {
-    if (notMyTimeInDetails || notMyBonusDetails || currentURL === '/monthly-survey' || currentURL === '/bonus-sheet' || currentURL === "/time-in") {
+  if (!superUsers.includes(user!.role)) {
+    if (notMyTimeInDetails || notMyBonusDetails || isUrlProtected) {
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
   }

@@ -8,6 +8,7 @@ import {
 
 import { ROLE } from "@prisma/client";
 import { UpdateProfileSchema } from "~/app/utils/zodHelpers";
+import { hasBonusObject } from '~/app/utils/helper'
 
 export const userRouter = createTRPCRouter({
   getAllMembers: publicProcedure
@@ -39,7 +40,7 @@ export const userRouter = createTRPCRouter({
         AND: [
           input.hasBonus && {
             role: {
-              in: ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE", "MANAGER", "FACEBOOK_MANAGER"]
+              in: hasBonusObject
             }
           },
         ].filter(Boolean),

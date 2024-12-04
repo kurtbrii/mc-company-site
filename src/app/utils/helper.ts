@@ -1,3 +1,5 @@
+import { type ROLE } from '@prisma/client'
+
 //! this is used in sidebar.tsx
 const dashboard_items = [
   {
@@ -38,5 +40,8 @@ const dashboard_items = [
   },
 ];
 
+const hasBonusObject = ["VIDEO_EDITOR", "FUNNEL_BUILDER", "CUSTOMER_SERVICE", "MANAGER", "FACEBOOK_MARKETING"] as ROLE[]
 
-export { dashboard_items }
+const superUsers = ["CEO", "MANAGER"] as ROLE[]
+
+export { dashboard_items, hasBonusObject, superUsers }
