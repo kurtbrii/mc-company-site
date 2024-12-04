@@ -70,13 +70,10 @@ export default function BonusSheetCustomerService({
               How many hours did you work?
             </TableHead>
             <TableHead className="text-center">
-              How many ads did you make with the competitors ad as a basis?{" "}
+              How many tickets did you resolve?
             </TableHead>
             <TableHead className="text-center">
-              How many new scrollstoppers did you create for an existing ad?{" "}
-            </TableHead>
-            <TableHead className="text-center">
-              How many image ads did you create?
+              How many disputes did you resolve?
             </TableHead>
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
@@ -89,9 +86,6 @@ export default function BonusSheetCustomerService({
               <TableRow key={index} className="text-center">
                 <TableCell className="w-48 font-medium">
                   {format(customerService.dateOfWork, "PP")}
-                </TableCell>
-                <TableCell className="font-medium">
-                  {customerService.hoursWorked}
                 </TableCell>
                 <TableCell className="font-medium">
                   {customerService.hoursWorked}
