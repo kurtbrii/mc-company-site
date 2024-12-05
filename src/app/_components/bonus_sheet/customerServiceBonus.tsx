@@ -31,7 +31,8 @@ import { FormFieldComponent } from "./form_field_components/customerServiceFormF
 
 function calculateProductivity(data: z.infer<typeof CustomerServiceSchema>) {
   return (
-    (data.ticketsResolved * 8 + data.disputesResolved * 0.1) / data.hoursWorked
+    (data.ticketsResolved / 100 + data.disputesResolved * 0.1) /
+    data.hoursWorked
   );
 }
 
