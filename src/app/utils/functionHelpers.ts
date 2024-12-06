@@ -1,4 +1,5 @@
 import { type ROLE } from "@prisma/client"
+import { MutableRefObject } from "react"
 
 export const userColor = (role: ROLE) => {
   switch (role) {
@@ -108,3 +109,7 @@ export const copyToClipboard = (dataCopied: string) => {
   void navigator.clipboard.writeText(dataCopied);
 
 }
+
+export const scrollToBottom = (ref: MutableRefObject<HTMLDivElement | null>) => {
+  ref.current?.scrollIntoView({ behavior: "smooth" });
+};

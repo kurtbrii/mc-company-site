@@ -29,8 +29,11 @@ export const timeInRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       return ctx.db.timeInDetails.create({
         data: {
+          timeIn: input.timeIn,
           timeInDescription: input.timeInDescription,
-          userId: input.userId
+          userId: input.userId,
+          timeOutDescription: input.timeOutDescription,
+          timeOut: input.timeOut
         },
       });
     }),

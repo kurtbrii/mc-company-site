@@ -15,7 +15,13 @@ export const TimeInSchema = z.object({
     .string()
     .min(5, { message: "Time in details must be at least 5 characters" })
     .max(200, { message: "Time in details must be at most 200 characters" }),
-  userId: z.string()
+  userId: z.string(),
+  timeOutDescription: z
+    .string()
+    .min(5, { message: "Time out details must be at least 5 characters" })
+    .max(40, { message: "Time out details must be at most 40 characters" }).optional(),
+  timeOut: z.date().optional(),
+  timeIn: z.date().optional()
 })
 
 export const TimeOutSchema = z.object({

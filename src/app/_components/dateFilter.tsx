@@ -3,7 +3,7 @@ import { addDays } from "date-fns";
 import { DatePickerWithRange } from "./datePicker";
 import { getCurrentMonday } from "~/app/utils/functionHelpers";
 import { type Dispatch, type SetStateAction } from "react";
-
+import { Button } from "~/components/ui/button";
 interface DateFilterProps {
   date: DateRange | undefined;
   setDate: Dispatch<SetStateAction<DateRange | undefined>>;
@@ -87,7 +87,8 @@ export default function DateFilter({ date, setDate }: DateFilterProps) {
       </button>
 
       {/* THIS WEEK */}
-      <button
+      <Button
+        variant={"secondary"}
         onClick={() =>
           changeDate(
             setDate,
@@ -95,10 +96,9 @@ export default function DateFilter({ date, setDate }: DateFilterProps) {
             addDays(getCurrentMonday(), 6),
           )
         }
-        className="h-10 rounded-md bg-discord_button px-3 hover:bg-white hover:text-discord_button tablet:h-full"
       >
         This Week
-      </button>
+      </Button>
 
       {/* SELECT DATES */}
       <DatePickerWithRange className="" date={date} setDate={setDate} />

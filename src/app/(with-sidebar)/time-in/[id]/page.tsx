@@ -20,13 +20,17 @@ import {
   getCurrentMonday,
   copyToClipboard,
   getTime,
+  scrollToBottom,
 } from "~/app/utils/functionHelpers";
 import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
-import React from "react";
+import { useState, useRef, useEffect } from "react";
 import { addDays } from "date-fns";
 import { DeleteDialog } from "~/app/_components/deleteDialog";
+import { AddTimeIn } from "~/app/_components/addTimeIn";
+import { useSession } from "next-auth/react";
 
 export default function TimeInUser({ params }: { params: { id: string } }) {
+  const { data: session } = useSession();
   const { data: getMember } = api.user.getMember.useQuery({ id: params.id });
   const deleteTimeIn = api.timeIn.deleteTimeInDetails.useMutation({
     onSuccess: () => {
@@ -43,7 +47,7 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
     },
   });
 
-  const [date, setDate] = React.useState<DateRange | undefined>({
+  const [date, setDate] = useState<DateRange | undefined>({
     from: getCurrentMonday() ?? new Date("2024-10-31"),
     to: addDays(getCurrentMonday(), 6),
   });
@@ -77,6 +81,15 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
     }
   };
 
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+  const [isFormOpen, setIsFormOpen] = useState(false);
+
+  useEffect(() => {
+    if (isFormOpen) {
+      scrollToBottom(messagesEndRef);
+    }
+  }, [isFormOpen]);
+
   return (
     <div className="m-10 flex w-screen flex-col items-center gap-4">
       {isLoading ? (
@@ -90,7 +103,32 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
         </div>
       )}
 
-      <DateFilter date={date} setDate={setDate} />
+      <div className="flex">
+        <DateFilter date={date} setDate={setDate} />
+        {superUsers.includes(session?.user?.role ?? "CEO") && (
+          <button
+            onClick={() => {
+              setIsFormOpen(true);
+              scrollToBottom(messagesEndRef);
+            }}
+          >
+            <svg
+              className="ml-12"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              height="35px"
+              width="35px"
+            >
+              <path
+                fillRule="evenodd"
+                d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 9a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25V15a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V9Z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </button>
+        )}
+      </div>
 
       <Table className="mt-14">
         <TableHeader>
@@ -128,14 +166,18 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
                   weekday: "long",
                 })}
               </TableCell>
-              <TableCell>{item.timeIn?.toLocaleTimeString()}</TableCell>
+              <TableCell>
+                {item.timeIn?.toLocaleTimeString("en-US", { hour12: false })}
+              </TableCell>
               <TableCell>
                 {item.timeInDescription === "Time Out"
                   ? "-"
                   : item.timeInDescription}
               </TableCell>
               <TableCell>
-                {item.timeOut ? item.timeOut.toLocaleTimeString() : "-"}
+                {item.timeOut
+                  ? item.timeOut.toLocaleTimeString("en-US", { hour12: false })
+                  : "-"}
               </TableCell>
               <TableCell>
                 {item.timeOutDescription === "Initial Time Out Description"
@@ -155,6 +197,16 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
           ))}
         </TableBody>
       </Table>
+
+      <div ref={messagesEndRef} className="mt-72">
+        {superUsers.includes(session?.user?.role ?? "CEO") && isFormOpen && (
+          <AddTimeIn
+            memberId={params.id}
+            refetch={refetchTimeInDetails}
+            setIsFormOpen={setIsFormOpen}
+          />
+        )}
+      </div>
     </div>
   );
 }
