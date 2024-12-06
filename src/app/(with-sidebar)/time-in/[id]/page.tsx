@@ -188,7 +188,7 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
                 {getTime(item.timeIn ?? new Date(), item.timeOut ?? new Date())}
               </TableCell>
 
-              {superUsers.includes(getMember?.role ?? "CEO") && (
+              {superUsers.includes(session?.user?.role ?? "CEO") && (
                 <TableCell className="text-right">
                   <DeleteDialog item={item} handleClick={handleClick} />
                 </TableCell>
