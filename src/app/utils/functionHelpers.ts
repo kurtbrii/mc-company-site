@@ -103,3 +103,8 @@ export const getAverageProductivity = (totalProductivity: number, length: number
   return length === 0 ? 0 : (totalProductivity / length * 100).toFixed(2)
 
 }
+
+export const copyToClipboard = (dataCopied: string) => {
+  void navigator.clipboard.writeText(dataCopied);
+
+}

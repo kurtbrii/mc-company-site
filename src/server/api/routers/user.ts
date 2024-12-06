@@ -82,4 +82,17 @@ export const userRouter = createTRPCRouter({
         }
       });
     }),
+
+  deleteTimeInId: protectedProcedure
+    .input(z.object({ userId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.user.update({
+        data: {
+          currentTimeInId: ""
+        },
+        where: {
+          id: input.userId
+        }
+      })
+    })
 });

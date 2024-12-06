@@ -47,6 +47,16 @@ export const timeInRouter = createTRPCRouter({
           id: input.id
         }
       })
+    }),
+
+  deleteTimeInDetails: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.timeInDetails.delete({
+        where: {
+          id: input.id
+        }
+      })
     })
 });
 

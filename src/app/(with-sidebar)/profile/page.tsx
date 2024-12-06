@@ -246,35 +246,37 @@ export default function Profile() {
             </div>
           )}
 
-          {superUsers.includes(user?.role ?? "USER") && (
-            <div className="flex flex-col gap-3 tablet:flex-row">
-              <Link
-                href={`/time-in`}
-                className="w-full rounded-lg bg-discord_left p-4 text-center"
-                type="button"
-              >
-                Time In Details <br />
-                (All Members)
-              </Link>
+          {superUsers.includes(user?.role ?? "CEO") && (
+            <>
+              <div className="flex flex-col gap-3 tablet:flex-row">
+                <Link
+                  href={`/time-in`}
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
+                  type="button"
+                >
+                  Time In Details <br />
+                  (All Members)
+                </Link>
 
-              <Link
-                href={`/bonus-sheet`}
-                className="w-full rounded-lg bg-discord_left p-4 text-center"
-                type="button"
-              >
-                Bonus Sheet <br />
-                (All Members)
-              </Link>
+                <Link
+                  href={`/bonus-sheet`}
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
+                  type="button"
+                >
+                  Bonus Sheet <br />
+                  (All Members)
+                </Link>
 
-              <Link
-                href={`/monthly-survey`}
-                className="w-full rounded-lg bg-discord_left p-4 text-center"
-                type="button"
-              >
-                Monthly Survey <br />
-                (All Members)
-              </Link>
-            </div>
+                <Link
+                  href={`/monthly-survey`}
+                  className="w-full rounded-lg bg-discord_left p-4 text-center"
+                  type="button"
+                >
+                  Monthly Survey <br />
+                  (All Members)
+                </Link>
+              </div>
+            </>
           )}
         </div>
       </form>
