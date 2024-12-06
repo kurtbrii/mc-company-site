@@ -9,15 +9,13 @@ import { Calendar } from "~/components/ui/calendar";
 import { cn } from "~/lib/utils";
 import { format } from "date-fns";
 import {
-  Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
 } from "~/components/ui/form";
 import { Button } from "~/components/ui/button";
-import { UseFormReturn } from "react-hook-form";
+import { type UseFormReturn } from "react-hook-form";
 
 interface FormFieldProps {
   form: UseFormReturn<
@@ -44,7 +42,7 @@ export function DateTimeFormField({ form, name, formLabel }: FormFieldProps) {
   }
 
   function handleTimeChange(type: "hour" | "minute" | "ampm", value: string) {
-    const currentDate = new Date();
+    const currentDate = form.getValues(name) ?? new Date();
     const newDate = new Date(currentDate);
 
     if (type === "hour") {
