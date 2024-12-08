@@ -30,10 +30,10 @@ import {
 import { FormFieldComponent } from "./form_field_components/customerServiceFormField";
 
 function calculateProductivity(data: z.infer<typeof CustomerServiceSchema>) {
-  const disputesResolved = (data.disputesResolved * 0.1) / data.hoursWorked;
-  const ticketsResolved = (data.ticketsResolved / data.hoursWorked) * 100 * 8;
-
-  return disputesResolved + ticketsResolved;
+  return (
+    (data.disputesResolved * 0.1 + data.ticketsResolved * 0.08) /
+    data.hoursWorked
+  );
 }
 
 export default function CustumerServiceBonus() {

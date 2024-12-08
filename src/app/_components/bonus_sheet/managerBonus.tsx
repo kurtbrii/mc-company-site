@@ -43,7 +43,7 @@ export default function ManagerBonus() {
         data.copyFunnelTrick * 0.75 +
         data.advertorialFromScratch * 3 +
         data.disputesAnswered * 0.1 +
-        data.ticketResolved * 8) /
+        data.ticketResolved * 0.08) /
       (data.hoursWorked + data.hoursAsCustomerService)
     );
   }
