@@ -85,6 +85,16 @@ export const bonusSheetRouter = createTRPCRouter({
     }),
 
 
+  deleteVideoEditorBonus: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.videoEditorsBonus.delete({
+        where: {
+          id: input.id
+        }
+      })
+    }),
+
   // ! funnel builder bonus
   createFunnelBuildersBonus: protectedProcedure
     .input(FunnelBuildersSchema)
@@ -154,6 +164,16 @@ export const bonusSheetRouter = createTRPCRouter({
         },
         orderBy: {
           dateOfWork: "desc"
+        }
+      })
+    }),
+
+  deleteCsBonus: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.customerServiceBonus.delete({
+        where: {
+          id: input.id
         }
       })
     }),

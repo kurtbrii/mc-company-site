@@ -186,7 +186,11 @@ export default function VideoEditorsBonus() {
                 controlName="vsl"
               />
 
-              <Button type="submit" className="mt-5 w-full">
+              <Button
+                type="submit"
+                className="mt-5 w-full"
+                disabled={form.formState.isSubmitting}
+              >
                 Submit
               </Button>
             </div>

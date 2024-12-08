@@ -133,7 +133,7 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
       <Table className="mt-14">
         <TableHeader>
           <TableRow>
-            <TableHead className="text-center">Time In Id</TableHead>
+            <TableHead className="text-center">Time In ID</TableHead>
             <TableHead className="text-center">Date</TableHead>
             <TableHead className="text-center">Day</TableHead>
             <TableHead className="text-center">Time In</TableHead>

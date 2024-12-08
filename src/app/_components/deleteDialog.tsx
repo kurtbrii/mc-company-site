@@ -13,21 +13,46 @@ import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useState } from "react";
 
+interface ItemProps {
+  item:
+    | {
+        date: Date;
+        id: string;
+        userId: string;
+        hoursWorked: number;
+        dateOfWork: Date;
+        productivity: number | null;
+        ticketsResolved: number;
+        disputesResolved: number;
+      }
+    | {
+        id: string;
+        userId: string;
+        timeInDescription: string;
+        timeIn: Date | null;
+        timeOutDescription: string;
+        timeOut: Date | null;
+      }
+    | {
+        hoursWorked: number;
+        competitorAdsBasis: number;
+        newScrollstoppers: number;
+        imageAds: number;
+        vsl: number;
+        dateOfWork: Date;
+        userId: string;
+        productivity: number | null;
+        id: string;
+        date: Date;
+      };
+}
 interface DialogProps {
-  item: {
-    id: string;
-    userId: string;
-    timeInDescription: string;
-    timeIn: Date | null;
-    timeOutDescription: string;
-    timeOut: Date | null;
-  };
+  item: ItemProps["item"];
   handleClick: (id: string) => void;
 }
 
 export function DeleteDialog({ item, handleClick }: DialogProps) {
   const [deleteInput, setDeleteInput] = useState("");
-  const [toggleDialog, setToggleDialog] = useState(false);
 
   return (
     <Dialog>

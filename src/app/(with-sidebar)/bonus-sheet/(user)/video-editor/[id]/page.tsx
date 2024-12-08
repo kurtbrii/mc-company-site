@@ -5,6 +5,7 @@ import UserCard from "~/app/_components/userCard";
 import {
   getCurrentMonday,
   getAverageProductivity,
+  copyToClipboard,
 } from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
@@ -24,6 +25,11 @@ import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
 
+import { DeleteDialog } from "~/app/_components/deleteDialog";
+import { useToast } from "~/components/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { superUsers } from "~/app/utils/helper";
+
 export default function BonusSheetVideoEditor({
   params,
 }: {
@@ -39,14 +45,35 @@ export default function BonusSheetVideoEditor({
   date?.from?.setHours(0, 0, 0, 0);
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: getVideoEditorBonus, isLoading } =
-    api.bonusSheet.getVideoEditorBonus.useQuery({
-      userId: params.id,
-      startDate: date?.from,
-      endDate: date?.to,
-    });
+  const {
+    data: getVideoEditorBonus,
+    isLoading,
+    refetch: refetchVideoEditorBonus,
+  } = api.bonusSheet.getVideoEditorBonus.useQuery({
+    userId: params.id,
+    startDate: date?.from,
+    endDate: date?.to,
+  });
 
   let totalProductivity = 0;
+
+  const { data: session } = useSession();
+  const { toast } = useToast();
+  const deleteBonus = api.bonusSheet.deleteVideoEditorBonus.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Successfully deleted details",
+      });
+    },
+  });
+
+  const handleClick = (id: string) => {
+    deleteBonus.mutate({
+      id: id,
+    });
+
+    void refetchVideoEditorBonus();
+  };
 
   return (
     <div className="m-10 flex w-full flex-col items-center gap-4">
@@ -62,9 +89,10 @@ export default function BonusSheetVideoEditor({
       )}
       <DateFilter date={date} setDate={setDate} />
 
-      <Table className="mt-14">
+      <Table className="mt-14 w-screen">
         <TableHeader>
           <TableRow>
+            <TableHead className="text-center">ID</TableHead>
             <TableHead className="text-center">What is the date?</TableHead>
             <TableHead className="text-center">
               How many hours did you work?
@@ -90,6 +118,20 @@ export default function BonusSheetVideoEditor({
             return (
               <TableRow key={index} className="text-center">
                 <TableCell className="w-48 font-medium">
+                  <button
+                    className="hover:text-everyone"
+                    onClick={() => {
+                      copyToClipboard(videoEditor.id);
+
+                      toast({
+                        title: "Text copied to clipboard",
+                      });
+                    }}
+                  >
+                    {videoEditor.id}
+                  </button>
+                </TableCell>
+                <TableCell className="w-48 font-medium">
                   {format(videoEditor.dateOfWork, "PP")}
                 </TableCell>
                 <TableCell className="font-medium">
@@ -108,6 +150,14 @@ export default function BonusSheetVideoEditor({
                 <TableCell className="font-medium">
                   {(videoEditor.productivity! * 100).toFixed(2)}%
                 </TableCell>
+                {superUsers.includes(session?.user?.role ?? "CEO") && (
+                  <TableCell className="text-right">
+                    <DeleteDialog
+                      item={videoEditor}
+                      handleClick={handleClick}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}

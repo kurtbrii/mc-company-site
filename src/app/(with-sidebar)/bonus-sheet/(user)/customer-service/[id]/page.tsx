@@ -5,6 +5,7 @@ import UserCard from "~/app/_components/userCard";
 import {
   getCurrentMonday,
   getAverageProductivity,
+  copyToClipboard,
 } from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
@@ -22,6 +23,10 @@ import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading
 import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
+import { DeleteDialog } from "~/app/_components/deleteDialog";
+import { useToast } from "~/components/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { superUsers } from "~/app/utils/helper";
 
 export default function BonusSheetCustomerService({
   params,
@@ -40,12 +45,34 @@ export default function BonusSheetCustomerService({
 
   let totalProductivity = 0;
 
-  const { data: customerService, isLoading } =
-    api.bonusSheet.getCustomerServiceBonus.useQuery({
-      userId: params.id,
-      startDate: date?.from,
-      endDate: date?.to,
+  const {
+    data: customerService,
+    isLoading,
+    refetch: refetchCsBonus,
+  } = api.bonusSheet.getCustomerServiceBonus.useQuery({
+    userId: params.id,
+    startDate: date?.from,
+    endDate: date?.to,
+  });
+
+  const { data: session } = useSession();
+  const { toast } = useToast();
+
+  const deleteBonus = api.bonusSheet.deleteCsBonus.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Successfully deleted details",
+      });
+    },
+  });
+
+  const handleClick = (id: string) => {
+    deleteBonus.mutate({
+      id: id,
     });
+
+    void refetchCsBonus();
+  };
 
   return (
     <div className="m-10 flex flex-col items-center gap-4">
@@ -65,6 +92,7 @@ export default function BonusSheetCustomerService({
       <Table className="mt-14">
         <TableHeader>
           <TableRow>
+            <TableHead className="text-center">ID</TableHead>
             <TableHead className="text-center">What is the date?</TableHead>
             <TableHead className="text-center">
               How many hours did you work?
@@ -84,6 +112,20 @@ export default function BonusSheetCustomerService({
 
             return (
               <TableRow key={index} className="text-center">
+                <TableCell className="font-medium">
+                  <button
+                    className="hover:text-everyone"
+                    onClick={() => {
+                      copyToClipboard(customerService.id);
+
+                      toast({
+                        title: "Text copied to clipboard",
+                      });
+                    }}
+                  >
+                    {customerService.id}
+                  </button>
+                </TableCell>
                 <TableCell className="w-48 font-medium">
                   {format(customerService.dateOfWork, "PP")}
                 </TableCell>
@@ -99,6 +141,14 @@ export default function BonusSheetCustomerService({
                 <TableCell className="font-medium">
                   {(customerService.productivity! * 100).toFixed(2)}%
                 </TableCell>
+                {superUsers.includes(session?.user?.role ?? "CEO") && (
+                  <TableCell className="text-right">
+                    <DeleteDialog
+                      item={customerService}
+                      handleClick={handleClick}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
