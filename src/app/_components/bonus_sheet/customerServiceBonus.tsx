@@ -78,7 +78,7 @@ export default function CustumerServiceBonus() {
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof CustomerServiceSchema>) => {
-    subumitCustomerServiceForm.mutate({
+    await subumitCustomerServiceForm.mutateAsync({
       hoursWorked: data.hoursWorked,
       ticketsResolved: data.ticketsResolved,
       disputesResolved: data.disputesResolved,
@@ -168,7 +168,7 @@ export default function CustumerServiceBonus() {
                 className="mt-5 w-full"
                 disabled={form.formState.isSubmitting}
               >
-                Submit
+                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </form>

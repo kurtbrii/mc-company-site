@@ -73,7 +73,7 @@ export default function FacebookMarketingBonus() {
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof FacebookMarketingSchema>) => {
-    void submitFacebookMarketingForm.mutateAsync({
+    await submitFacebookMarketingForm.mutateAsync({
       userId: userId,
       campaignsLaunched: data.campaignsLaunched,
       dateOfWork: data.dateOfWork,
@@ -149,9 +149,12 @@ export default function FacebookMarketingBonus() {
                 controlName="campaignsLaunched"
               />
 
-              {/* // How many funnels did you create from scratch? */}
-              <Button type="submit" className="mt-5 w-full">
-                Submit
+              <Button
+                type="submit"
+                className="mt-5 w-full"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </form>

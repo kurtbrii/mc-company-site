@@ -86,7 +86,7 @@ export default function ManagerBonus() {
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof ManagerSchema>) => {
-    void submitManagerForm.mutateAsync({
+    await submitManagerForm.mutateAsync({
       userId: userId,
       advertorialFromScratch: data.advertorialFromScratch,
       copyFunnelTrick: data.copyFunnelTrick,
@@ -203,8 +203,12 @@ export default function ManagerBonus() {
                 controlName="disputesAnswered"
               />
 
-              <Button type="submit" className="mt-5 w-full">
-                Submit
+              <Button
+                type="submit"
+                className="mt-5 w-full"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </form>

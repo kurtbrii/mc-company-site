@@ -5,6 +5,7 @@ import UserCard from "~/app/_components/userCard";
 import {
   getCurrentMonday,
   getAverageProductivity,
+  copyToClipboard,
 } from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
@@ -24,6 +25,11 @@ import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
 
+import { DeleteDialog } from "~/app/_components/deleteDialog";
+import { useToast } from "~/components/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { superUsers } from "~/app/utils/helper";
+
 export default function BonusSheetFBMarketing({
   params,
 }: {
@@ -41,12 +47,33 @@ export default function BonusSheetFBMarketing({
   date?.from?.setHours(0, 0, 0, 0);
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: fbMarketingBonus, isLoading } =
-    api.bonusSheet.getFBMarketingBonus.useQuery({
-      userId: params.id,
-      startDate: date?.from,
-      endDate: date?.to,
+  const {
+    data: fbMarketingBonus,
+    isLoading,
+    refetch: refetchFbMarketingBonus,
+  } = api.bonusSheet.getFBMarketingBonus.useQuery({
+    userId: params.id,
+    startDate: date?.from,
+    endDate: date?.to,
+  });
+  const { data: session } = useSession();
+  const { toast } = useToast();
+
+  const deleteBonus = api.bonusSheet.deleteFbMarketingBonus.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Successfully deleted details",
+      });
+    },
+  });
+
+  const handleClick = (id: string) => {
+    deleteBonus.mutate({
+      id: id,
     });
+
+    void refetchFbMarketingBonus();
+  };
 
   return (
     <div className="m-10 flex w-full flex-col items-center gap-4">
@@ -66,6 +93,7 @@ export default function BonusSheetFBMarketing({
       <Table className="mt-14 w-[800px] justify-self-center">
         <TableHeader>
           <TableRow>
+            <TableHead className="text-center">ID</TableHead>
             <TableHead className="w-64 text-center">
               What is the date?
             </TableHead>
@@ -87,6 +115,21 @@ export default function BonusSheetFBMarketing({
             return (
               <TableRow key={index} className="text-center">
                 <TableCell className="w-48 font-medium">
+                  <button
+                    className="hover:text-everyone"
+                    onClick={() => {
+                      copyToClipboard(fbMarketing.id);
+
+                      toast({
+                        title: "Text copied to clipboard",
+                      });
+                    }}
+                  >
+                    {fbMarketing.id}
+                  </button>
+                </TableCell>
+
+                <TableCell className="w-48 font-medium">
                   {format(fbMarketing.dateOfWork, "PP")}
                 </TableCell>
 
@@ -101,6 +144,15 @@ export default function BonusSheetFBMarketing({
                 <TableCell className="font-medium">
                   {(fbMarketing.productivity! * 100).toFixed(2)}
                 </TableCell>
+
+                {superUsers.includes(session?.user?.role ?? "CEO") && (
+                  <TableCell className="text-right">
+                    <DeleteDialog
+                      item={fbMarketing}
+                      handleClick={handleClick}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}

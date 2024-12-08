@@ -79,16 +79,13 @@ export default function FunnelBuildersBonus() {
       hoursWorked: undefined,
       userId: userId ?? "",
       productivity: 0,
-      // disputesAnswered: undefined,
-      // hoursAsCustomerService: undefined,
-      // ticketResolved: undefined,
     },
     resolver: zodResolver(FunnelBuildersSchema),
   });
 
   //! Submit Form
   const onSubmit = async (data: z.infer<typeof FunnelBuildersSchema>) => {
-    void submitFunnelBuildersForm.mutateAsync({
+    await submitFunnelBuildersForm.mutateAsync({
       userId: userId,
       funnelsCreated: data.funnelsCreated,
       copyFunnelTrick: data.copyFunnelTrick,
@@ -96,9 +93,6 @@ export default function FunnelBuildersBonus() {
       hoursWorked: data.hoursWorked,
       dateOfWork: data.dateOfWork,
       productivity: calculateTotalProductivity(data),
-      // disputesAnswered: data.disputesAnswered,
-      // ticketResolved: data.ticketResolved,
-      // hoursAsCustomerService: data.hoursAsCustomerService,
     });
   };
 
@@ -182,32 +176,12 @@ export default function FunnelBuildersBonus() {
                 controlName="advertorialFromScratch"
               />
 
-              {/* MIGHT BE NEEDED IN THE FUTURE !! */}
-              {/* // How many hours did you work as a customer service employee
-              <FormFieldComponent
-                form={form}
-                label={
-                  "How many hours did you work as a customer service employee"
-                }
-                controlName="hoursAsCustomerService"
-              />
-
-              {/* // How many tickets did you resolve in Freshdesk*/}
-              {/* <FormFieldComponent
-                form={form}
-                label={"How many tickets did you resolve in Freshdesk?"}
-                controlName="ticketResolved"
-              /> */}
-
-              {/* How many disputes did you answered */}
-              {/* <FormFieldComponent
-                form={form}
-                label={"How many disputes did you answer?"}
-                controlName="disputesAnswered"
-              /> */}
-
-              <Button type="submit" className="mt-5 w-full">
-                Submit
+              <Button
+                type="submit"
+                className="mt-5 w-full"
+                disabled={form.formState.isSubmitting}
+              >
+                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </form>

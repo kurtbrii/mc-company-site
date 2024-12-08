@@ -5,6 +5,7 @@ import UserCard from "~/app/_components/userCard";
 import {
   getCurrentMonday,
   getAverageProductivity,
+  copyToClipboard,
 } from "~/app/utils/functionHelpers";
 import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
@@ -24,6 +25,11 @@ import React from "react";
 import { addDays } from "date-fns";
 import { format } from "date-fns";
 
+import { DeleteDialog } from "~/app/_components/deleteDialog";
+import { useToast } from "~/components/hooks/use-toast";
+import { useSession } from "next-auth/react";
+import { superUsers } from "~/app/utils/helper";
+
 export default function BonusSheetFunnelBuilder({
   params,
 }: {
@@ -41,12 +47,34 @@ export default function BonusSheetFunnelBuilder({
   date?.from?.setHours(0, 0, 0, 0);
   date?.to?.setHours(23, 59, 59, 999);
 
-  const { data: funnelBuilderBonus, isLoading } =
-    api.bonusSheet.getFunnelBuilderBonus.useQuery({
-      userId: params.id,
-      startDate: date?.from,
-      endDate: date?.to,
+  const {
+    data: funnelBuilderBonus,
+    isLoading,
+    refetch: refetchFbBonus,
+  } = api.bonusSheet.getFunnelBuilderBonus.useQuery({
+    userId: params.id,
+    startDate: date?.from,
+    endDate: date?.to,
+  });
+
+  const { data: session } = useSession();
+  const { toast } = useToast();
+
+  const deleteBonus = api.bonusSheet.deleteFbBonus.useMutation({
+    onSuccess: () => {
+      toast({
+        title: "Successfully deleted details",
+      });
+    },
+  });
+
+  const handleClick = (id: string) => {
+    deleteBonus.mutate({
+      id: id,
     });
+
+    void refetchFbBonus();
+  };
 
   return (
     <div className="m-10 flex flex-col items-center gap-4">
@@ -66,6 +94,7 @@ export default function BonusSheetFunnelBuilder({
       <Table className="mt-14">
         <TableHeader>
           <TableRow>
+            <TableHead className="text-center">ID</TableHead>
             <TableHead className="text-center">What is the date?</TableHead>
             <TableHead className="text-center">
               How many hours did you work?
@@ -79,15 +108,6 @@ export default function BonusSheetFunnelBuilder({
             <TableHead className="text-center">
               How many advertorials did you create from scratch?
             </TableHead>
-            {/* <TableHead className="text-center">
-              How many hours did you work as a customer service employee?
-            </TableHead>
-            <TableHead className="text-center">
-              How many tickets did you resolve in Freshdesk
-            </TableHead>
-            <TableHead className="text-center">
-              How many disputes did you answered
-            </TableHead> */}
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>
@@ -97,6 +117,20 @@ export default function BonusSheetFunnelBuilder({
 
             return (
               <TableRow key={index} className="text-center">
+                <TableCell className="w-48 font-medium">
+                  <button
+                    className="hover:text-everyone"
+                    onClick={() => {
+                      copyToClipboard(funnelBuilder.id);
+
+                      toast({
+                        title: "Text copied to clipboard",
+                      });
+                    }}
+                  >
+                    {funnelBuilder.id}
+                  </button>
+                </TableCell>
                 <TableCell className="w-48 font-medium">
                   {format(funnelBuilder.dateOfWork, "PP")}
                 </TableCell>
@@ -112,18 +146,17 @@ export default function BonusSheetFunnelBuilder({
                 <TableCell className="font-medium">
                   {funnelBuilder.advertorialFromScratch}
                 </TableCell>
-                {/* <TableCell className="font-medium">
-                  {funnelBuilder.hoursAsCustomerService}
-                </TableCell>
-                <TableCell className="font-medium">
-                  {funnelBuilder.ticketResolved}
-                </TableCell>
-                <TableCell className="font-medium">
-                  {funnelBuilder.disputesAnswered}
-                </TableCell> */}
                 <TableCell className="font-medium">
                   {(funnelBuilder.productivity! * 100).toFixed(2)}%
                 </TableCell>
+                {superUsers.includes(session?.user?.role ?? "CEO") && (
+                  <TableCell className="text-right">
+                    <DeleteDialog
+                      item={funnelBuilder}
+                      handleClick={handleClick}
+                    />
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}

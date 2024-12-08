@@ -59,6 +59,7 @@ export default function BonusSheetVideoEditor({
 
   const { data: session } = useSession();
   const { toast } = useToast();
+
   const deleteBonus = api.bonusSheet.deleteVideoEditorBonus.useMutation({
     onSuccess: () => {
       toast({
@@ -131,25 +132,33 @@ export default function BonusSheetVideoEditor({
                     {videoEditor.id}
                   </button>
                 </TableCell>
+
                 <TableCell className="w-48 font-medium">
                   {format(videoEditor.dateOfWork, "PP")}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {videoEditor.hoursWorked}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {videoEditor.competitorAdsBasis}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {videoEditor.newScrollstoppers}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {videoEditor.imageAds}
                 </TableCell>
+
                 <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
+
                 <TableCell className="font-medium">
                   {(videoEditor.productivity! * 100).toFixed(2)}%
                 </TableCell>
+
                 {superUsers.includes(session?.user?.role ?? "CEO") && (
                   <TableCell className="text-right">
                     <DeleteDialog

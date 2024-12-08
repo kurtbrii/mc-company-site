@@ -44,6 +44,26 @@ interface ItemProps {
         productivity: number | null;
         id: string;
         date: Date;
+      }
+    | {
+        id: string;
+        date: Date;
+        userId: string;
+        hoursWorked: number;
+        funnelsCreated: number;
+        copyFunnelTrick: number;
+        advertorialFromScratch: number;
+        dateOfWork: Date;
+        productivity: number | null;
+      }
+    | {
+        date: Date;
+        id: string;
+        userId: string;
+        dateOfWork: Date;
+        productivity: number | null;
+        campaignsLaunched: number;
+        hoursCampaignsLaunched: number;
       };
 }
 interface DialogProps {

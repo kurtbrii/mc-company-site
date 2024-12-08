@@ -191,7 +191,7 @@ export default function VideoEditorsBonus() {
                 className="mt-5 w-full"
                 disabled={form.formState.isSubmitting}
               >
-                Submit
+                {form.formState.isSubmitting ? "Submitting..." : "Submit"}
               </Button>
             </div>
           </form>

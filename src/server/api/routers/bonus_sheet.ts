@@ -133,6 +133,16 @@ export const bonusSheetRouter = createTRPCRouter({
       })
     }),
 
+  deleteFbBonus: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.funnelBuildersBonus.delete({
+        where: {
+          id: input.id
+        }
+      })
+    }),
+
 
   // ! customer service bonus
   createCustomerServiceBonus: protectedProcedure
@@ -209,6 +219,16 @@ export const bonusSheetRouter = createTRPCRouter({
         }
       })
     }),
+
+  deleteFbMarketingBonus: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db.facebookMarketingBonus.delete({
+        where: {
+          id: input.id
+        }
+      })
+    })
 });
 
 
