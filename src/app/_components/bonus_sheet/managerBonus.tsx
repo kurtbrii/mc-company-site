@@ -38,10 +38,12 @@ export default function ManagerBonus() {
 
   function calculateTotalProductivity(data: z.infer<typeof ManagerSchema>) {
     return (
+      // funnel builders
       (data.funnelsCreated * 2 +
-        data.copyFunnelTrick * 0.75 +
-        data.advertorialFromScratch * 0.3 +
+        data.copyFunnelTrick * 0.25 +
+        data.advertorialFromScratch * 2 +
         data.funnelsImported * 0.5 +
+        // customer service
         data.disputesAnswered * 0.1 +
         data.ticketResolved * 0.06) /
       (data.hoursWorked + data.hoursAsCustomerService)

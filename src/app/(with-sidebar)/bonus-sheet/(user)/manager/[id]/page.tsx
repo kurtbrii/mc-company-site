@@ -48,7 +48,7 @@ export default function BonusSheetManager({
   date?.to?.setHours(23, 59, 59, 999);
 
   const {
-    data: funnelBuilderBonus,
+    data: managerBonus,
     isLoading,
     refetch: refetchManagerBonus,
   } = api.bonusSheet.getManagerBonus.useQuery({
@@ -134,8 +134,8 @@ export default function BonusSheetManager({
           </TableRow>
         </TableHeader>
         <TableBody>
-          {funnelBuilderBonus?.map((funnelBuilder, index) => {
-            totalProductivity += funnelBuilder.productivity!;
+          {managerBonus?.map((manager, index) => {
+            totalProductivity += manager.productivity!;
 
             return (
               <TableRow key={index} className="text-center">
@@ -143,63 +143,60 @@ export default function BonusSheetManager({
                   <button
                     className="hover:text-everyone"
                     onClick={() => {
-                      copyToClipboard(funnelBuilder.id);
+                      copyToClipboard(manager.id);
 
                       toast({
                         title: "Text copied to clipboard",
                       });
                     }}
                   >
-                    {funnelBuilder.id}
+                    {manager.id}
                   </button>
                 </TableCell>
 
                 <TableCell className="w-48 font-medium">
-                  {format(funnelBuilder.dateOfWork, "PP")}
+                  {format(manager.dateOfWork, "PP")}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.hoursWorked}
+                  {manager.hoursWorked}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.funnelsCreated}
+                  {manager.funnelsCreated}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.copyFunnelTrick}
+                  {manager.copyFunnelTrick}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.advertorialFromScratch}
+                  {manager.advertorialFromScratch}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.funnelsImported}
+                  {manager.funnelsImported}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.hoursAsCustomerService}
+                  {manager.hoursAsCustomerService}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.ticketResolved}
+                  {manager.ticketResolved}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.disputesAnswered}
+                  {manager.disputesAnswered}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {(funnelBuilder.productivity! * 100).toFixed(2)}%
+                  {(manager.productivity! * 100).toFixed(2)}%
                 </TableCell>
 
                 {superUsers.includes(session?.user?.role ?? "CEO") && (
                   <TableCell className="text-right">
-                    <DeleteDialog
-                      item={funnelBuilder}
-                      handleClick={handleClick}
-                    />
+                    <DeleteDialog item={manager} handleClick={handleClick} />
                   </TableCell>
                 )}
               </TableRow>
@@ -208,11 +205,10 @@ export default function BonusSheetManager({
         </TableBody>
       </Table>
 
-      {funnelBuilderBonus && (
+      {managerBonus && (
         <p className="mt-20 self-end text-lg">
           Average Productivity:{" "}
-          {getAverageProductivity(totalProductivity, funnelBuilderBonus.length)}
-          %
+          {getAverageProductivity(totalProductivity, managerBonus.length)}%
         </p>
       )}
     </div>
