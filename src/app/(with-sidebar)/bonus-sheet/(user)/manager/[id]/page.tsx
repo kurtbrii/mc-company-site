@@ -115,6 +115,10 @@ export default function BonusSheetManager({
             </TableHead>
 
             <TableHead className="text-center">
+              How many funnels did you import?
+            </TableHead>
+
+            <TableHead className="text-center">
               How many hours did you work as a customer service employee?
             </TableHead>
 
@@ -126,9 +130,6 @@ export default function BonusSheetManager({
               How many disputes did you answered?
             </TableHead>
 
-            <TableHead className="text-center">
-              How many funnels did you import?
-            </TableHead>
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>

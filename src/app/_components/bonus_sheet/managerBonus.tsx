@@ -40,8 +40,8 @@ export default function ManagerBonus() {
     return (
       (data.funnelsCreated * 2 +
         data.copyFunnelTrick * 0.75 +
-        data.advertorialFromScratch * 3 +
-        data.funnelsImported * 1 +
+        data.advertorialFromScratch * 0.3 +
+        data.funnelsImported * 0.5 +
         data.disputesAnswered * 0.1 +
         data.ticketResolved * 0.06) /
       (data.hoursWorked + data.hoursAsCustomerService)

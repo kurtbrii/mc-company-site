@@ -33,7 +33,7 @@ function calculateProductivity(data: z.infer<typeof VideoEditorsBonusSchema>) {
   return (
     (data.competitorAdsBasis * 0.2 +
       data.newScrollstoppers * 0.1 +
-      data.imageAds +
+      data.imageAds * 0.1 +
       data.vsl * 1.33) /
     data.hoursWorked
   );
