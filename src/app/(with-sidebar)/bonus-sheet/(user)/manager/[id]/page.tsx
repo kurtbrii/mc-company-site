@@ -95,27 +95,39 @@ export default function BonusSheetManager({
         <TableHeader>
           <TableRow>
             <TableHead className="text-center">ID</TableHead>
+
             <TableHead className="text-center">What is the date?</TableHead>
+
             <TableHead className="text-center">
               How many hours did you work?
             </TableHead>
+
             <TableHead className="text-center">
               How many funnels did you create from scratch?
             </TableHead>
+
             <TableHead className="text-center">
               How many funnels did you copy using trick?
             </TableHead>
+
             <TableHead className="text-center">
               How many advertorials did you create from scratch?
             </TableHead>
+
             <TableHead className="text-center">
               How many hours did you work as a customer service employee?
             </TableHead>
+
             <TableHead className="text-center">
               How many tickets did you resolve in Freshdesk?
             </TableHead>
+
             <TableHead className="text-center">
               How many disputes did you answered?
+            </TableHead>
+
+            <TableHead className="text-center">
+              How many funnels did you import?
             </TableHead>
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
@@ -159,6 +171,10 @@ export default function BonusSheetManager({
 
                 <TableCell className="font-medium">
                   {funnelBuilder.advertorialFromScratch}
+                </TableCell>
+
+                <TableCell className="font-medium">
+                  {funnelBuilder.funnelsImported}
                 </TableCell>
 
                 <TableCell className="font-medium">

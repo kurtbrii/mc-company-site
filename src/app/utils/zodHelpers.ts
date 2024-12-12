@@ -51,6 +51,7 @@ export const ManagerSchema = z.object({
   funnelsCreated: z.coerce.number({ message: "This should be a number" }),
   copyFunnelTrick: z.coerce.number({ message: "This should be a number" }),
   advertorialFromScratch: z.coerce.number({ message: "This should be a number" }),
+  funnelsImported: z.coerce.number({ message: "This should be a number" }),
 
   hoursAsCustomerService: z.coerce.number({ message: "This should be a number" }),
   ticketResolved: z.coerce.number({ message: "This should be a number" }),
@@ -78,6 +79,8 @@ export const FunnelBuildersSchema = z.object({
   funnelsCreated: z.coerce.number({ message: "This should be a number" }),
   copyFunnelTrick: z.coerce.number({ message: "This should be a number" }),
   advertorialFromScratch: z.coerce.number({ message: "This should be a number" }),
+  funnelsImported: z.coerce.number({ message: "This should be a number" }),
+
 
   dateOfWork: z.date(),
   userId: z.string(),

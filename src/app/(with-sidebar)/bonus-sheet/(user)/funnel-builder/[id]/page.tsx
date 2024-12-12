@@ -77,7 +77,7 @@ export default function BonusSheetFunnelBuilder({
   };
 
   return (
-    <div className="m-10 flex flex-col items-center gap-4">
+    <div className="m-10 flex w-screen flex-col items-center gap-4">
       {isLoading ? (
         <UserCardLoading />
       ) : (
@@ -91,23 +91,33 @@ export default function BonusSheetFunnelBuilder({
 
       <DateFilter date={date} setDate={setDate} />
 
-      <Table className="mt-14">
+      <Table className="mt-14 w-screen">
         <TableHeader>
           <TableRow>
             <TableHead className="text-center">ID</TableHead>
+
             <TableHead className="text-center">What is the date?</TableHead>
+
             <TableHead className="text-center">
               How many hours did you work?
             </TableHead>
+
             <TableHead className="text-center">
               How many funnels did you create from scratch?
             </TableHead>
+
             <TableHead className="text-center">
               How many funnels did you copy using trick?
             </TableHead>
+
             <TableHead className="text-center">
               How many advertorials did you create from scratch?
             </TableHead>
+
+            <TableHead className="text-center">
+              How many funnels did you import?
+            </TableHead>
+
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>
@@ -131,24 +141,35 @@ export default function BonusSheetFunnelBuilder({
                     {funnelBuilder.id}
                   </button>
                 </TableCell>
+
                 <TableCell className="w-48 font-medium">
                   {format(funnelBuilder.dateOfWork, "PP")}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {funnelBuilder.hoursWorked}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {funnelBuilder.funnelsCreated}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {funnelBuilder.copyFunnelTrick}
                 </TableCell>
+
                 <TableCell className="font-medium">
                   {funnelBuilder.advertorialFromScratch}
                 </TableCell>
+
+                <TableCell className="font-medium">
+                  {funnelBuilder.funnelsImported}
+                </TableCell>
+
                 <TableCell className="font-medium">
                   {(funnelBuilder.productivity! * 100).toFixed(2)}%
                 </TableCell>
+
                 {superUsers.includes(session?.user?.role ?? "CEO") && (
                   <TableCell className="text-right">
                     <DeleteDialog

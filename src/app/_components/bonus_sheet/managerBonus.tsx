@@ -41,6 +41,7 @@ export default function ManagerBonus() {
       (data.funnelsCreated * 2 +
         data.copyFunnelTrick * 0.75 +
         data.advertorialFromScratch * 3 +
+        data.funnelsImported * 1 +
         data.disputesAnswered * 0.1 +
         data.ticketResolved * 0.06) /
       (data.hoursWorked + data.hoursAsCustomerService)
@@ -78,6 +79,7 @@ export default function ManagerBonus() {
       hoursAsCustomerService: undefined,
       hoursWorked: undefined,
       ticketResolved: undefined,
+      funnelsImported: undefined,
       userId: userId ?? "",
       productivity: 0,
     },
@@ -96,6 +98,7 @@ export default function ManagerBonus() {
       hoursWorked: data.hoursWorked,
       ticketResolved: data.ticketResolved,
       dateOfWork: data.dateOfWork,
+      funnelsImported: data.funnelsImported,
       productivity: calculateTotalProductivity(data),
     });
   };
@@ -156,7 +159,9 @@ export default function ManagerBonus() {
               {/* How many hours did you work? */}
               <FormFieldComponent
                 form={form}
-                label={"How many hours did you work?"}
+                label={
+                  "How many hours did you work as a Funnel Builder employee?"
+                }
                 controlName="hoursWorked"
               />
               {/* // How many funnels did you create from scratch? */}
@@ -179,6 +184,15 @@ export default function ManagerBonus() {
                 label={"How many advertorials did you create from scratch?"}
                 controlName="advertorialFromScratch"
               />
+
+              <FormFieldComponent
+                form={form}
+                label={"How many funnels did you import?"}
+                controlName="funnelsImported"
+              />
+
+              <hr />
+              <hr />
 
               {/* // How many hours did you work as a customer service employee */}
               <FormFieldComponent

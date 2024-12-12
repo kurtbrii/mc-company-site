@@ -123,6 +123,7 @@ model ManagerBonus {
     copyFunnelTrick        Int
     advertorialFromScratch Int
     hoursAsCustomerService Float
+    funnelsImported        Int?
     ticketResolved         Int
     disputesAnswered       Int
 
@@ -150,6 +151,7 @@ model FunnelBuildersBonus {
     funnelsCreated         Int
     copyFunnelTrick        Int
     advertorialFromScratch Int
+    funnelsImported        Int?
     // hoursAsCustomerService Float
     // ticketResolved         Int
     // disputesAnswered       Int

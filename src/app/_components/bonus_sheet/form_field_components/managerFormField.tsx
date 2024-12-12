@@ -20,6 +20,7 @@ interface FormFieldProps {
       funnelsCreated: number;
       copyFunnelTrick: number;
       advertorialFromScratch: number;
+      funnelsImported: number;
       productivity: number;
       hoursAsCustomerService: number;
       ticketResolved: number;
@@ -37,6 +38,7 @@ interface FormFieldProps {
     | "userId"
     | "funnelsCreated"
     | "copyFunnelTrick"
+    | "funnelsImported"
     | "advertorialFromScratch"
     | "productivity"
     | "ticketResolved"

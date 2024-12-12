@@ -13,7 +13,6 @@ import {
 } from "~/components/ui/form";
 
 import { useToast } from "~/components/hooks/use-toast";
-import { Input } from "~/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
 import { api } from "~/trpc/react";
@@ -43,7 +42,8 @@ export default function FunnelBuildersBonus() {
     return (
       (data.funnelsCreated * 2 +
         data.copyFunnelTrick * 0.25 +
-        data.advertorialFromScratch * 3) /
+        data.advertorialFromScratch * 3 +
+        data.funnelsImported * 1) /
       data.hoursWorked
     );
   }
@@ -92,6 +92,7 @@ export default function FunnelBuildersBonus() {
       advertorialFromScratch: data.advertorialFromScratch,
       hoursWorked: data.hoursWorked,
       dateOfWork: data.dateOfWork,
+      funnelsImported: data.funnelsImported,
       productivity: calculateTotalProductivity(data),
     });
   };
@@ -174,6 +175,12 @@ export default function FunnelBuildersBonus() {
                 form={form}
                 label={"How many advertorials did you create from scratch?"}
                 controlName="advertorialFromScratch"
+              />
+
+              <FormFieldComponent
+                form={form}
+                label={"How many funnels did you import?"}
+                controlName="funnelsImported"
               />
 
               <Button

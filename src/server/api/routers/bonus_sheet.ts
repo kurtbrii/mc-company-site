@@ -21,6 +21,7 @@ export const bonusSheetRouter = createTRPCRouter({
           funnelsCreated: input.funnelsCreated,
           copyFunnelTrick: input.copyFunnelTrick,
           advertorialFromScratch: input.advertorialFromScratch,
+          funnelsImported: input.funnelsImported,
 
           hoursAsCustomerService: input.hoursAsCustomerService,
           ticketResolved: input.ticketResolved,
@@ -107,7 +108,8 @@ export const bonusSheetRouter = createTRPCRouter({
           advertorialFromScratch: input.advertorialFromScratch,
           userId: input.userId,
           dateOfWork: input.dateOfWork,
-          productivity: input.productivity
+          productivity: input.productivity,
+          funnelsImported: input.funnelsImported
           // hoursAsCustomerService: input.hoursAsCustomerService,
           // ticketResolved: input.ticketResolved,
           // disputesAnswered: input.disputesAnswered,
