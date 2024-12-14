@@ -41,8 +41,8 @@ export default function ManagerBonus() {
       // funnel builders
       (data.funnelsCreated * 2 +
         data.copyFunnelTrick * 0.25 +
-        data.advertorialFromScratch * 2 +
-        data.funnelsImported * 0.5 +
+        data.advertorialFromScratch * 3 +
+        data.funnelsImported * 1 +
         // customer service
         data.disputesAnswered * 0.1 +
         data.ticketResolved * 0.06) /
