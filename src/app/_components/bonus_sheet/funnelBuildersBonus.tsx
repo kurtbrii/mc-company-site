@@ -41,7 +41,7 @@ export default function FunnelBuildersBonus() {
   ) {
     return (
       (data.funnelsCreated * 2 +
-        data.copyFunnelTrick * 0.25 +
+        data.copyFunnelTrick * 0.42 +
         data.advertorialFromScratch * 3 +
         data.funnelsImported * 1) /
       data.hoursWorked
