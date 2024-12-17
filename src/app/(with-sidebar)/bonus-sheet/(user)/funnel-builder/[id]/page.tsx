@@ -107,15 +107,15 @@ export default function BonusSheetFunnelBuilder({
             </TableHead>
 
             <TableHead className="text-center">
-              How many funnels did you copy using trick?
+              How many Funnels imported from other store (without major edits)?
+            </TableHead>
+
+            <TableHead className="text-center">
+              How many Funnels imported from other store (from scratch)?
             </TableHead>
 
             <TableHead className="text-center">
               How many advertorials did you create from scratch?
-            </TableHead>
-
-            <TableHead className="text-center">
-              How many funnels did you import?
             </TableHead>
 
             <TableHead className="text-center">Productivity Score</TableHead>
@@ -159,11 +159,11 @@ export default function BonusSheetFunnelBuilder({
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.advertorialFromScratch}
+                  {funnelBuilder.funnelsImported}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {funnelBuilder.funnelsImported}
+                  {funnelBuilder.advertorialFromScratch}
                 </TableCell>
 
                 <TableCell className="font-medium">

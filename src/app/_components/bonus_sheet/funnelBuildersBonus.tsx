@@ -41,8 +41,8 @@ export default function FunnelBuildersBonus() {
   ) {
     return (
       (data.funnelsCreated * 2 +
-        data.copyFunnelTrick * 0.42 +
         data.advertorialFromScratch * 3 +
+        data.copyFunnelTrick * 0.42 +
         data.funnelsImported * 1) /
       data.hoursWorked
     );
@@ -166,8 +166,18 @@ export default function FunnelBuildersBonus() {
               {/* // How many funnels did you copy using trick? (fill in 0 if you didnt do anything) */}
               <FormFieldComponent
                 form={form}
-                label={"How many funnels did you copy using trick?"}
+                label={
+                  "How many Funnels imported from other store (without major edits)?"
+                }
                 controlName="copyFunnelTrick"
+              />
+
+              <FormFieldComponent
+                form={form}
+                label={
+                  "How many Funnels imported from other store (from scratch)?"
+                }
+                controlName="funnelsImported"
               />
 
               {/* // How many advertorials did you create from scratch? (fill in 0 if you didnt do anything) */}
@@ -175,12 +185,6 @@ export default function FunnelBuildersBonus() {
                 form={form}
                 label={"How many advertorials did you create from scratch?"}
                 controlName="advertorialFromScratch"
-              />
-
-              <FormFieldComponent
-                form={form}
-                label={"How many funnels did you import?"}
-                controlName="funnelsImported"
               />
 
               <Button

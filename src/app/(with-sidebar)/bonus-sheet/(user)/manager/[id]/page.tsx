@@ -99,7 +99,7 @@ export default function BonusSheetManager({
             <TableHead className="text-center">What is the date?</TableHead>
 
             <TableHead className="text-center">
-              How many hours did you work?
+              How many hours did you work as a Funnel Builder Employee?
             </TableHead>
 
             <TableHead className="text-center">
@@ -107,17 +107,18 @@ export default function BonusSheetManager({
             </TableHead>
 
             <TableHead className="text-center">
-              How many funnels did you copy using trick?
-            </TableHead>
-
-            <TableHead className="text-center">
-              How many advertorials did you create from scratch?
+              How many Funnels imported from other store (without major edits)?
             </TableHead>
 
             <TableHead className="text-center">
               How many funnels did you import?
             </TableHead>
 
+            <TableHead className="text-center">
+              How many advertorials did you create from scratch?
+            </TableHead>
+
+            {/* CUSTOMER SERVICE ITEMS */}
             <TableHead className="text-center">
               How many hours did you work as a customer service employee?
             </TableHead>
@@ -171,11 +172,11 @@ export default function BonusSheetManager({
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {manager.advertorialFromScratch}
+                  {manager.funnelsImported}
                 </TableCell>
 
                 <TableCell className="font-medium">
-                  {manager.funnelsImported}
+                  {manager.advertorialFromScratch}
                 </TableCell>
 
                 <TableCell className="font-medium">

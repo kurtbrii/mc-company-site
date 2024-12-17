@@ -29,6 +29,11 @@ export default function MonthlySurvey() {
 
   const dateNow = new Date(Date.now());
 
+  const rangeList = [];
+  for (let i = 15; i <= 20; i++) {
+    rangeList.push(i);
+  }
+
   const submitSurvey = api.survey.createSurvey.useMutation({
     onSuccess: () => {
       toast({
@@ -95,10 +100,10 @@ export default function MonthlySurvey() {
   }
 
   // ! FORM IS NOT YET OPEN
-  if (![27, 28, 29, 30, 23].includes(dateNow.getDate())) {
+  if (!rangeList.includes(dateNow.getDate())) {
     return (
       <div className="flex h-screen w-screen items-center justify-center">
-        <p>This is only accessible by the end of the month.</p>
+        <p>The monthly survey form is currently closed.</p>
       </div>
     );
   }

@@ -40,8 +40,8 @@ export default function ManagerBonus() {
     return (
       // funnel builders
       (data.funnelsCreated * 2 +
-        data.copyFunnelTrick * 0.42 +
         data.advertorialFromScratch * 3 +
+        data.copyFunnelTrick * 0.42 +
         data.funnelsImported * 1 +
         // customer service
         data.disputesAnswered * 0.1 +
@@ -176,21 +176,24 @@ export default function ManagerBonus() {
               {/* // How many funnels did you copy using trick? (fill in 0 if you didnt do anything) */}
               <FormFieldComponent
                 form={form}
-                label={"How many funnels did you copy using trick?"}
+                label={
+                  "How many Funnels imported from other store (without major edits)?"
+                }
                 controlName="copyFunnelTrick"
               />
 
-              {/* // How many advertorials did you create from scratch? (fill in 0 if you didnt do anything) */}
+              <FormFieldComponent
+                form={form}
+                label={
+                  "How many Funnels imported from other store (from scratch)?"
+                }
+                controlName="funnelsImported"
+              />
+
               <FormFieldComponent
                 form={form}
                 label={"How many advertorials did you create from scratch?"}
                 controlName="advertorialFromScratch"
-              />
-
-              <FormFieldComponent
-                form={form}
-                label={"How many funnels did you import?"}
-                controlName="funnelsImported"
               />
 
               <hr />
