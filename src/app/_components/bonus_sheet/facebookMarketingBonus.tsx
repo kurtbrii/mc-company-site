@@ -1,8 +1,8 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
-import { useSession } from "next-auth/react";
 import {
   Form,
   FormControl,
@@ -12,26 +12,26 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 
-import { useToast } from "~/components/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
+import { useToast } from "~/components/hooks/use-toast";
 import { api } from "~/trpc/react";
 import { FacebookMarketingSchema } from "../../utils/zodHelpers";
 
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { cn } from "~/lib/utils";
 import { Calendar } from "~/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
+import { cn } from "~/lib/utils";
 
 import { FormFieldComponent } from "./form_field_components/facebookMarketingFormField";
 
 function calculateProductivity(data: z.infer<typeof FacebookMarketingSchema>) {
-  return (data.campaignsLaunched * 0.25) / data.hoursCampaignsLaunched;
+  return (data.campaignsLaunched * 0.28) / data.hoursCampaignsLaunched;
 }
 
 export default function FacebookMarketingBonus() {
