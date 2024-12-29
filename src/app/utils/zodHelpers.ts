@@ -1,5 +1,5 @@
+import { MOTIVATED, ROLE, YES_NO, YES_NO_SAME } from "@prisma/client";
 import { z, } from "zod";
-import { ROLE, MOTIVATED, YES_NO, YES_NO_SAME } from "@prisma/client";
 
 // ! user.ts
 export const UpdateProfileSchema = z.object({
@@ -71,7 +71,8 @@ export const VideoEditorsBonusSchema = z.object({
   vsl: z.coerce.number({ message: "This should be a number" }),
   dateOfWork: z.date(),
   userId: z.string(),
-  productivity: z.number()
+  productivity: z.number(),
+  videoAdsFromScratch: z.number()
 })
 
 export const FunnelBuildersSchema = z.object({

@@ -1,8 +1,8 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Button } from "~/components/ui/button";
-import { useSession } from "next-auth/react";
 import {
   Form,
   FormControl,
@@ -12,21 +12,21 @@ import {
   FormMessage,
 } from "~/components/ui/form";
 
-import { useToast } from "~/components/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type z } from "zod";
+import { useToast } from "~/components/hooks/use-toast";
 import { api } from "~/trpc/react";
 import { VideoEditorsBonusSchema } from "../../utils/zodHelpers";
 
 import { format } from "date-fns";
 import { CalendarIcon } from "lucide-react";
-import { cn } from "~/lib/utils";
 import { Calendar } from "~/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "~/components/ui/popover";
+import { cn } from "~/lib/utils";
 import { FormFieldComponent } from "./form_field_components/videoEditorFormField";
 
 function calculateProductivity(data: z.infer<typeof VideoEditorsBonusSchema>) {
@@ -34,7 +34,8 @@ function calculateProductivity(data: z.infer<typeof VideoEditorsBonusSchema>) {
     (data.competitorAdsBasis * 0.2 +
       data.newScrollstoppers * 0.1 +
       data.imageAds * 0.1 +
-      data.vsl * 1.33) /
+      data.vsl * 1.33 +
+      data.videoAdsFromScratch * 2.5) /
     data.hoursWorked
   );
 }
@@ -76,6 +77,7 @@ export default function VideoEditorsBonus() {
       newScrollstoppers: undefined,
       vsl: undefined,
       userId: userId ?? "",
+      videoAdsFromScratch: undefined,
       productivity: 0,
     },
     resolver: zodResolver(VideoEditorsBonusSchema),
@@ -93,6 +95,7 @@ export default function VideoEditorsBonus() {
       newScrollstoppers: data.newScrollstoppers,
       vsl: data.vsl,
       dateOfWork: data.dateOfWork,
+      videoAdsFromScratch: data.videoAdsFromScratch,
       productivity: productivity,
     });
   };
@@ -184,6 +187,12 @@ export default function VideoEditorsBonus() {
                 form={form}
                 label={"How many VSL's did you make?"}
                 controlName="vsl"
+              />
+
+              <FormFieldComponent
+                form={form}
+                label={"How many video ads from scratch did you make?"}
+                controlName="videoAdsFromScratch"
               />
 
               <Button

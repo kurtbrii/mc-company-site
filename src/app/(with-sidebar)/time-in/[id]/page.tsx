@@ -196,7 +196,6 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
                     : item.timeOutDescription}
                 </TableCell>
                 <TableCell>
-                  {" "}
                   {item.timeOut ? calculatedTimeDecimal[1] : "-"}
                 </TableCell>
                 <TableCell>

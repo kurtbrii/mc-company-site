@@ -1,15 +1,15 @@
 "use client";
 
-import { api } from "~/trpc/react";
-import UserCard from "~/app/_components/userCard";
-import {
-  getCurrentMonday,
-  getAverageProductivity,
-  copyToClipboard,
-} from "~/app/utils/functionHelpers";
-import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
 import DateFilter from "~/app/_components/dateFilter";
+import UserCard from "~/app/_components/userCard";
+import {
+  copyToClipboard,
+  getAverageProductivity,
+  getCurrentMonday,
+} from "~/app/utils/functionHelpers";
+import { type UserProps } from "~/app/utils/propsHelpers";
+import { api } from "~/trpc/react";
 
 import {
   Table,
@@ -20,15 +20,14 @@ import {
   TableRow,
 } from "~/components/ui/table";
 
-import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
+import { addDays, format } from "date-fns";
 import React from "react";
-import { addDays } from "date-fns";
-import { format } from "date-fns";
+import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
 
-import { DeleteDialog } from "~/app/_components/deleteDialog";
-import { useToast } from "~/components/hooks/use-toast";
 import { useSession } from "next-auth/react";
+import { DeleteDialog } from "~/app/_components/deleteDialog";
 import { superUsers } from "~/app/utils/helper";
+import { useToast } from "~/components/hooks/use-toast";
 
 export default function BonusSheetVideoEditor({
   params,
@@ -110,6 +109,9 @@ export default function BonusSheetVideoEditor({
             <TableHead className="text-center">
               How many VSL&apos;s did you make?
             </TableHead>
+            <TableHead className="text-center">
+              Video Ads from Scratch
+            </TableHead>
             <TableHead className="text-center">Productivity Score</TableHead>
           </TableRow>
         </TableHeader>
@@ -154,6 +156,10 @@ export default function BonusSheetVideoEditor({
                 </TableCell>
 
                 <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
+
+                <TableCell className="font-medium">
+                  {videoEditor.videoAdsFromSractch}
+                </TableCell>
 
                 <TableCell className="font-medium">
                   {(videoEditor.productivity! * 100).toFixed(2)}%

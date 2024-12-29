@@ -1,11 +1,10 @@
 import {
   createTRPCRouter,
-  protectedProcedure,
-  publicProcedure,
+  protectedProcedure
 } from "~/server/api/trpc";
 
 import { z } from "zod";
-import { VideoEditorsBonusSchema, FunnelBuildersSchema, CustomerServiceSchema, FacebookMarketingSchema, ManagerSchema } from "~/app/utils/zodHelpers";
+import { CustomerServiceSchema, FacebookMarketingSchema, FunnelBuildersSchema, ManagerSchema, VideoEditorsBonusSchema } from "~/app/utils/zodHelpers";
 
 
 export const bonusSheetRouter = createTRPCRouter({
@@ -63,7 +62,8 @@ export const bonusSheetRouter = createTRPCRouter({
           vsl: input.vsl,
           userId: input.userId,
           dateOfWork: input.dateOfWork,
-          productivity: input.productivity
+          videoAdsFromScratch: input.videoAdsFromScratch,
+          productivity: input.productivity,
         },
       });
     }),
