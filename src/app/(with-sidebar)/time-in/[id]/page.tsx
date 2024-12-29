@@ -149,7 +149,7 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
         <TableBody>
           {getUserTimeIn?.map((item, index) => {
             const calculatedTimeDecimal =
-              getDecimalTime(item.timeIn!, item.timeOut!) ?? 0;
+              getDecimalTime(item.timeIn!, item.timeOut ?? new Date()) ?? 0;
 
             totalTimeIn += calculatedTimeDecimal[0] as number;
 
@@ -195,7 +195,10 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
                     ? "-"
                     : item.timeOutDescription}
                 </TableCell>
-                <TableCell>{calculatedTimeDecimal[1] as string}</TableCell>
+                <TableCell>
+                  {" "}
+                  {item.timeOut ? calculatedTimeDecimal[1] : "-"}
+                </TableCell>
                 <TableCell>
                   {item.timeOut
                     ? (calculatedTimeDecimal[0] as number).toFixed(2)
