@@ -72,7 +72,7 @@ export const VideoEditorsBonusSchema = z.object({
   dateOfWork: z.date(),
   userId: z.string(),
   productivity: z.number(),
-  videoAdsFromScratch: z.number()
+  videoAdsFromScratch: z.coerce.number()
 })
 
 export const FunnelBuildersSchema = z.object({

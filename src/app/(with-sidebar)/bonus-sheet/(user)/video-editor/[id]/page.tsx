@@ -158,7 +158,7 @@ export default function BonusSheetVideoEditor({
                 <TableCell className="font-medium">{videoEditor.vsl}</TableCell>
 
                 <TableCell className="font-medium">
-                  {videoEditor.videoAdsFromSractch}
+                  {videoEditor.videoAdsFromScratch}
                 </TableCell>
 
                 <TableCell className="font-medium">
