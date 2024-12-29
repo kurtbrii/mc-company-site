@@ -1,5 +1,5 @@
 import { type ROLE } from "@prisma/client"
-import { MutableRefObject } from "react"
+import { type MutableRefObject } from "react"
 
 export const userColor = (role: ROLE) => {
   switch (role) {
@@ -74,7 +74,7 @@ export const buttonActive = (role: ROLE) => {
   }
 }
 
-export const getTime = (date1: Date, date2: Date) => {
+export const getDecimalTime = (date1: Date, date2: Date) => {
   const start = date1.getTime();
   const end = date2.getTime();
 
@@ -83,7 +83,11 @@ export const getTime = (date1: Date, date2: Date) => {
   const minutes = Math.floor(diff / (1000 * 60) % 60);
   const seconds = Math.floor(diff / 1000 % 60);
 
-  return `${hours ? hours : "00"}:${minutes ? minutes : "00"}:${seconds ? seconds : "00"}`;
+  const newMinutes = minutes / 60
+  const newSeconds = seconds / 3660
+
+  return [hours + newMinutes + newSeconds, `${hours ? hours : "00"}:${minutes ? minutes : "00"}:${seconds ? seconds : "00"}`]
+
 };
 
 export const getCurrentMonday = () => {

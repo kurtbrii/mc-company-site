@@ -1,13 +1,25 @@
 "use client";
 
-import { api } from "~/trpc/react";
-import UserCard from "~/app/_components/userCard";
-import { type UserProps } from "~/app/utils/propsHelpers";
 import { type DateRange } from "react-day-picker";
 import DateFilter from "~/app/_components/dateFilter";
+import UserCard from "~/app/_components/userCard";
 import { superUsers } from "~/app/utils/helper";
+import { type UserProps } from "~/app/utils/propsHelpers";
 import { useToast } from "~/components/hooks/use-toast";
+import { api } from "~/trpc/react";
 
+import { addDays } from "date-fns";
+import { useSession } from "next-auth/react";
+import { useEffect, useRef, useState } from "react";
+import { AddTimeIn } from "~/app/_components/addTimeIn";
+import { DeleteDialog } from "~/app/_components/deleteDialog";
+import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
+import {
+  copyToClipboard,
+  getCurrentMonday,
+  getDecimalTime,
+  scrollToBottom,
+} from "~/app/utils/functionHelpers";
 import {
   Table,
   TableBody,
@@ -16,18 +28,6 @@ import {
   TableHeader,
   TableRow,
 } from "~/components/ui/table";
-import {
-  getCurrentMonday,
-  copyToClipboard,
-  getTime,
-  scrollToBottom,
-} from "~/app/utils/functionHelpers";
-import { UserCardLoading } from "~/app/_components/loading_state/userCardLoading";
-import { useState, useRef, useEffect } from "react";
-import { addDays } from "date-fns";
-import { DeleteDialog } from "~/app/_components/deleteDialog";
-import { AddTimeIn } from "~/app/_components/addTimeIn";
-import { useSession } from "next-auth/react";
 
 export default function TimeInUser({ params }: { params: { id: string } }) {
   const { data: session } = useSession();
@@ -83,6 +83,8 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
   const [isFormOpen, setIsFormOpen] = useState(false);
+
+  let totalTimeIn = 0;
 
   useEffect(() => {
     if (isFormOpen) {
@@ -141,71 +143,94 @@ export default function TimeInUser({ params }: { params: { id: string } }) {
             <TableHead className="text-center">Time Out</TableHead>
             <TableHead className="text-center">Time Out Description</TableHead>
             <TableHead className="text-center">Total</TableHead>
+            <TableHead className="text-center">Total In Decimal</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {getUserTimeIn?.map((item, index) => (
-            <TableRow key={index} className="text-center">
-              <TableCell className="font-medium">
-                <button
-                  className="hover:text-everyone"
-                  onClick={() => {
-                    copyToClipboard(item.id);
+          {getUserTimeIn?.map((item, index) => {
+            const calculatedTimeDecimal =
+              getDecimalTime(item.timeIn!, item.timeOut!) ?? 0;
 
-                    toast({
-                      title: "Text copied to clipboard",
-                    });
-                  }}
-                >
-                  {item.id}
-                </button>
-              </TableCell>
-              <TableCell>{item.timeIn?.toLocaleDateString()}</TableCell>
-              <TableCell>
-                {item.timeIn?.toLocaleDateString("en-US", {
-                  weekday: "long",
-                })}
-              </TableCell>
-              <TableCell>
-                {item.timeIn?.toLocaleTimeString("en-US", { hour12: false })}
-              </TableCell>
-              <TableCell>
-                {item.timeInDescription === "Time Out"
-                  ? "-"
-                  : item.timeInDescription}
-              </TableCell>
-              <TableCell>
-                {item.timeOut
-                  ? item.timeOut.toLocaleTimeString("en-US", { hour12: false })
-                  : "-"}
-              </TableCell>
-              <TableCell>
-                {item.timeOutDescription === "Initial Time Out Description"
-                  ? "-"
-                  : item.timeOutDescription}
-              </TableCell>
-              <TableCell>
-                {getTime(item.timeIn ?? new Date(), item.timeOut ?? new Date())}
-              </TableCell>
+            totalTimeIn += calculatedTimeDecimal[0] as number;
 
-              {superUsers.includes(session?.user?.role ?? "CEO") && (
-                <TableCell className="text-right">
-                  <DeleteDialog item={item} handleClick={handleClick} />
+            return (
+              <TableRow key={index} className="text-center">
+                <TableCell className="font-medium">
+                  <button
+                    className="hover:text-everyone"
+                    onClick={() => {
+                      copyToClipboard(item.id);
+
+                      toast({
+                        title: "Text copied to clipboard",
+                      });
+                    }}
+                  >
+                    {item.id}
+                  </button>
                 </TableCell>
-              )}
-            </TableRow>
-          ))}
+                <TableCell>{item.timeIn?.toLocaleDateString()}</TableCell>
+                <TableCell>
+                  {item.timeIn?.toLocaleDateString("en-US", {
+                    weekday: "long",
+                  })}
+                </TableCell>
+                <TableCell>
+                  {item.timeIn?.toLocaleTimeString("en-US", { hour12: false })}
+                </TableCell>
+                <TableCell>
+                  {item.timeInDescription === "Time Out"
+                    ? "-"
+                    : item.timeInDescription}
+                </TableCell>
+                <TableCell>
+                  {item.timeOut
+                    ? item.timeOut.toLocaleTimeString("en-US", {
+                        hour12: false,
+                      })
+                    : "-"}
+                </TableCell>
+                <TableCell>
+                  {item.timeOutDescription === "Initial Time Out Description"
+                    ? "-"
+                    : item.timeOutDescription}
+                </TableCell>
+                <TableCell>{calculatedTimeDecimal[1] as string}</TableCell>
+                <TableCell>
+                  {item.timeOut
+                    ? (calculatedTimeDecimal[0] as number).toFixed(2)
+                    : "-"}
+                </TableCell>
+
+                {session &&
+                  superUsers.includes(session?.user?.role ?? "CEO") && (
+                    <TableCell className="text-right">
+                      <DeleteDialog item={item} handleClick={handleClick} />
+                    </TableCell>
+                  )}
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
 
+      <p className="mt-5 self-end">
+        Total Time In:{" "}
+        <span className="font-bold text-everyone">
+          {totalTimeIn.toFixed(2)}
+        </span>
+      </p>
+
       <div ref={messagesEndRef} className="mt-72">
-        {superUsers.includes(session?.user?.role ?? "CEO") && isFormOpen && (
-          <AddTimeIn
-            memberId={params.id}
-            refetch={refetchTimeInDetails}
-            setIsFormOpen={setIsFormOpen}
-          />
-        )}
+        {session &&
+          superUsers.includes(session?.user?.role ?? "CEO") &&
+          isFormOpen && (
+            <AddTimeIn
+              memberId={params.id}
+              refetch={refetchTimeInDetails}
+              setIsFormOpen={setIsFormOpen}
+            />
+          )}
       </div>
     </div>
   );

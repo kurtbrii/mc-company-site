@@ -1,13 +1,12 @@
 "use client";
 
-import Sidebar from "../../_components/sidebar";
-import { api } from "~/trpc/react";
-import Link from "next/link";
-import UserCard from "../../_components/userCard";
-import { UserCardLoading } from "../../_components/loading_state/userCardLoading";
-import { userColor } from "../../utils/functionHelpers";
-import { useState } from "react";
 import { type ROLE } from "@prisma/client";
+import Link from "next/link";
+import { useState } from "react";
+import { api } from "~/trpc/react";
+import { UserCardLoading } from "../../_components/loading_state/userCardLoading";
+import UserCard from "../../_components/userCard";
+import { userColor } from "../../utils/functionHelpers";
 
 export default function TimeIn() {
   const [selectedRole, setSelectedRole] = useState("ALL");
