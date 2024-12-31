@@ -35,7 +35,7 @@ function calculateProductivity(data: z.infer<typeof VideoEditorsBonusSchema>) {
       data.newScrollstoppers * 0.1 +
       data.imageAds * 0.1 +
       data.vsl * 1.33 +
-      data.videoAdsFromScratch * 2.5) /
+      data.videoAdsFromScratch * 0.83) /
     data.hoursWorked
   );
 }
